@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  {% if title %}
+    <title>pyBlog - {{ title }}</title>
+  {% else %}
+    <title>pyBlog</title>
+  {% endif %} 
+</head>
+<body>
+  <header id="header">
+    <nav class="topnav" id="topnav-A">
+      <div>
+        <a href="{{ url_for('index') }}" class="topnav-logo">
+          <i class="fa-brands fa-python"></i>
+          PyBlog
+        </a>
+        <a href="javascript: void(0);" class="topnav-toggle" id="topnavToggle-A">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </div>              
+      <a href="{{ url_for('index') }}">Home</a>  
+      <a href="{{ url_for('about') }}">About</a>  
+      <div class="fright">
+        <a href="{{ url_for('login') }}">Sign in</a>  
+        <a href="{{ url_for('register') }}" class="signup">Sign up</a>   
+      </div>
+    </nav>
+  </header>
+  {% block content %}
+  {% endblock content %}
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
