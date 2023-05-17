@@ -7,13 +7,34 @@
 }
 
 body {
-  font-family: Ubuntu, Verdana, sans-serif;
-  height: 100vh;
   margin: 0;
+  background-color: #f6f6f6; 
+  font-family: Ubuntu, Verdana, sans-serif; 
+}
+
+#header {
+  background-color: #18354c;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0, 0, 0, 0.19);
+} 
+
+#main {
+  margin-top: 100px;
+}
+
+.card {
+  margin-bottom: 20px;
+  border-top: 1px solid #ddd;
+  padding: 0 15px;
+  background-color: #fff
+} 
+
+.container {
+  width: 100%;
+  margin: 0 auto;
 }
 
 .topnav {
-  background-color: #18354c;
+  background-color: inherit;
 } 
 
 .topnav div {
@@ -22,7 +43,7 @@ body {
 
 .topnav a {
   display: none;
-  padding: 14px;
+  padding: 14px 22px;
   color: #f1f1f1;
   text-decoration: none;
   font-weight: 500;
@@ -33,7 +54,7 @@ body {
   background-color: #f1f1f1;
   color: #18354c;
   font-weight: 500;
-} 
+}
 
 .topnav .topnav-logo, .topnav .topnav-toggle {
   display: inline-block;
@@ -55,7 +76,7 @@ body {
 .topnav .topnav-toggle {
   position: absolute;
   top: 50%;
-  right: 14px;
+  right: 22px;
   z-index: 1;
   transform: translateY(-50%);
   border: 2px solid #f1f1f1;
@@ -63,12 +84,29 @@ body {
   padding: 4px 7px;
 }
 
-/* Toggle the navigation bar */
+/* Toggle the top navigation bar */
 .toggle a {
   display: block;
 }
 
+
 @media screen and (min-width: 600px) {
+  .card {
+    padding: 0 30px;
+  }
+
+}
+ 
+@media screen and (min-width: 992px) {
+  .container {
+    max-width: 940px;
+  }
+
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
   .topnav .topnav-toggle {
     display: none;
   }
@@ -91,6 +129,7 @@ body {
 
   .topnav .topnav-logo {
     padding: 14px;
+    padding-left: 0;
   }
 
   .topnav .fright {
@@ -98,10 +137,16 @@ body {
   }
 
   .topnav .signup {
-    margin: 9px 28px 9px 0;
+    margin: 9px 0;
     border: 1px solid #f1f1f1;
-    border-radius: 4px;
+    border-radius: 5px;
     padding-top: 6px;
     padding-bottom: 6px;
   }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 1080px;
+  } 
 }
