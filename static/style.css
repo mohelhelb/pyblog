@@ -39,6 +39,11 @@ p {
   clear: both;
 }
 
+/* Prevent text from wrapping */
+.nowrap {
+  white-space: nowrap;
+}
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -119,6 +124,31 @@ p {
   display: block;
 }
 
+.footer {
+  padding: 16px 8px;
+  background-color: #18354c; 
+}
+
+.footer nav {
+  text-align: center;  
+}
+
+.footer a {
+  padding-right: 8px;
+  color: #f1f1f1;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+.footer a:last-child {
+  padding-right: 0;
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
 
 @media screen and (min-width: 600px) {
   .card {
