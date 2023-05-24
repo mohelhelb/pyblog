@@ -9,12 +9,25 @@
 body {
   margin: 0;
   background-color: #f6f6f6;
+  color: #292929;
   font-family: -apple-sytem, BlinkMacSystemFont, Ubuntu, Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}
+
+h2 {
+  margin: 0;
 }
 
 p {
   line-height: 1.6;
   font-size: 1rem;
+}
+
+a {
+  text-decoration: none;
 }
 
 #header {
@@ -62,12 +75,28 @@ p {
   background-color: #fff
 }
 
+.subcard {
+  margin-bottom: 48px; 
+}
+
 .fright {
   float: none;
 }
 
 .fleft {
   float: none;
+}
+
+.small {
+  font-size: 0.8rem;
+}
+
+.text-muted {
+  color: #999;
+}
+
+.middot {
+  padding: 0 4px;
 }
 
 .topnav {
@@ -80,10 +109,9 @@ p {
 
 .topnav a {
   display: none;
-  padding: 14px 22px;
+  padding: 15px;
   background-color: inherit;
   color: #f1f1f1;
-  text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
   opacity: 1;
@@ -105,7 +133,7 @@ p {
 .topnav .topnav-toggle {
   position: absolute;
   top: 50%;
-  right: 22px;
+  right: 15px;
   z-index: 1;
   transform: translateY(-50%);
   border: 2px solid #f1f1f1;
@@ -136,7 +164,6 @@ p {
 .footer a {
   padding-right: 8px;
   color: #f1f1f1;
-  text-decoration: none;
   font-weight: 500;
   opacity: 1;
   transition: opacity 0.4s;
@@ -150,12 +177,63 @@ p {
   opacity: 0.7;
 }
 
-@media screen and (min-width: 600px) {
-  .card {
-    padding: 0 30px;
-  }
-
+.badge header > span {
+  line-height: 0;
 }
+
+.badge .username, .badge .fake-avatar {
+  vertical-align: middle;
+} 
+
+.badge .username, .badge p {
+  color: #666;
+}
+
+.badge .username {
+  margin-left: 5px;
+  font-weight: 500; 
+  transition: color 0.4s;
+}
+
+.badge .username:hover {
+  color: #619ccd;
+}
+
+/* Pending */
+.badge .fake-avatar {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+} 
+
+.badge .title {
+  display: block;
+  color: #619ccd;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.badge .title, .badge p {
+  margin: 8px 0;
+}
+
+.badge .level {
+  display: inline-block;
+  border-radius: 2px;
+  padding: 4px;
+  background-color: #f1f1f1;
+  font-weight: 500;
+}
+
+/* 
+@media screen and (min-width: 576px) {
+}
+
+@media screen and (min-width: 768px) {
+}
+*/
  
 @media screen and (min-width: 992px) {
   p {
