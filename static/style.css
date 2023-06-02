@@ -39,7 +39,7 @@ h2, h3 {
   margin: 0;
 }
 
-p {
+article p {
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -53,16 +53,16 @@ a {
 input {
   width: 100%;
   margin: 9px 0 20px 0;
-  border: none;
-  border-radius: 4px;
+  border: 1px solid var(--gray-m);
+  border-radius: 5px;
   padding: 15px 8px;
-  background-color: var(--gray-xs);
   font-size: inherit;
   font-family: inherit;
 }
 
 input:not([type="submit"]):focus {
-  outline: 4px solid rgba(0, 123, 255, 0.3);
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+  border: 1px solid rgba(0, 123, 255, 0.5);
 }
 
 input[type="submit"] {
@@ -410,6 +410,18 @@ form legend {
   text-align: center;
 }
 
+.forgot-password {
+  position: relative;
+}
+
+.forgot-password a {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  z-index: 1;
+  transform: translateY(calc(-50% - 5.5px)); /* 50% (margin-bottom(input) - margin-top(input)) = 5.5 */
+}
+
 /* 
 @media screen and (min-width: 576px) {
 }
@@ -419,7 +431,7 @@ form legend {
 */
  
 @media screen and (min-width: 992px) {
-  p {
+  article p {
     font-size: 1.11rem;
   }
 

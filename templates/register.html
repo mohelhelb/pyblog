@@ -11,12 +11,13 @@
       <input type="text" id="lastName" name="last_name" placeholder="Enter Last Name" required>
       <label for="emailAddress">Email</label>
       <input type="email" id="emailAddress" name="email" placeholder="Enter Email Address" required>
-      <label for="confirmEmailAddress">Confirm Email</label>
-      <input type="password" id="confirmEmailAddress" name="confirm_email" placeholder="Confirm Email Address" required>
-      <!-- <hr class="hr mt-6"> -->
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter Password" required>
+      <label for="repeatPassword">Repeat Password</label>
+      <input type="password" id="repeatPassword" name="repeat_password" placeholder="Repeat Password" required>
       <p class="small mt-0 mb-0">By creating an account you agree to our <a href="#">Terms & Conditions</a>.</p>
-      <input type="submit" value="Sign Up">
-      <p class="mt-0 mb-0">Already have an account? <a href="#" class="ml-3">Sign in</a></p>
+      <input type="submit" value="Sign up">
+      <div class="mt-0 mb-0">Already have an account? <a href="{{ url_for("login") }}" class="ml-3">Sign in</a></div>
     </fieldset>
   </form>
 {% endblock content %}
