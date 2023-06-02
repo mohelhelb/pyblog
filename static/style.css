@@ -39,15 +39,15 @@ h2, h3 {
   margin: 0;
 }
 
-article p {
+p {
   line-height: 1.6;
   font-size: 1rem;
 }
 
 a {
   color: var(--blue-s);
-  /* color: var(--blue-m); */
   text-decoration: none;
+  transition: opacity 0.4s;
 }
 
 input {
@@ -66,6 +66,7 @@ input:not([type="submit"]):focus {
 }
 
 input[type="submit"] {
+  border: none;
   background-color: var(--blue-l);
   color: var(--gray-s);
   font-weight: 500;
@@ -73,9 +74,8 @@ input[type="submit"] {
   transition: opacity 0.4s;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:active {
   opacity: 0.7;
-  cursor: pointer;
 }
 
 form fieldset {
@@ -231,10 +231,6 @@ form legend {
   transition: color 0.4s;
 }
 
-.username:hover {
-  color: var(--blue-s);
-}
-
 .fake-avatar, .username {
   vertical-align: middle;
 }
@@ -258,12 +254,6 @@ form legend {
   transition: background-color 0.4s, color 0.4s, opacity 0.4s;
 }
 
-.topnav a:hover {
-  background-color: var(--gray-s);
-  color: var(--blue-xxl);
-  opacity: 1;
-}
-
 .topnav .topnav-logo, .topnav .topnav-toggle {
   display: inline-block;
   font-size: 1.2rem;
@@ -279,12 +269,6 @@ form legend {
   border: 2px solid var(--gray-s);
   border-radius: 4px;
   padding: 4px 7px;
-}  
-
-.topnav .topnav-logo:hover, .topnav .topnav-toggle:hover {
-  background-color: inherit;
-  color: var(--gray-s);
-  opacity: 0.7;
 }
 
 /* Toggle the top navigation bar */
@@ -312,10 +296,6 @@ form legend {
 
 .footer a:last-child {
   padding-right: 0;
-}
-
-.footer a:hover {
-  opacity: 0.7;
 }
 
 .badge p {
@@ -362,6 +342,7 @@ form legend {
   animation-iteration-count: infinite;
 }
 
+/* Animation: numWriters & numPosts */
 @keyframes numWriters {
   0% {
     transform: translateX(0%);
@@ -378,7 +359,6 @@ form legend {
     opacity: 0;
   }
 }
-
 @keyframes numPosts {  
   0% {
     transform: translateX(-100%);
@@ -417,9 +397,41 @@ form legend {
 .forgot-password a {
   position: absolute;
   top: 50%;
-  right: 8px;
+  right: 10px;
   z-index: 1;
   transform: translateY(calc(-50% - 5.5px)); /* 50% (margin-bottom(input) - margin-top(input)) = 5.5 */
+}
+
+/* Disable hover effect on mobile devices */
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.7;
+  } 
+
+  input[type="submit"]:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  } 
+
+  .username:hover {
+    color: var(--blue-s);
+  } 
+
+  .topnav a:hover {
+    background-color: var(--gray-s);
+    color: var(--blue-xxl);
+    opacity: 1;
+  }    
+
+  .topnav .topnav-logo:hover, .topnav .topnav-toggle:hover {
+    background-color: inherit;
+    color: var(--gray-s);
+    opacity: 0.7;
+  }  
+
+  .footer a:hover {
+    opacity: 0.7;
+  } 
 }
 
 /* 
@@ -431,7 +443,7 @@ form legend {
 */
  
 @media screen and (min-width: 992px) {
-  article p {
+  p {
     font-size: 1.11rem;
   }
 
