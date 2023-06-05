@@ -60,61 +60,63 @@
     </main>
     <!-- Aside Content -->
     <aside id="sidebar" class="fleft">
-      <!-- Number of Writers/Posts -->
-      <div class="card mb-20">
-        <div class="density mt-16 mb-16 clearfix">
-          <div class="num-writers fleft">
-            <h2>+200</h2>
-            <p>Writers</p>
-          </div>
-          <div class="num-posts fleft">
-            <h2>+2K</h2>
-            <p>Posts</p>
+      {% block sidebar %}
+        <!-- Number of Writers/Posts -->
+        <div class="card mb-20">
+          <div class="density mt-16 mb-16 clearfix">
+            <div class="num-writers fleft">
+              <h2>+200</h2>
+              <p>Writers</p>
+            </div>
+            <div class="num-posts fleft">
+              <h2>+2K</h2>
+              <p>Posts</p>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Top Writers -->
-      <div class="card">
-        <header class="top-writers mt-24 mb-16">
-          <h3><i class="fa-solid fa-arrow-up-1-9 fa-fw"></i> Top Writers</h3>
-        </header>        
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
-        </div> 
-        <div class="mb-16">
-          <span class="fake-avatar"></span>
-          <a href="#" class="username">John Doe</a>  
+        <!-- Top Writers -->
+        <div class="card">
+          <header class="top-writers mt-24 mb-16">
+            <h3><i class="fa-solid fa-arrow-up-1-9 fa-fw"></i> Top Writers</h3>
+          </header>        
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div> 
+          <div class="mb-16">
+            <span class="fake-avatar"></span>
+            <a href="#" class="username">John Doe</a>  
+          </div>
         </div>
-      </div>
+      {% endblock sidebar %}
     </aside>
   </div>
 
