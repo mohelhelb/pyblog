@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <span class="waterdrop"></span>
+
   <!-- Post Header -->
   <header>
     <h1 class="post-title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</h1>
@@ -11,7 +13,7 @@
     </div>
     <hr class="hr mt-0">        
     <p class="post-subtitle"> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
+      lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
     </p>
   </header>
   
@@ -56,5 +58,27 @@
 {% endblock content %}
 
 {% block sidebar %}
-<div class="card mb-20" style="height: 300px;"></div>
+  <div class="card mb-20">
+    <div class="mt-24">
+      <span class="fake-avatar"></span>
+      <a href="#" class="username">John Doe</a>
+    </div>
+    <p class="small text-muted mt-14 mb-24">
+      I am a lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.
+    </p>
+  </div>
+  <div class="more-posts card mb-20">
+    <p class="mt-24 mb-14">More posts by John Doe</p>    
+    <h2>
+      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+    </h2>  
+    <hr class="hr">  
+    <h2>
+      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+    </h2>  
+    <hr class="hr">  
+    <h2 class="mb-24">
+      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+    </h2>
+  </div>
 {% endblock sidebar %}

@@ -145,6 +145,7 @@ form legend {
 }
 
 .card {
+  position: relative;
   border-top: 1px solid var(--gray-m);
   border-bottom: 1px solid var(--gray-m);
   padding: 0 15px;
@@ -185,12 +186,18 @@ form legend {
 }
 .mb-20 {
   margin-bottom: 20px;
-} 
+}  
 .mt-16 {
   margin-top: 16px;
 }
 .mb-16 {
   margin-bottom: 16px;
+} 
+.mt-14 {
+  margin-top: 14px;
+}
+.mb-14 {
+  margin-bottom: 14px;
 }  
 .mt-8 {
   margin-top: 8px;
@@ -283,6 +290,17 @@ form legend {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: 1px solid rgba(0, 123, 255, 0.5);
   color: rgb(0, 123, 255);
+} 
+
+.waterdrop {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--gray-m);
+  border-radius: 50%;
+  background-color: var(--gray-xs);
 } 
 
 /* <<< General CSS Classes */
@@ -450,8 +468,6 @@ form legend {
   transform: translateY(calc(-50% - 5.5px)); /* 50% (margin-bottom(input) - margin-top(input)) = 5.5 */
 }
 
-/* In progress */
-
 .date-level-author .fleft {
   float: left;
 }
@@ -468,6 +484,16 @@ form legend {
 
 .date-level-author a:last-child {
   text-align: right;
+}
+
+/* In progress */
+
+.more-posts h2 {
+  font-size: 1rem;
+}
+
+.more-posts p {
+  font-weight: 500;
 }
 
 /* <<< Specific CSS Classes */
