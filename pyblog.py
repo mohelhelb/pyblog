@@ -26,3 +26,7 @@ def register():
 @app.route("/post")
 def post():
     return render_template("post.html")
+
+@app.route("/resetPassword")
+def resetBeforeEmail():
+    return render_template("resetBeforeEmail.html")

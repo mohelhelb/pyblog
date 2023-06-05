@@ -10,7 +10,7 @@
       <label for="password">Password</label>
       <div class="forgot-password">
         <input type="password" id="password" name="password" placeholder="Enter Password" required>
-        <a href="#">Forgot?</a>
+        <a href="{{ url_for('resetBeforeEmail') }}">Forgot?</a>
       </div>
       <input type="submit" value="Sign in"> 
       <div class="mt-0 mb-0">Need an account? <a href="{{ url_for("register") }}" class="ml-3">Sign up</a></div> 

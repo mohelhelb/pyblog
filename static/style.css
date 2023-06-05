@@ -486,15 +486,15 @@ form legend {
   text-align: right;
 }
 
-/* In progress */
-
 .more-posts h2 {
   font-size: 1rem;
 }
 
 .more-posts p {
   font-weight: 500;
-}
+} 
+
+/* In progress */ 
 
 /* <<< Specific CSS Classes */
 
