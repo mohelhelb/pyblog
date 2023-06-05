@@ -30,3 +30,7 @@ def post():
 @app.route("/resetPassword")
 def resetBeforeEmail():
     return render_template("resetBeforeEmail.html")
+
+@app.route("/resetPassword/token")
+def resetAfterEmail():
+    return render_template("resetAfterEmail.html")
