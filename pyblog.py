@@ -34,3 +34,8 @@ def resetBeforeEmail():
 @app.route("/resetPassword/token")
 def resetAfterEmail():
     return render_template("resetAfterEmail.html")
+
+
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")

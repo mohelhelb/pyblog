@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
   {% if title %}
     <title>pyBlog - {{ title }}</title>
@@ -64,11 +64,11 @@
         <!-- Number of Writers/Posts -->
         <div class="card mb-20">
           <div class="density mt-16 mb-16 clearfix">
-            <div class="num-writers fleft">
+            <div class="num-writers fleft width-third t-align-center">
               <h2>+200</h2>
               <p>Writers</p>
             </div>
-            <div class="num-posts fleft">
+            <div class="num-posts fleft width-third t-align-center">
               <h2>+2K</h2>
               <p>Posts</p>
             </div>
@@ -76,43 +76,43 @@
         </div>
         <!-- Top Writers -->
         <div class="card">
-          <header class="top-writers mt-24 mb-16">
+          <header class="top-writers mt-24 mb-16 t-align-center">
             <h3><i class="fa-solid fa-arrow-up-1-9 fa-fw"></i> Top Writers</h3>
           </header>        
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div> 
           <div class="mb-24">
-            <span class="fake-avatar"></span>
+            <span class="fake-avatar width-40 height-40"></span>
             <a href="#" class="username">John Doe</a>  
           </div>
         </div>
@@ -142,6 +142,8 @@
   </footer>
 
   <!-- JavaScript -->
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+  {% block js %}
+  {% endblock js %}
 </body>
 </html>

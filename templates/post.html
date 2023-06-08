@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <span class="waterdrop"></span>
+  <span class="waterdrop width-20 height-20"></span>
 
   <!-- Post Header -->
   <header>
     <h1 class="post-title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</h1>
     <div class="date-level-author clearfix">
-      <span class="fleft text-muted">Feb 30</span>
-      <span class="fleft text-muted">Intermediate</span>
-      <a href="#" class="fleft author">John Doe</a>
+      <span class="fleft width-third text-muted-light t-align-left">Feb 30</span>
+      <span class="fleft width-third text-muted-light t-align-center">Intermediate</span>
+      <a href="#" class="fleft width-third t-align-right">John Doe</a>
     </div>
     <hr class="hr mt-0">        
-    <p class="post-subtitle"> 
+    <p class="text-muted-dark"> 
       lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
     </p>
   </header>
@@ -43,14 +43,18 @@
   <!-- Post Footer -->
   <footer class="mt-20 mb-20">
     <div class="clearfix">
-      <div class="previous fleft">
-        <a href="#">
-          <i class="fa-solid fa-angles-left fa-lg"></i>
+      <div class="previous fleft width-half t-align-left">
+        <a href="#" class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-angles-left fa-lg"></i>
+          </span>
         </a>
       </div>
-      <div class="next fleft">
-        <a href="#">
-          <i class="fa-solid fa-angles-right fa-lg"></i>
+      <div class="next fleft width-half t-align-right">
+        <a href="#" class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-angles-right fa-lg"></i>
+          </span>
         </a>
       </div>
     </div>
@@ -60,10 +64,10 @@
 {% block sidebar %}
   <div class="card mb-20">
     <div class="mt-24">
-      <span class="fake-avatar"></span>
+      <span class="fake-avatar width-40 height-40"></span>
       <a href="#" class="username">John Doe</a>
     </div>
-    <p class="small text-muted mt-14 mb-24">
+    <p class="small text-muted-dark mt-14 mb-24">
       I am a lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.
     </p>
   </div>

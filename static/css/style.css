@@ -43,43 +43,53 @@ h2, h3 {
   margin: 0;
 }
 
-p {
+p, textarea {
   line-height: 1.6;
-  font-size: 1rem;
 }
 
 a {
   color: var(--blue-s);
   text-decoration: none;
   transition: opacity 0.4s;
-}
+} 
 
-input {
+input, textarea, button {
   width: 100%;
   margin: 9px 0 20px 0;
-  border: 1px solid var(--gray-m);
   border-radius: 5px;
   padding: 15px 8px;
   font-size: inherit;
   font-family: inherit;
+} 
+
+input, textarea {
+  border: 1px solid var(--gray-m);
+  color: var(--gray-xl);
 }
 
-input:not([type="submit"]):focus {
+input:not([type="submit"]):focus, textarea:focus {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: 1px solid rgba(0, 123, 255, 0.5);
 }
 
-input[type="submit"] {
+input[type="submit"], button {
   border: none;
-  background-color: var(--blue-l);
-  color: var(--gray-s);
   font-weight: 500;
   opacity: 1;
   transition: opacity 0.4s;
+} 
+
+input[type="submit"] {
+  background-color: var(--blue-l); 
+  color: var(--gray-s); 
 }
 
-input[type="submit"]:active {
+input[type="submit"]:active, button:active {
   opacity: 0.7;
+}
+
+textarea {
+  resize: vertical;
 }
 
 form fieldset {
@@ -90,7 +100,7 @@ form fieldset {
 
 form legend {
   padding: 0;
-  text-align: center;
+  color: var(--blue-xxl);
   font-size: 1.5rem;
   font-weight: 500;
 }
@@ -109,7 +119,12 @@ form legend {
 }
 
 #title, #subtitle {
+  color: var(--blue-xxl);
   text-align: center;
+}
+
+#profileForm {
+  display: none;
 }
 
 /* General CSS Classes >>> */
@@ -129,10 +144,6 @@ form legend {
 .post-title {
   font-size: 2rem;
 }
-
-.post-subtitle {
-  color: var(--gray-xl);
-} 
 
 .container {
   width: 100%;
@@ -154,6 +165,34 @@ form legend {
 
 .hr {
   border: 1px solid var(--gray-xs);
+} 
+
+/* Predefined Width */
+.width-half {
+  width: 50%;
+} 
+.width-third {
+  width: calc(100% / 3);
+}
+.width-100 {
+  width: 100px;
+} 
+.width-40 {
+  width: 40px;
+} 
+.width-20 {
+  width: 20px;
+}
+
+/* Predefined Height */
+.height-100 {
+  height: 100px;
+} 
+.height-40 {
+  height: 40px;
+} 
+.height-20 {
+  height: 20px;
 }
 
 /* Predefined Margin */
@@ -162,6 +201,12 @@ form legend {
 }
 .mb-48 {
   margin-bottom: 48px;
+}  
+.mt-30 {
+  margin-top: 30px;
+}
+.mb-30 {
+  margin-bottom: 30px;
 } 
 .mt-40 {
   margin-top: 40px;
@@ -221,6 +266,35 @@ form legend {
   margin-bottom: 0;
 }
 
+/* Predefined Text Alignment */
+.t-align-left {
+  text-align: left;
+}
+.t-align-center {
+  text-align: center; 
+}
+.t-align-right {
+  text-align: right;
+}
+ 
+/* Predefined Text Mute Color */
+.text-muted-light {
+  color: var(--gray-l);
+} 
+.text-muted-dark {
+  color: var(--gray-xl);
+} 
+
+/* Predefined Button Color */
+.btn-info {
+  background-color: var(--blue-l);
+  color: var(--gray-s);
+}
+.btn-default {
+  background-color: var(--gray-s);
+  color: var(--black);
+}
+
 .fright {
   float: none;
 }
@@ -231,11 +305,8 @@ form legend {
 
 .small {
   font-size: 0.8rem;
-}
+} 
 
-.text-muted {
-  color: var(--gray-l);
-}
 
 .middot {
   padding: 0 4px;
@@ -244,8 +315,6 @@ form legend {
 /* Pending */
 .fake-avatar {
   display: inline-block;
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   background-color: var(--gray-m);
   line-height: 0;
@@ -260,37 +329,24 @@ form legend {
 
 .fake-avatar, .username {
   vertical-align: middle;
-} 
-
-.previous, .next {
-  width: 50%;
 }
 
-.previous {
-  text-align: left;
-}
-
-.next {
-  text-align: right;
-}
-
-.previous.fleft, .next.fleft {
-  float: left;
-}
-
-.previous a, .next a {
+.circle {
   display: inline-block;
-  border: 1px solid var(--gray-m); 
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--gray-m);
   border-radius: 50%;
-  padding: calc(15px + 1.5px / 2) 15px; /* Content Width = Content Height + 1.5 */
-  color: var(--gray-l);
 }
 
-.previous a:active, .next a:active {
-  outline: 3px solid rgba(0, 123, 255, 0.3);
-  border: 1px solid rgba(0, 123, 255, 0.5);
-  color: rgb(0, 123, 255);
-} 
+.abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%); 
+}
 
 .waterdrop {
   position: absolute;
@@ -387,6 +443,10 @@ form legend {
   font-weight: 500;
 } 
 
+.density {
+  visibility: visible;
+}
+
 .density .num-writers.fleft, .density .num-posts.fleft {
   float: left;    
 } 
@@ -397,13 +457,11 @@ form legend {
 
 .density .num-posts {
   animation-name: numPosts;
-  animation-delay: 4s;
+  animation-delay: 4s; /* animation-delay = animation-duration / 2 */
   opacity: 0;
 }
 
 .density .num-writers, .density .num-posts {
-  width: calc(100% / 3);
-  text-align: center;
   animation-duration: 8s;
   animation-iteration-count: infinite;
 }
@@ -453,7 +511,6 @@ form legend {
 
 .top-writers {
   color: var(--blue-xxl);
-  text-align: center;
 }
 
 .forgot-password {
@@ -472,18 +529,8 @@ form legend {
   float: left;
 }
 
-.date-level-author span , .date-level-author a {
+.date-level-author span, .date-level-author a {
   display: inline-block;
-  width: calc(100% / 3);
-  text-align: center;
-}
-
-.date-level-author span:first-child {
-  text-align: left;
-}
-
-.date-level-author a:last-child {
-  text-align: right;
 }
 
 .more-posts h2 {
@@ -492,9 +539,41 @@ form legend {
 
 .more-posts p {
   font-weight: 500;
+}
+
+.previous.fleft, .next.fleft {
+  float: left;
+}
+
+.previous .circle, .next .circle {
+  color: var(--gray-xl);
+  font-weight: 500;
+}  
+
+.previous .circle:active, .next .circle:active {
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+  border: none;
+  color: var(--blue-l); 
 } 
 
 /* In progress */ 
+
+.chart.fleft {
+  float: left;
+}
+
+.chart > span {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.chart .circle {
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+  border: none;
+  color: var(--blue-l);
+  font-weight: 500;
+}
 
 /* <<< Specific CSS Classes */
 
@@ -504,7 +583,7 @@ form legend {
     opacity: 0.7;
   } 
 
-  input[type="submit"]:hover {
+  input[type="submit"]:hover, button:hover {
     opacity: 0.7;
     cursor: pointer;
   } 
@@ -529,10 +608,10 @@ form legend {
     opacity: 0.7;
   } 
 
-  .previous a:hover, .next a:hover {
+  .previous .circle:hover, .next .circle:hover {
     outline: 3px solid rgba(0, 123, 255, 0.3);
-    border: 1px solid rgba(0, 123, 255, 0.5);
-    color: rgb(0, 123, 255);
+    border: none;
+    color: var(--blue-l);
   } 
 }
 
@@ -545,9 +624,11 @@ form legend {
 */
  
 @media screen and (min-width: 992px) {
+  /*
   p {
     font-size: 1.11rem;
   }
+  */
 
   #main {
     width: 70%;
