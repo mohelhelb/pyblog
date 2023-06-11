@@ -23,16 +23,21 @@ def login():
 def register():
     return render_template("register.html")
 
-@app.route("/post")
-def post():
+@app.route("/post/<int:post_id>")
+def post(post_id):
     return render_template("post.html")
 
+@app.route("/posts/<author>")
+def posts_written_by(author):
+    return render_template("postsByAuthor.html")
+
+
 @app.route("/resetPassword")
-def resetBeforeEmail():
+def reset_before_email():
     return render_template("resetBeforeEmail.html")
 
 @app.route("/resetPassword/token")
-def resetAfterEmail():
+def reset_after_email():
     return render_template("resetAfterEmail.html")
 
 

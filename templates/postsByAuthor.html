@@ -2,12 +2,38 @@
 
 {% block content %}
   <section class="card mb-20">
-    <h1 id="title">PyBlog</h1>                     
-    <h2 id="subtitle">A blog on Python and related technologies</h2>             
-    <article class="badge mt-48 mb-30">
+    <div class="mt-40 mb-16 t-align-center">
+      <span class="fake-avatar width-100 height-100"></span>
+    </div>
+    <p class="mt-0 mb-0">John Doe</p>
+    <hr class="hr mt-0">
+    <p class="mt-0 mb-24 l-height-6 text-muted-dark">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</p>
+    <div class="mb-24 clearfix">    
+      <div class="chart fleft width-third t-align-center">
+        <span>Posts</span>
+        <div class="circle">
+          <span class="abs-center">35</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Followers</span>
+        <div class="circle">
+          <span class="abs-center">5.2K</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Following</span>
+        <div class="circle">
+          <span class="abs-center">200</span>
+        </div>                                        
+      </div> 
+    </div>
+  </section>
+  <section class="card mb-20">
+    <h1 class="h1-2 t-align-center text-muted-dark mb-0">By<br>John Doe</h1>
+    <hr class="hr mt-0 mb-48">                  
+    <article class="badge mt-0 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -20,11 +46,9 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>                             
+    </article>                          
     <article class="badge mt-30 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -37,11 +61,9 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>  
+    </article>                        
     <article class="badge mt-30 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -54,11 +76,9 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>  
+    </article>                        
     <article class="badge mt-30 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -71,11 +91,9 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>  
+    </article>                        
     <article class="badge mt-30 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -88,11 +106,9 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>  
+    </article>                        
     <article class="badge mt-30 mb-30">
       <header>
-        <span class="fake-avatar width-40 height-40"></span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
         <h2>
           <a href="{{ url_for('post', post_id=1) }}" class="title mt-8 mb-8">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
         </h2>
@@ -105,7 +121,7 @@
         <span class="middot">&middot;</span>
         <span class="level">Intermediate</span>
       </footer>
-    </article>  
+    </article>   
     <hr class="hr">
     <footer class="mt-20 mb-20">
       <div class="clearfix">
@@ -124,7 +140,6 @@
           </a>
         </div>
       </div>
-    </footer>                   
+    </footer>                  
   </section>
 {% endblock content %}
-

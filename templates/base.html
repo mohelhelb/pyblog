@@ -53,10 +53,8 @@
   <div class="container clearfix">
     <!-- Main Content -->
     <main id="main" class="fleft">
-      <section class="card mb-20">
-        {% block content %}
-        {% endblock content %}
-      </section>
+      {% block content %}
+      {% endblock content %}
     </main>
     <!-- Aside Content -->
     <aside id="sidebar" class="fleft">
@@ -81,39 +79,39 @@
           </header>        
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-16">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div> 
           <div class="mb-24">
             <span class="fake-avatar width-40 height-40"></span>
-            <a href="#" class="username">John Doe</a>  
+            <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>  
           </div>
         </div>
       {% endblock sidebar %}

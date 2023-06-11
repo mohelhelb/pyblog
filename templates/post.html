@@ -1,88 +1,91 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <span class="waterdrop width-20 height-20"></span>
+  <section class="card mb-20">
+    <span class="waterdrop width-20 height-20"></span>
 
-  <!-- Post Header -->
-  <header>
-    <h1 class="post-title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</h1>
-    <div class="date-level-author clearfix">
-      <span class="fleft width-third text-muted-light t-align-left">Feb 30</span>
-      <span class="fleft width-third text-muted-light t-align-center">Intermediate</span>
-      <a href="#" class="fleft width-third t-align-right">John Doe</a>
-    </div>
-    <hr class="hr mt-0">        
-    <p class="text-muted-dark"> 
+    <!-- Post Header -->
+    <header>
+      <h1 class="post-title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</h1>
+      <div class="date-level-author clearfix">
+        <span class="fleft width-third text-muted-light t-align-left">Feb 30</span>
+        <span class="fleft width-third text-muted-light t-align-center">Intermediate</span>
+        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="fleft width-third t-align-right">John Doe</a>
+      </div>
+      <hr class="hr mt-0">        
+      <p class="l-height-6 text-muted-dark"> 
       lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
-    </p>
-  </header>
-  
-  <!-- Post Body -->
-  <p> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-  </p>   
-  <p> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-  </p>   
-  <p> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-  </p>   
-  <p> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-  </p> 
-  <hr class="hr">
+      </p>
+    </header>
 
-  <!-- Post Footer -->
-  <footer class="mt-20 mb-20">
-    <div class="clearfix">
-      <div class="previous fleft width-half t-align-left">
-        <a href="#" class="circle">
-          <span class="abs-center">
-            <i class="fa-solid fa-angles-left fa-lg"></i>
-          </span>
-        </a>
+    <!-- Post Body -->    
+    <p class="l-height-6"> 
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </p>  
+    <p class="l-height-6"> 
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </p>  
+    <p class="l-height-6"> 
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </p>  
+    <p class="l-height-6"> 
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </p>
+
+    <hr class="hr">
+
+    <!-- Post Footer -->
+    <footer class="mt-20 mb-20">
+      <div class="clearfix">
+        <div class="previous fleft width-half t-align-left">
+          <a href="#" class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-left fa-lg"></i>
+            </span>
+          </a>
+        </div>
+        <div class="next fleft width-half t-align-right">
+          <a href="#" class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-right fa-lg"></i>
+            </span>
+          </a>
+        </div>
       </div>
-      <div class="next fleft width-half t-align-right">
-        <a href="#" class="circle">
-          <span class="abs-center">
-            <i class="fa-solid fa-angles-right fa-lg"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-  </footer>
+    </footer>
+  </section>
 {% endblock content %}
 
 {% block sidebar %}
   <div class="card mb-20">
     <div class="mt-24">
       <span class="fake-avatar width-40 height-40"></span>
-      <a href="#" class="username">John Doe</a>
+      <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
     </div>
-    <p class="small text-muted-dark mt-14 mb-24">
+    <p class="small l-height-6 text-muted-dark mt-14 mb-24">
       I am a lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.
     </p>
   </div>
   <div class="more-posts card mb-20">
-    <p class="mt-24 mb-14">More posts by John Doe</p>    
+    <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by John Doe</p>    
     <h2>
-      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
     </h2>  
     <hr class="hr">  
     <h2>
-      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
     </h2>  
     <hr class="hr">  
     <h2 class="mb-24">
-      <a href="{{ url_for('post') }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
     </h2>
   </div>
 {% endblock sidebar %}

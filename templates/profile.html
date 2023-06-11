@@ -1,51 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="mt-40 mb-16 t-align-center">
-    <span class="fake-avatar width-100 height-100"></span>
-  </div>
-  <p class="mt-0 mb-0">John Doe</p>
-  <hr class="hr mt-0">
-  <p class="mt-0 mb-24 text-muted-dark">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</p>
-  <div class="clearfix">    
-    <div class="chart fleft width-third t-align-center">
-      <span>Posts</span>
-      <div class="circle">
-        <span class="abs-center">35</span>
-      </div>
-    </div>  
-    <div class="chart fleft width-third t-align-center">
-      <span>Followers</span>
-      <div class="circle">
-        <span class="abs-center">5.2K</span>
-      </div>
-    </div>  
-    <div class="chart fleft width-third t-align-center">
-      <span>Following</span>
-      <div class="circle">
-        <span class="abs-center">200</span>
-      </div>
-    </div> 
-  </div>
-  <button type="button" class="btn btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
-  <form action="" method="POST" id="profileForm" class="mt-30">
-    <fieldset form="profileForm">
-      <legend class="t-align-center">Profile</legend> 
-      <hr class="hr mt-0 mb-26">
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" name="first_name" value="John">
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" name="last_name" value="Doe">
-      <label for="emailAddress">Email</label>
-      <input type="email" id="emailAddress" name="email" value="johndoe@company.com">
-      <label for="aboutMe">About me</label>
-      <textarea id="aboutMe" name="about_me" rows="5">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</textarea> 
-      <input type="submit" value="Update" class="mb-16">
-      <button type="button" class="btn-default mt-0 mb-24" id="cancelProfileButton">Cancel</button>
-    </fieldset>
-  </form>
+  <section class="card mb-20">
+    <div class="mt-40 mb-16 t-align-center">
+      <span class="fake-avatar width-100 height-100"></span>
+    </div>
+    <p class="mt-0 mb-0">John Doe</p>
+    <hr class="hr mt-0">
+    <p class="mt-0 mb-24 text-muted-dark l-height-6">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</p>
+    <div class="mb-24 clearfix">    
+      <div class="chart fleft width-third t-align-center">
+        <span>Posts</span>
+        <div class="circle">
+          <span class="abs-center">35</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Followers</span>
+        <div class="circle">
+          <span class="abs-center">5.2K</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Following</span>
+        <div class="circle">
+          <span class="abs-center">200</span>
+        </div>
+      </div> 
+    </div>
+    <button type="button" class="btn btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
+  </section>
+  <section class="card mb-20" id="profileFormCard">
+    <form class="mt-40" action="" method="POST" id="profileForm">
+      <fieldset form="profileForm">
+        <legend class="t-align-center">Profile</legend> 
+        <hr class="hr mt-0 mb-26">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="first_name" value="John">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="last_name" value="Doe">
+        <label for="emailAddress">Email</label>
+        <input type="email" id="emailAddress" name="email" value="johndoe@company.com">
+        <label for="aboutMe">About me</label>
+        <textarea id="aboutMe" name="about_me" rows="5">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</textarea> 
+        <input type="submit" value="Update" class="mb-16">
+        <button type="button" class="btn-default mt-0 mb-24" id="cancelProfileButton">Cancel</button>
+      </fieldset>
+    </form>
+  </section>
 {% endblock content %}
 
 {% block js %}
-<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
 {% endblock js %}
