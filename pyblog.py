@@ -23,6 +23,10 @@ def login():
 def register():
     return render_template("register.html")
 
+@app.route("/create/post")
+def create_post():
+    return render_template("create_post.html")
+
 @app.route("/post/<int:post_id>")
 def post(post_id):
     return render_template("post.html")

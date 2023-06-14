@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card mb-20">
+    <form action="" method="POST" class="mt-40" id="createPostForm">
+      <fieldset>
+        <legend class="t-align-center">Create Post</legend>
+        <hr class="hr mt-0 mb-26">
+        <label for="postTitle">Title</label>
+        <input type="text" id="postTitle" name="post_title" placeholder="Enter Post Tittle" required>
+        <label for="postContent">Content</label>
+        <textarea id="postContent" name="post_content" placeholder="Enter Post Content" rows="4" required></textarea>
+        <p class="mt-0">Difficulty Level</p>
+        <label for="beginnerLevel">  
+          <input type="radio" id="beginnerLevel" name="level" value="beginner" checked="checked">  
+          <span class="checkmark"></span> 
+          <span>Beginner</span>
+        </label>
+        <label for="intermediateLevel"> 
+          <input type="radio" id="intermediateLevel" name="level" value="intermediate">  
+          <span class="checkmark"></span> 
+          <span>Intermediate</span>
+        </label>
+        <label for="advancedLevel"> 
+          <input type="radio" id="advancedLevel" name="level" value="advanced"> 
+          <span class="checkmark"></span>  
+          <span>Advanced</span>
+        </label>
+        <input type="submit" value="Create Post" class="mb-24">
+      </fieldset>
+    </form>
+  </section>   
+{% endblock content %}
+
+{% block js %}
+  <script src="{{ url_for('static', filename='js/create_post.js') }}"></script>
+{% endblock js %} 

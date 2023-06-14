@@ -1,5 +1,4 @@
 :root {
-  font-size: 18px;
   /* Colors by name */
   --white: #fff;
   --black: #292929;
@@ -22,11 +21,12 @@ body {
   /* Position the footer element at the bottom */
   position: relative;
   min-height: 100vh;
-  padding-bottom: 53px; /* Equal to height(footer) */
+  padding-bottom: 53px; /* padding-bottom(body) = height(footer) */
 
   margin: 0;
   background-color: var(--gray-xs);
   color: var(--black);
+  font-size: 18px;
   font-family: -apple-sytem, BlinkMacSystemFont, Ubuntu, Verdana, sans-serif;
 }
 
@@ -543,6 +543,13 @@ form legend {
   display: inline-block;
 }
 
+.more-posts .see-all {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  font-size: 16px;
+}
+
 .more-posts h2 {
   font-size: 1rem;
 }
@@ -562,8 +569,6 @@ form legend {
   color: var(--blue-l); 
 } 
 
-/* In progress */ 
-
 .chart.fleft {
   float: left;
 }
@@ -579,6 +584,57 @@ form legend {
   border: none;
   color: var(--blue-l);
   font-weight: 500;
+}
+
+/* In progress */
+
+#createPostForm label[for="beginnerLevel"], #createPostForm label[for="intermediateLevel"], #createPostForm label[for="advancedLevel"]{
+  display: block; 
+  margin-bottom: 20px; 
+  line-height: 0;
+  user-select: none;
+  cursor: pointer;
+}  
+
+#createPostForm input[type="radio"] {
+  display: none;
+} 
+
+#createPostForm .checkmark {
+  display: inline-block;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  border: 1px solid var(--gray-m);
+  border-radius: 5px;
+  vertical-align: middle;
+} 
+
+#createPostForm .checkmark:after {
+  content: "";
+  display: none;
+  position: absolute;
+}  
+
+#createPostForm input[type="radio"]:checked ~ .checkmark {
+  border: 3px solid rgba(0, 123, 255, 0.3);
+}  
+
+#createPostForm input[type="radio"]:checked ~ .checkmark:after {
+  display: inline-block;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 20%;
+  height: 50%;
+  border: 3px solid rgba(0, 123, 255, 0.5);
+  border-top-width: 0;
+  border-left-width: 0;
+}
+
+#createPostForm .checkmark ~ span {
+  vertical-align: middle;
 }
 
 /* <<< Specific CSS Classes */

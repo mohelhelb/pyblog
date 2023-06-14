@@ -75,6 +75,7 @@
     </p>
   </div>
   <div class="more-posts card mb-20">
+    <a class="see-all" href="{{ url_for('posts_written_by', author='johndoe') }}">See all <i class="fa-solid fa-arrow-right"></i></a>
     <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by John Doe</p>    
     <h2>
       <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
@@ -84,8 +85,8 @@
       <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
     </h2>  
     <hr class="hr">  
-    <h2 class="mb-24">
-      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+    <h2 class="mb-48">
+      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam litium moritis</a>
     </h2>
   </div>
 {% endblock sidebar %}
