@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card mb-20">
+    <div class="mt-40 mb-16 t-align-center">
+      <span class="fake-avatar width-100 height-100"></span>
+    </div>
+    <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
+    <hr class="hr mt-0">
+    <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user["about_me"] }}</p>
+    <div class="mb-24 clearfix">    
+      <div class="chart fleft width-third t-align-center">
+        <span>Posts</span>
+        <div class="circle">
+          <span class="abs-center">{{ user["num_posts"] }}</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Followers</span>
+        <div class="circle">
+          <span class="abs-center">{{ user["num_followers"] }}</span>
+        </div>
+      </div>  
+      <div class="chart fleft width-third t-align-center">
+        <span>Following</span>
+        <div class="circle">
+          <span class="abs-center">{{ user["num_following"] }}</span>
+        </div>                                        
+      </div> 
+    </div>
+  </section>
+  <section class="card mb-20">
+    <h1 class="h1-2 t-align-center text-muted-dark mb-0">By<br>{{ user["full_name"] }}</h1>
+    <hr class="hr mt-0 mb-48">                  
+    {% for post in posts_by_author %} 
+      <article class="badge mt-30 mb-30">
+        <header>
+          <h2>
+            <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+          </h2>
+        </header>
+        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+        <footer class="small text-muted-light">
+          <span>{{ post.date }}</span>
+          <span class="middot">&middot;</span>
+          <span>5 min read</span>
+          <span class="middot">&middot;</span>
+          <span class="level">{{ post.level }}</span>
+        </footer>
+      </article>  
+    {% endfor %}
+{% endblock content %}

@@ -5,26 +5,26 @@
     <div class="mt-40 mb-16 t-align-center">
       <span class="fake-avatar width-100 height-100"></span>
     </div>
-    <p class="mt-0 mb-0">John Doe</p>
+    <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
     <hr class="hr mt-0">
-    <p class="mt-0 mb-24 text-muted-dark l-height-6">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</p>
+    <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ user["about_me"] }}</p>
     <div class="mb-24 clearfix">    
       <div class="chart fleft width-third t-align-center">
         <span>Posts</span>
         <div class="circle">
-          <span class="abs-center">35</span>
+          <span class="abs-center">{{ user["num_posts"] }}</span>
         </div>
       </div>  
       <div class="chart fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
-          <span class="abs-center">5.2K</span>
+          <span class="abs-center">{{ user["num_followers"] }}</span>
         </div>
       </div>  
       <div class="chart fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
-          <span class="abs-center">200</span>
+          <span class="abs-center">{{ user["num_following"] }}</span>
         </div>
       </div> 
     </div>
@@ -36,13 +36,13 @@
         <legend class="t-align-center">Profile</legend> 
         <hr class="hr mt-0 mb-26">
         <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="first_name" value="John">
+        <input type="text" id="firstName" name="first_name" value="{{ user["first_name"] }}">
         <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="last_name" value="Doe">
+        <input type="text" id="lastName" name="last_name" value="{{ user["last_name"] }}">
         <label for="emailAddress">Email</label>
-        <input type="email" id="emailAddress" name="email" value="johndoe@company.com">
+        <input type="email" id="emailAddress" name="email" value="{{ user["email"] }}">
         <label for="aboutMe">About me</label>
-        <textarea id="aboutMe" name="about_me" rows="5">I am lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.</textarea> 
+        <textarea id="aboutMe" name="about_me" rows="3">{{ user["about_me"] }}</textarea> 
         <input type="submit" value="Update" class="mb-16">
         <button type="button" class="btn-default mt-0 mb-24" id="cancelProfileButton">Cancel</button>
       </fieldset>

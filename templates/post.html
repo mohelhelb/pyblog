@@ -6,39 +6,20 @@
 
     <!-- Post Header -->
     <header>
-      <h1 class="post-title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</h1>
+      <h1 class="post-title">{{ post.title }}</h1>
       <div class="date-level-author clearfix">
-        <span class="fleft width-third text-muted-light t-align-left">Feb 30</span>
-        <span class="fleft width-third text-muted-light t-align-center">Intermediate</span>
-        <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="fleft width-third t-align-right">John Doe</a>
+        <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
+        <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
+        <a href="{{ url_for('posts_written_by', author=post.author) }}" class="fleft width-third t-align-right">{{ post.author }}</a>
       </div>
       <hr class="hr mt-0">        
-      <p class="l-height-6 text-muted-dark"> 
-      lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
-      </p>
+      <p class="l-height-6 text-muted-dark">{{ post.subheading }}</p>
     </header>
 
-    <!-- Post Body -->    
-    <p class="l-height-6"> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    </p>  
-    <p class="l-height-6"> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    </p>  
-    <p class="l-height-6"> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    </p>  
-    <p class="l-height-6"> 
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    </p>
+    <!-- Post Body -->     
+    <p class="l-height-6">{{ post.content }}</p>     
+    <p class="l-height-6">{{ post.content }}</p>    
+    <p class="l-height-6">{{ post.content }}</p>
 
     <hr class="hr">
 
@@ -68,25 +49,25 @@
   <div class="card mb-20">
     <div class="mt-24">
       <span class="fake-avatar width-40 height-40"></span>
-      <a href="{{ url_for('posts_written_by', author='johndoe') }}" class="username">John Doe</a>
+      <a href="{{ url_for('posts_written_by', author=post.author) }}" class="username">{{ post.author }}</a>
     </div>
     <p class="small l-height-6 text-muted-dark mt-14 mb-24">
       I am a lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.
     </p>
   </div>
   <div class="more-posts card mb-20">
-    <a class="see-all" href="{{ url_for('posts_written_by', author='johndoe') }}">See all <i class="fa-solid fa-arrow-right"></i></a>
-    <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by John Doe</p>    
+    <a class="see-all" href="{{ url_for('posts_written_by', author=post.author) }}">See all <i class="fa-solid fa-arrow-right"></i></a>
+    <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by {{ post.author }}</p>    
     <h2>
-      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+      <a href="{{ url_for('post', post_id=post.post_id) }}">{{ post.title }}</a>
     </h2>  
     <hr class="hr">  
     <h2>
-      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a>
+      <a href="{{ url_for('post', post_id=post.post_id) }}">{{ post.title }}</a> 
     </h2>  
     <hr class="hr">  
     <h2 class="mb-48">
-      <a href="{{ url_for('post', post_id=1) }}">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam litium moritis</a>
+      <a href="{{ url_for('post', post_id=post.post_id) }}">{{ post.title }}</a> 
     </h2>
   </div>
 {% endblock sidebar %}
