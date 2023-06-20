@@ -18,13 +18,21 @@
           <span class="checkmark"></span> 
           <span>Beginner</span>
         </label>
-        <label for="intermediateLevel"> 
-          <input type="radio" id="intermediateLevel" name="level" value="intermediate">  
+        <label for="intermediateLevel">  
+          {% if post.level == "Intermediate" %} 
+            <input type="radio" id="intermediateLevel" name="level" value="intermediate" checked="checked"> 
+          {% else %}
+            <input type="radio" id="intermediateLevel" name="level" value="intermediate"> 
+          {% endif %} 
           <span class="checkmark"></span> 
           <span>Intermediate</span>
         </label>
         <label for="advancedLevel"> 
-          <input type="radio" id="advancedLevel" name="level" value="advanced"> 
+          {% if post.level == "Advanced" %} 
+            <input type="radio" id="advancedLevel" name="level" value="advanced" checked="checked"> 
+          {% else %}
+            <input type="radio" id="advancedLevel" name="level" value="advanced">
+          {% endif %}
           <span class="checkmark"></span>  
           <span>Advanced</span>
         </label>

@@ -30,7 +30,7 @@ def create_post():
     return render_template("create_post.html", action="Create", post=None)
 
 
-@app.route("/edit/post/<int:post_id>")
+@app.route("/edit/post/<int:post_id>", methods=["GET", "POST"])
 def edit_post(post_id):
     post = posts[post_id]
     return render_template("create_post.html", action="Edit", post=post)

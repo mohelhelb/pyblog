@@ -440,6 +440,10 @@ form legend {
   padding-right: 0;
 }
 
+article.badge {
+  display: none;
+}
+
 .badge .title {
   display: block;
   font-size: 1.5rem;
@@ -554,16 +558,25 @@ form legend {
   font-size: 1rem;
 }
 
+.load-more {
+  text-align: center;
+}
+
 .previous.fleft, .next.fleft {
   float: left;
 }
 
-.previous .circle, .next .circle {
+.previous .circle, .next .circle, .load-more .circle {
   color: var(--gray-xl);
   font-weight: 500;
 }  
 
-.previous .circle:active, .next .circle:active {
+.load-more .circle {
+  display: none;
+  background-color: var(--white);
+}
+
+.previous .circle:active, .next .circle:active, .load-more .circle:active {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l); 
@@ -585,8 +598,6 @@ form legend {
   color: var(--blue-l);
   font-weight: 500;
 }
-
-/* In progress */
 
 #createPostForm label[for="beginnerLevel"], #createPostForm label[for="intermediateLevel"], #createPostForm label[for="advancedLevel"]{
   display: block; 
@@ -635,7 +646,9 @@ form legend {
 
 #createPostForm .checkmark ~ span {
   vertical-align: middle;
-}
+} 
+
+/* In progress */
 
 /* <<< Specific CSS Classes */
 
@@ -670,7 +683,7 @@ form legend {
     opacity: 0.7;
   } 
 
-  .previous .circle:hover, .next .circle:hover {
+  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover {
     outline: 3px solid rgba(0, 123, 255, 0.3);
     border: none;
     color: var(--blue-l);
