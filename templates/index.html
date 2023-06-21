@@ -3,7 +3,39 @@
 {% block content %}
   <section class="card mb-20">
     <h1 id="title">PyBlog</h1>                     
-    <h2 class="mb-48" id="subtitle">A blog on Python and related technologies</h2>
+    <h2 class="mb-48" id="subtitle">A blog on Python and related technologies</h2> 
+    <h3 class="mb-0">
+      <i class="fa-solid fa-arrow-trend-up"></i>
+      <span class="trending ml-3">Trending Posts</span>
+    </h3>
+    <hr class="hr mt-0">
+    {% for post in trending_posts %}
+      <article class="badge mt-30 mb-30">
+        <header>
+          <span class="fake-avatar width-40 height-40"></span>
+          <a href="{{ url_for('posts_written_by', author=post.author) }}" class="username">{{ post.author }}</a>
+          <h2>
+            <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+          </h2>
+        </header>
+        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+        <footer class="small text-muted-light">
+          <span>{{ post.date }}</span>
+          <span class="middot">&middot;</span>
+          <span>5 min read</span>
+          <span class="middot">&middot;</span>
+          <span class="level">{{ post.level }}</span>
+        </footer>
+      </article> 
+    {% endfor %}   
+    <h3 class="mb-0">
+      <i class="fa-solid fa-arrow-up"></i>
+      <span class="trending">Latest Releases</span>
+      <!-- Pending
+      <i class="fa-solid fa-ellipsis-vertical" style="float: right; color: var(--gray-xl);"></i>
+      -->
+    </h3>   
+    <hr class="hr mt-0">
     {% for post in posts %}
       <article class="badge mt-30 mb-30">
         <header>

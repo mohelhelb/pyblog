@@ -337,6 +337,7 @@ form legend {
   transition: color 0.4s;
 }
 
+/* Pending */
 .fake-avatar, .username {
   vertical-align: middle;
 }
@@ -389,7 +390,7 @@ form legend {
   font-size: 1rem;
   font-weight: 500;
   opacity: 1;
-  transition: background-color 0.4s, color 0.4s;
+  transition: background-color 0.4s, color 0.4s, opacity 0.4s;
 }
 
 .topnav .topnav-logo, .topnav .topnav-toggle {
@@ -523,7 +524,7 @@ article.badge {
   margin: 8px 0;
 }
 
-.top-writers {
+.trending {
   color: var(--blue-xxl);
 }
 
@@ -667,17 +668,19 @@ article.badge {
     color: var(--blue-s);
   } 
 
+  /*
   .topnav a:hover {
     background-color: var(--gray-s);
     color: var(--blue-xxl);
     opacity: 1;
-  }    
+  }
 
   .topnav .topnav-logo:hover, .topnav .topnav-toggle:hover {
     background-color: inherit;
     color: var(--gray-s);
     opacity: 0.7;
-  }  
+  }
+  */  
 
   .footer a:hover {
     opacity: 0.7;
@@ -761,11 +764,10 @@ article.badge {
   }
 
   .topnav .signup {
-    margin: 9px 0;
+    margin: 9px 0 9px 14px;
     border: 1px solid var(--gray-s);
     border-radius: 5px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 16px;
   }
 }
 
