@@ -31,6 +31,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  color: var(--blue-xxl);
   font-weight: 500;
 }
 
@@ -114,11 +115,6 @@ form legend {
   width: 100%;
 }
 
-#title, #subtitle {
-  color: var(--blue-xxl);
-  text-align: center;
-}
-
 #profileFormCard {
   display: none;
 }
@@ -176,6 +172,9 @@ form legend {
 }
 .width-100 {
   width: 100px;
+}  
+.width-60 {
+  width: 60px;
 } 
 .width-40 {
   width: 40px;
@@ -187,6 +186,9 @@ form legend {
 /* Predefined Height */
 .height-100 {
   height: 100px;
+}  
+.height-60 {
+  height: 60px;
 } 
 .height-40 {
   height: 40px;
@@ -349,6 +351,8 @@ form legend {
   height: 60px;
   border: 1px solid var(--gray-m);
   border-radius: 50%;
+  color: var(--gray-xl);
+  font-weight: 500;
 }
 
 .abs-center {
@@ -557,47 +561,61 @@ article.badge {
 
 .more-posts h2 {
   font-size: 1rem;
-}
+}   
 
-.load-more {
-  text-align: center;
-}
+/* In progress */
 
-.previous.fleft, .next.fleft {
+.div-3 .fleft {
   float: left;
 }
 
-.previous .circle, .next .circle, .load-more .circle {
-  color: var(--gray-xl);
-  font-weight: 500;
-}  
-
-.load-more .circle {
-  display: none;
-  background-color: var(--white);
-}
-
-.previous .circle:active, .next .circle:active, .load-more .circle:active {
-  outline: 3px solid rgba(0, 123, 255, 0.3);
-  border: none;
-  color: var(--blue-l); 
-} 
-
-.chart.fleft {
-  float: left;
-}
-
-.chart > span {
+.div-3 div > span {
   display: inline-block;
   width: 100%;
   margin-bottom: 12px;
-}
+} 
 
 .chart .circle {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l);
-  font-weight: 500;
+} 
+
+.previous.fleft, .next.fleft {
+  float: left;
+} 
+
+.load-more .circle {
+  display: none;
+}
+
+.sort-toggle {
+  position: relative;
+}
+
+.sort-toggle .hr {
+  width: calc(100% - 50px); /* 50 = width(.sort .circle) + 10 */
+  margin: unset;
+}
+
+.sort-toggle .circle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  padding: 5px 0;
+}
+
+.sort-toggle ~ .sort {
+  display: none;
+}
+
+.previous .circle:active, .next .circle:active, .load-more .circle:active, .sort-toggle .circle:active {
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+  border: none;
+  color: var(--blue-l); 
 }
 
 #createPostForm label[for="beginnerLevel"], #createPostForm label[for="intermediateLevel"], #createPostForm label[for="advancedLevel"]{
@@ -647,9 +665,7 @@ article.badge {
 
 #createPostForm .checkmark ~ span {
   vertical-align: middle;
-} 
-
-/* In progress */
+}
 
 /* <<< Specific CSS Classes */
 
@@ -686,10 +702,11 @@ article.badge {
     opacity: 0.7;
   } 
 
-  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover {
+  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover, .sort-toggle .circle:hover, .sort .circle:hover {
     outline: 3px solid rgba(0, 123, 255, 0.3);
     border: none;
     color: var(--blue-l);
+    cursor: pointer;
   } 
 }
 

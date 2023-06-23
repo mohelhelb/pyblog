@@ -11,7 +11,7 @@ function displayArticlesFromTo(articles, start, end) {
 
 // Load more articles on mouse-clicking
 export function loadMoreArticles(articles, perPageNumArticles) {
-  let loadMoreButton = document.querySelector(".load-more button");
+  let loadMoreButton = document.querySelector(".load-more .circle");
   let totalNumArticles = articles.length;
   let division = totalNumArticles / perPageNumArticles;
   let floorDivision = Math.floor(totalNumArticles / perPageNumArticles);
@@ -53,4 +53,3 @@ export function loadMoreArticles(articles, perPageNumArticles) {
     displayArticlesFromTo(articles, start, end);
   });
 }
-

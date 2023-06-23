@@ -2,11 +2,11 @@
 
 {% block content %}
   <section class="card mb-20">
-    <h1 id="title">PyBlog</h1>                     
-    <h2 class="mb-48" id="subtitle">A blog on Python and related technologies</h2> 
+    <h1 class="t-align-center">PyBlog</h1>                     
+    <h2 class="t-align-center mb-48">A blog on Python and related technologies</h2> 
     <h3 class="mb-0">
       <i class="fa-solid fa-arrow-trend-up"></i>
-      <span class="trending ml-3">Trending Posts</span>
+      <span class="ml-3">Trending Posts</span>
     </h3>
     <hr class="hr mt-0">
     {% for post in trending_posts %}
@@ -30,12 +30,42 @@
     {% endfor %}   
     <h3 class="mb-0">
       <i class="fa-solid fa-arrow-up"></i>
-      <span class="trending">Latest Releases</span>
-      <!-- Pending
-      <i class="fa-solid fa-ellipsis-vertical" style="float: right; color: var(--gray-xl);"></i>
-      -->
+      <span class="ml-3">Newest Releases</span>
     </h3>   
-    <hr class="hr mt-0">
+    <div class="sort-toggle">
+      <hr class="hr mt-0 mb-3"> 
+      <span class="circle">
+        <span class="abs-center">
+          <i class="fa-solid fa-angles-down"></i>
+        </span>
+      </span> 
+    </div>
+    <div class="div-3 sort mt-30 clearfix">    
+      <div class="fleft width-third t-align-center">
+        <span>Trending</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </span>
+        </div>
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Newest</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-up"></i>
+          </span>
+        </div>  
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Oldest</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-down"></i>
+          </span>
+        </div>
+      </div>
+    </div>  
     {% for post in posts %}
       <article class="badge mt-30 mb-30">
         <header>
@@ -55,10 +85,12 @@
         </footer>
       </article> 
     {% endfor %}
-    <div class="load-more">
-      <button class="circle" type="button">
+    <div class="load-more t-align-center mb-20">
+      <span class="circle">
+        <span class="abs-center">
           <i class="fa-solid fa-angles-down fa-lg"></i>
-      </button>
+        </span>
+      </span>
     </div>
 {% endblock content %}
 

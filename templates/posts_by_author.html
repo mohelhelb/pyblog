@@ -8,20 +8,20 @@
     <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
     <hr class="hr mt-0">
     <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user["about_me"] }}</p>
-    <div class="mb-24 clearfix">    
-      <div class="chart fleft width-third t-align-center">
+    <div class="div-3 chart mb-24 clearfix">    
+      <div class="fleft width-third t-align-center">
         <span>Posts</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_posts"] }}</span>
         </div>
       </div>  
-      <div class="chart fleft width-third t-align-center">
+      <div class="fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_followers"] }}</span>
         </div>
       </div>  
-      <div class="chart fleft width-third t-align-center">
+      <div class="fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_following"] }}</span>
@@ -30,8 +30,41 @@
     </div>
   </section>
   <section class="card mb-20">
-    <h1 class="h1-2 t-align-center text-muted-dark mb-0">By<br>{{ user["full_name"] }}</h1>
-    <hr class="hr mt-0 mb-48">                  
+    <h1 class="h1-2 text-muted-dark mb-0">{{ user["full_name"] }}</h1>   
+    <div class="sort-toggle">
+      <hr class="hr mt-0 mb-3"> 
+      <span class="circle">
+        <span class="abs-center">
+          <i class="fa-solid fa-angles-down"></i>
+        </span>
+      </span> 
+    </div>
+    <div class="div-3 sort mt-30 clearfix">    
+      <div class="fleft width-third t-align-center">
+        <span>Trending</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </span>
+        </div>
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Newest</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-up"></i>
+          </span>
+        </div>  
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Oldest</span>
+        <div class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-arrow-down"></i>
+          </span>
+        </div>
+      </div>
+    </div>                  
     {% for post in posts_by_author %} 
       <article class="badge mt-30 mb-30">
         <header>

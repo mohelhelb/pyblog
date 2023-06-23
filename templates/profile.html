@@ -8,26 +8,26 @@
     <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
     <hr class="hr mt-0">
     <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ user["about_me"] }}</p>
-    <div class="mb-24 clearfix">    
-      <div class="chart fleft width-third t-align-center">
+    <div class="div-3 chart mb-24 clearfix">    
+      <div class="fleft width-third t-align-center">
         <span>Posts</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_posts"] }}</span>
         </div>
       </div>  
-      <div class="chart fleft width-third t-align-center">
+      <div class="fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_followers"] }}</span>
         </div>
       </div>  
-      <div class="chart fleft width-third t-align-center">
+      <div class="fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
           <span class="abs-center">{{ user["num_following"] }}</span>
-        </div>
+        </div>                                        
       </div> 
-    </div>
+    </div>    
     <button type="button" class="btn btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
   </section>
   <section class="card mb-20" id="profileFormCard">
