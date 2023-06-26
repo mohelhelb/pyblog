@@ -33,8 +33,35 @@
   <section class="card mb-20" id="profileFormCard">
     <form class="mt-40" action="" method="POST" id="profileForm">
       <fieldset form="profileForm">
-        <legend class="t-align-center">Profile</legend> 
-        <hr class="hr mt-0 mb-26">
+        <legend>Profile</legend>    
+        <div class="sort-toggle mb-30">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down"></i>
+            </span>
+          </span> 
+        </div>
+        <div class="div-3 account mb-30 clearfix">
+          <div class="fleft width-third t-align-center">
+            <span>Password</span>
+            <div class="circle"> 
+              <span class="abs-center">Change</span>                  
+            </div>
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Image</span>
+            <label class="circle fake-avatar"> 
+              <input type="file" id="image">
+            </label>      
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Account</span>
+            <div class="circle delete"> 
+              <span class="abs-center">Delete</span>
+            </div>
+          </div>
+        </div>
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" name="first_name" value="{{ user["first_name"] }}">
         <label for="lastName">Last Name</label>
@@ -42,11 +69,47 @@
         <label for="emailAddress">Email</label>
         <input type="email" id="emailAddress" name="email" value="{{ user["email"] }}">
         <label for="aboutMe">About me</label>
-        <textarea id="aboutMe" name="about_me" rows="3">{{ user["about_me"] }}</textarea> 
+        <textarea id="aboutMe" name="about_me" rows="3">{{ user["about_me"] }}</textarea>
         <input type="submit" value="Update" class="mb-16">
         <button type="button" class="btn-default mt-0 mb-24" id="cancelProfileButton">Cancel</button>
       </fieldset>
-    </form>
+    </form>   
+    <!-- Password Change Modal -->
+    <div class="modal" id="changePasswordModal">
+      <div class="card modal-content">
+        <form class="mt-40" method="Post" action="">
+          <fieldset>
+            <legend>Change Password</legend>
+            <hr class="hr mt-0 mb-30">
+            <label for="currentPassword">Current Password</label>
+            <div class="forgot-password">
+              <input type="password" id="currentPassword" name="current_password" placeholder="Enter Current Password" required>
+              <a href="{{ url_for('reset_before_email') }}">Forgot?</a>
+            </div> 
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" name="new_password" placeholder="Enter New Password" required> 
+            <label for="repeatNewPassword">Repeat New Password</label>  
+            <input type="password" id="repeatNewPassword" name="repeat_new_password" placeholder="Repeat New Password" required>  
+            <input type="submit" value="Confirm" class="mb-16">
+            <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  
+          </fieldset>
+        </form>
+      </div>
+    </div>     
+    <!-- Delete Account Modal -->
+    <div class="modal" id="deleteAccountModal">
+      <div class="card modal-content">
+        <form class="mt-40" method="Post" action="">
+          <fieldset>
+            <legend>Delete Account</legend>
+            <hr class="hr mt-0 mb-30">
+            <p>Are you sure you want to delete your account?</p>
+            <input type="submit" value="Confirm" class="mb-16">
+            <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  
+          </fieldset>
+        </form>
+      </div>
+    </div>  
   </section>
 {% endblock content %}
 

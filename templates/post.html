@@ -6,14 +6,46 @@
 
     <!-- Post Header -->
     <header>
-      <h1 class="post-title">{{ post.title }}</h1>
-      <div class="date-level-author clearfix">
-        <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
-        <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
-        <a href="{{ url_for('posts_written_by', author=post.author) }}" class="fleft width-third t-align-right">{{ post.author }}</a>
-      </div>
-      <hr class="hr mt-0">        
-      <p class="l-height-6 text-muted-dark">{{ post.subheading }}</p>
+      <h1 class="post-title">{{ post.title }}</h1>    
+      {% if True %}       
+        <div class="date-level-author clearfix">
+          <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
+          <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
+        </div> 
+        <div class="sort-toggle">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down"></i>
+            </span>
+          </span> 
+        </div> 
+        <div class="div-3 edit-hide-delete mt-30 clearfix"> 
+          <div class="fleft width-third t-align-center">
+            <a href="{{url_for('edit_post', post_id=post.post_id)}}" class="circle">
+              <span class="abs-center">Edit</span>
+            </a> 
+          </div> 
+          <div class="fleft width-third t-align-center">
+            <div class="circle"> 
+              <span class="abs-center">Hide</span>
+            </div>  
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <div class="circle delete"> 
+              <span class="abs-center">Delete</span>
+            </div>
+          </div>
+        </div>
+      {% else %}      
+        <div class="date-level-author clearfix">
+          <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
+          <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
+          <a href="{{ url_for('posts_written_by', author=post.author) }}" class="fleft width-third t-align-right">{{ post.author }}</a>
+        </div>
+        <hr class="hr mt-0 mb-0">
+      {% endif %}      
+      <p class="l-height-6 text-muted-dark mt-24">{{ post.subheading }}</p>
     </header>
 
     <!-- Post Body -->     

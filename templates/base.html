@@ -38,15 +38,21 @@
         </div>               
         <a href="{{ url_for('index') }}">Home</a>  
         <a href="{{ url_for('about') }}">About</a>
-        {% if True %}
+        {% if False %}
           <div class="fright">
             <a href="{{ url_for('login') }}">
+              <!--
               <i class="fa-solid fa-arrow-right-to-bracket"></i>
               <span class="ml-3">Sign in</span>
+              -->
+              Sign in
             </a>  
             <a href="{{ url_for('register') }}" class="signup">
+              <!--
               <i class="fa-solid fa-user-plus fa-sm"></i>
               <span class="ml-3">Sign up</span>
+              -->
+              Sign up
             </a>    
           </div>
         {% else %} 

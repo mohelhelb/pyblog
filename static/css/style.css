@@ -11,6 +11,7 @@
   /* --blue-m: #1a73e8; */
   --blue-l: #007bff;
   --blue-xxl: #18354c;
+  --red-m: #f66;
 }
 
 * {
@@ -84,6 +85,19 @@ input[type="submit"] {
 input[type="submit"]:active, button:active {
   opacity: 0.7;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+label[for="image"] {
+  border: none;
+  cursor: pointer;
+}  
+
+label[for="image"]:hover {
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+} 
 
 textarea {
   resize: vertical;
@@ -166,9 +180,15 @@ form legend {
 /* Predefined Width */
 .width-half {
   width: 50%;
-} 
+}
+.width-40pc {
+  width: 40%;
+}
 .width-third {
   width: calc(100% / 3);
+}
+.width-20pc {
+  width: 20%;
 }
 .width-100 {
   width: 100px;
@@ -355,6 +375,12 @@ form legend {
   font-weight: 500;
 }
 
+.circle:active { 
+  outline: 3px solid rgba(0, 123, 255, 0.3);
+  border: none;
+  color: var(--blue-l);
+} 
+
 .abs-center {
   position: absolute;
   top: 50%;
@@ -373,6 +399,42 @@ form legend {
   border-radius: 50%;
   background-color: var(--gray-xs);
 } 
+
+/* In progress */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal .modal-content {
+  position: relative;
+  top: 15vh;
+  width: 95%;
+  max-width: 550px;
+  margin: auto;
+  border: 1px solid var(--gray-m);
+  border-radius: 5px;
+  animation-name: modal;
+  animation-duration: 0.4s;
+}
+
+@keyframes modal {
+  0% {
+    top: -10vh;
+    opacity: 0;
+  }
+  100% {
+    top: 15vh;
+    opacity: 1;
+  }
+}
 
 /* <<< General CSS Classes */
 
@@ -561,9 +623,7 @@ article.badge {
 
 .more-posts h2 {
   font-size: 1rem;
-}   
-
-/* In progress */
+} 
 
 .div-3 .fleft {
   float: left;
@@ -575,18 +635,43 @@ article.badge {
   margin-bottom: 12px;
 } 
 
-.chart .circle {
+.div-2 .fleft {
+  float: left;
+}
+
+/*
+.div-2 div > span {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+} 
+*/
+/*
+.div-3.chart .circle {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l);
+}
+*/
+
+.account .circle, .edit-hide-delete .circle {
+  width: 85px;
+  height: 85px;
+}  
+
+.edit-hide-delete .circle a {
+  color: inherit;
+}
+
+.account div:last-child .circle:active {  
+  outline: 3px solid rgba(255, 51, 51, 0.3);
+  border: none;
+  color: var(--red-m);
+  cursor: pointer; 
 } 
 
 .previous.fleft, .next.fleft {
   float: left;
-} 
-
-.load-more .circle {
-  display: none;
 }
 
 .sort-toggle {
@@ -594,7 +679,7 @@ article.badge {
 }
 
 .sort-toggle .hr {
-  width: calc(100% - 50px); /* 50 = width(.sort .circle) + 10 */
+  width: calc(100% - 50px); /* 50 = width(.sort-toggle .circle) + 10 */
   margin: unset;
 }
 
@@ -608,15 +693,21 @@ article.badge {
   padding: 5px 0;
 }
 
-.sort-toggle ~ .sort {
+.sort-toggle ~ .sort, .sort-toggle ~ .account, .sort-toggle ~ .edit-hide-delete {
   display: none;
-}
+}  
 
+.load-more .circle {
+  display: none;
+} 
+
+/*
 .previous .circle:active, .next .circle:active, .load-more .circle:active, .sort-toggle .circle:active {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l); 
 }
+*/
 
 #createPostForm label[for="beginnerLevel"], #createPostForm label[for="intermediateLevel"], #createPostForm label[for="advancedLevel"]{
   display: block; 
@@ -700,14 +791,34 @@ article.badge {
 
   .footer a:hover {
     opacity: 0.7;
-  } 
+  }
 
-  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover, .sort-toggle .circle:hover, .sort .circle:hover {
+  .circle:hover { 
     outline: 3px solid rgba(0, 123, 255, 0.3);
     border: none;
     color: var(--blue-l);
     cursor: pointer;
   } 
+
+  .circle.delete:hover {  
+    outline: 3px solid rgba(255, 51, 51, 0.3);
+    border: none;
+    color: var(--red-m);
+    cursor: pointer; 
+  } 
+
+  label[for="image"]:hover {
+    outline: 3px solid rgba(0, 123, 255, 0.3);
+  } 
+
+  /*
+  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover, .sort-toggle .circle:hover, .sort .circle:hover, .account .circle:hover {
+    outline: 3px solid rgba(0, 123, 255, 0.3);
+    border: none;
+    color: var(--blue-l);
+    cursor: pointer;
+  }
+ */ 
 }
 
 /* 
