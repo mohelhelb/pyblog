@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <section class="card mb-20">
-    <div class="mt-40 mb-16 t-align-center">
-      <span class="fake-avatar width-100 height-100"></span>
-    </div>
+  <section class="card mb-20"> 
+    <form class="mt-26 t-align-center" id="imageForm" action="" method="POST" enctype="multipart/form-data">
+      <!-- >>> CSRF token -->
+      {{ image_form.hidden_tag() }}
+      <!-- <<< CSRF token -->    
+      <!-- >>> Image -->
+      <label class="avatar-username" for="image">
+        <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="100px" height="100px">
+      </label> 
+      {% if image_form.image.errors %} 
+      {{ image_form.image(class="field-danger") }} 
+      <ul>
+        {% for error in image_form.image.errors %}
+        <li class="small text-danger">{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}  
+      {{ image_form.image() }} 
+      {% endif %}
+      <!-- <<< Image -->  
+      <!-- >>> Submit Button -->
+      {{ image_form.submit_image(form="imageForm", style="display: none;") }}
+      <!-- <<< Submit Button -->  
+    </form>
     <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
     <hr class="hr mt-0">
     <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ user["about_me"] }}</p>
@@ -28,13 +48,13 @@
         </div>                                        
       </div> 
     </div>    
-    <button type="button" class="btn btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
+    <button type="button" class="btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
   </section>
   <section class="card mb-20" id="profileFormCard">
-    <form class="mt-40" action="" method="POST" id="profileForm">
+    <form class="mt-40" id="profileForm" action="" method="POST" enctype="multipart/form-data">
       <fieldset form="profileForm">
         <legend>Profile</legend>    
-        <div class="sort-toggle mb-30">
+        <div class="sort-toggle mb-6">
           <hr class="hr mt-0 mb-3"> 
           <span class="circle">
             <span class="abs-center">
@@ -42,18 +62,18 @@
             </span>
           </span> 
         </div>
-        <div class="div-3 account mb-30 clearfix">
+        <div class="div-3 account mt-26 clearfix">
           <div class="fleft width-third t-align-center">
             <span>Password</span>
-            <div class="circle"> 
-              <span class="abs-center">Change</span>                  
-            </div>
+            <a href="{{ url_for('change_password', user_id=user['user_id']) }}" class="circle">
+              <span class="abs-center">Change</span>
+            </a>
           </div>  
           <div class="fleft width-third t-align-center">
-            <span>Image</span>
-            <label class="circle fake-avatar"> 
-              <input type="file" id="image">
-            </label>      
+            <span>Country</span>
+            <div class="circle"> 
+              <span class="abs-center">DE</span>
+            </div>
           </div>  
           <div class="fleft width-third t-align-center">
             <span>Account</span>
@@ -62,40 +82,67 @@
             </div>
           </div>
         </div>
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="first_name" value="{{ user["first_name"] }}">
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="last_name" value="{{ user["last_name"] }}">
-        <label for="emailAddress">Email</label>
-        <input type="email" id="emailAddress" name="email" value="{{ user["email"] }}">
-        <label for="aboutMe">About me</label>
-        <textarea id="aboutMe" name="about_me" rows="3">{{ user["about_me"] }}</textarea>
-        <input type="submit" value="Update" class="mb-16">
-        <button type="button" class="btn-default mt-0 mb-24" id="cancelProfileButton">Cancel</button>
+        <!-- >>> CSRF token -->
+        {{ profile_form.hidden_tag() }}
+        <!-- <<< CSRF token -->  
+        <!-- >>> First Name -->
+        {{ profile_form.first_name.label }}
+        {% if profile_form.first_name.errors %} 
+          {{ profile_form.first_name(class="field-danger", placeholder=profile_form.first_name.description) }} 
+          <ul>
+            {% for error in profile_form.first_name.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ profile_form.first_name(placeholder=profile_form.first_name.description) }} 
+        {% endif %}
+        <!-- <<< First Name -->
+        <!-- >>> Last Name -->
+        {{ profile_form.last_name.label }}
+        {% if profile_form.last_name.errors %} 
+          {{ profile_form.last_name(class="field-danger", placeholder=profile_form.last_name.description) }} 
+          <ul>
+            {% for error in profile_form.last_name.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ profile_form.last_name(placeholder=profile_form.last_name.description) }} 
+        {% endif %}
+        <!-- <<< Last Name --->    
+        <!-- >>> Email -->
+        {{ profile_form.email.label }}
+        {% if profile_form.email.errors %} 
+          {{ profile_form.email(class="field-danger", placeholder=profile_form.email.description) }} 
+          <ul>
+            {% for error in profile_form.email.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ profile_form.email(placeholder=profile_form.email.description) }} 
+        {% endif %}
+        <!-- <<< Email -->
+        <!-- >>> About Me -->
+        {{ profile_form.about_me.label }}
+        {% if profile_form.about_me.errors %} 
+          {{ profile_form.about_me(class="field-danger", placeholder=profile_form.about_me.description, rows="3") }} 
+          <ul>
+            {% for error in profile_form.about_me.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ profile_form.about_me(placeholder=profile_form.about_me.description, rows="3") }} 
+        {% endif %}
+        <!-- <<< About Me --> 
+        <!-- >>> Submit Button -->
+        {{ profile_form.submit_profile(class="btn-info mt-26", form="profileForm") }}
+        <!-- <<< Submit Button -->         
+        <button type="button" class="btn-default mt-8 mb-24" id="cancelProfileButton">Cancel</button>
       </fieldset>
     </form>   
-    <!-- Password Change Modal -->
-    <div class="modal" id="changePasswordModal">
-      <div class="card modal-content">
-        <form class="mt-40" method="Post" action="">
-          <fieldset>
-            <legend>Change Password</legend>
-            <hr class="hr mt-0 mb-30">
-            <label for="currentPassword">Current Password</label>
-            <div class="forgot-password">
-              <input type="password" id="currentPassword" name="current_password" placeholder="Enter Current Password" required>
-              <a href="{{ url_for('reset_before_email') }}">Forgot?</a>
-            </div> 
-            <label for="newPassword">New Password</label>
-            <input type="password" id="newPassword" name="new_password" placeholder="Enter New Password" required> 
-            <label for="repeatNewPassword">Repeat New Password</label>  
-            <input type="password" id="repeatNewPassword" name="repeat_new_password" placeholder="Repeat New Password" required>  
-            <input type="submit" value="Confirm" class="mb-16">
-            <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  
-          </fieldset>
-        </form>
-      </div>
-    </div>     
     <!-- Delete Account Modal -->
     <div class="modal" id="deleteAccountModal">
       <div class="card modal-content">
@@ -104,8 +151,14 @@
             <legend>Delete Account</legend>
             <hr class="hr mt-0 mb-30">
             <p>Are you sure you want to delete your account?</p>
-            <input type="submit" value="Confirm" class="mb-16">
-            <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  
+            <div class="div-2">
+              <div class="fleft t-align-center width-50pc">
+                <input type="submit" value="Delete" class="btn-danger mb-16">
+              </div>
+              <div class="fleft t-align-center width-50pc">
+                <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  
+              </div>
+            </div>
           </fieldset>
         </form>
       </div>
@@ -114,5 +167,5 @@
 {% endblock content %}
 
 {% block js %}
-  <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/profile.js') }}"></script>
 {% endblock js %}

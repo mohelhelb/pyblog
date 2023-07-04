@@ -4,40 +4,71 @@
   <section class="card mb-20">
     <form action="" method="POST" class="mt-40" id="createPostForm">
       <fieldset>
-        <legend class="t-align-center">{{ action }} Post</legend>
-        <hr class="hr mt-0 mb-26">
-        <label for="postTitle">Title</label>
-        <input type="text" id="postTitle" name="post_title" placeholder="Enter Post Tittle" value="{{ post.title }}" autofocus required> 
-        <label for="postSubheading">Subheading</label>
-        <textarea id="postSubheading" name="post_subheading" placeholder="Enter Post Subheading" rows="2" required>{{ post.subheading }}</textarea> 
-        <label for="postContent">Content</label>
-        <textarea id="postContent" name="post_content" placeholder="Enter Post Content" rows="15" required>{{ post.content }}</textarea>
-        <p class="mt-0">Difficulty Level</p>
-        <label for="beginnerLevel">
-          <input type="radio" id="beginnerLevel" name="level" value="beginner" checked="checked">  
-          <span class="checkmark"></span> 
-          <span>Beginner</span>
-        </label>
-        <label for="intermediateLevel">  
-          {% if post.level == "Intermediate" %} 
-            <input type="radio" id="intermediateLevel" name="level" value="intermediate" checked="checked"> 
-          {% else %}
-            <input type="radio" id="intermediateLevel" name="level" value="intermediate"> 
-          {% endif %} 
-          <span class="checkmark"></span> 
-          <span>Intermediate</span>
-        </label>
-        <label for="advancedLevel"> 
-          {% if post.level == "Advanced" %} 
-            <input type="radio" id="advancedLevel" name="level" value="advanced" checked="checked"> 
-          {% else %}
-            <input type="radio" id="advancedLevel" name="level" value="advanced">
-          {% endif %}
-          <span class="checkmark"></span>  
-          <span>Advanced</span>
-        </label>
-        <input type="submit" value="{{ action }} Post" class="mb-24">
+        <legend>{{ action }} Post</legend>
+        <hr class="hr mt-0">  
+        <!-- >>> CSRF token -->
+        {{ form.hidden_tag() }}
+        <!-- <<< CSRF token -->
+        <!-- >>> Title -->
+        {{ form.title.label(class="mt-26") }}
+        {% if form.title.errors %} 
+          {{ form.title(class="field-danger", placeholder=form.title.description) }} 
+          <ul>
+            {% for error in form.title.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.title(placeholder=form.title.description) }} 
+        {% endif %}
+        <!-- <<< Title -->
+        <!-- >>> Subheading -->
+        {{ form.subheading.label }}
+        {% if form.subheading.errors %} 
+          {{ form.subheading(class="field-danger", placeholder=form.subheading.description, rows="2") }} 
+          <ul>
+            {% for error in form.subheading.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.subheading(placeholder=form.subheading.description, rows="2") }} 
+        {% endif %}
+        <!-- <<< Subheading -->
+        <!-- >>> Content -->
+        {{ form.content.label }}
+        {% if form.content.errors %} 
+          {{ form.content(class="field-danger", placeholder=form.content.description, rows="15") }} 
+          <ul>
+            {% for error in form.content.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.content(placeholder=form.content.description, rows="15") }} 
+        {% endif %}
+        <!-- <<< Content -->
+        <!-- <<< Difficulty Level --> 
+        {{ form.level.label(class="mb-0") }}
+        {% for difficulty_level in form.level %}
+          <label for="{{ difficulty_level.id }}">
+            {% if difficulty_level.id == "level-0" %}
+              {{ difficulty_level(checked="checked") }} 
+            {% endif %}
+            {{ difficulty_level }}
+            <span class="checkmark"></span>
+            <span>{{ difficulty_level.label.text }}</span>
+          </label>
+        {% endfor %}
+        <!-- <<< Difficulty Level -->   
+        <!-- >>> Submit Button -->
+        {{ form.submit(class="btn-info mt-6 mb-24") }}
+        <!-- <<< Submit Button -->  
       </fieldset>
     </form>
   </section>   
-{% endblock content %}
+{% endblock content %} 
+
+{% block js %}
+  <script type="module" src="{{ url_for('static', filename='js/create_post.js') }}"></script>  
+{% endblock js %} 

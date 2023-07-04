@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+
+{% block content %}
+  <section class="card mb-20">
+    <form action="" method="POST" class="mt-40">
+      <fieldset>
+        <legend>Recover your account</legend>
+        <hr class="hr mt-0 mb-6"> 
+        <!-- >>> CSRF token -->
+        {{ form.hidden_tag() }}
+        <!-- <<< CSRF token -->
+        <!-- >>> Email -->
+        {{ form.email.label }}
+        {% if form.email.errors %} 
+          {{ form.email(class="field-danger", placeholder=form.email.description) }} 
+          <ul>
+            {% for error in form.email.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.email(placeholder=form.email.description) }} 
+        {% endif %}
+        <!-- <<< Email -->
+        <!-- >>> Submit Button -->
+        {{ form.submit(class="btn-info mt-26 mb-24") }}
+        <!-- <<< Submit Button -->
+      </fieldset>
+    </form> 
+  </section>
+{% endblock content %} 
+
+{% block js %}
+  <script type="module" src="{{ url_for('static', filename='js/reset_before_email.js') }}"></script>  
+{% endblock js %}                

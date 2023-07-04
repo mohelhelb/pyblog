@@ -53,3 +53,40 @@ export function loadMoreArticles(articles, perPageNumArticles) {
     displayArticlesFromTo(articles, start, end);
   });
 }
+
+
+// Outline fields with errors on focus
+export function outlineFieldDanger(inputFields, textAreaField) {
+  for (let i = 0; i < inputFields.length; i++) {
+    if (inputFields[i].className === "field-danger") { 
+      inputFields[i].addEventListener("focusin", function() {
+        this.style.outline = "3px solid rgba(255, 102, 102, 0.3)";
+        this.style.borderColor = "rgba(255, 102, 102, 0.5)";
+      }); 
+      inputFields[i].addEventListener("focusout", function() {
+        this.style.outline = "none";
+      });
+    }
+  }
+  try {
+    if (textAreaField.className === "field-danger") { 
+      textAreaField.addEventListener("focusin", function() {
+        this.style.outline = "3px solid rgba(255, 102, 102, 0.3)";
+        this.style.borderColor = "rgba(255, 102, 102, 0.5)";
+      }); 
+      textAreaField.addEventListener("focusout", function() {
+        this.style.outline = "none";
+      });
+    } 
+  } catch (err) {
+      // pass
+    } 
+}
+
+// Determine whether a form has errors or not
+export function hasErrors(form) {
+  if (form.getElementsByClassName("field-danger").length != 0) {
+    return true;
+  }
+  return false;
+}

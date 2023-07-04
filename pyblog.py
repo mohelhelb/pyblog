@@ -1,9 +1,101 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from wtforms import Form, PasswordField, StringField, TextAreaField
+from wtforms.validators import Email, InputRequired, Length
+
+from forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, ImageForm, ProfileForm, SigninForm, SignupForm
+from config import DevelopmentConfig
+
 from mock_data import posts, users
 from random import shuffle
 
-app = Flask(__name__)
+app = Flask(__name__) 
 
+# Configuration
+app.config.from_object(DevelopmentConfig)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    # WTForms library:
+    # form = SignupForm(request.form)
+    # if request.method == "POST" and form.validate():
+    #   ...
+    form = SignupForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("register.html", form=form) 
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = SigninForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("login.html", form=form) 
+
+
+@app.route("/profile/<int:user_id>", methods=["GET", "POST"])
+def profile(user_id): 
+    image_form = ImageForm() 
+    profile_form = ProfileForm()
+    user = [user for user in users if user["user_id"] == user_id][0] 
+    if request.method == "GET" or "submit_image" in request.form:  
+        profile_form.first_name.data = user["first_name"]
+        profile_form.last_name.data = user["last_name"]
+        profile_form.email.data = user["email"]
+        profile_form.about_me.data = user["about_me"] 
+        if image_form.validate_on_submit():
+            return "Pending I" 
+    if "submit_profile" in request.form and profile_form.validate_on_submit():
+        return "Pending II"
+    return render_template("profile.html", profile_form=profile_form, image_form=image_form, user=user)  
+
+
+@app.route("/reset-password", methods=["GET", "POST"])
+def email_token():
+    form = EmailTokenForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("email_token.html", form=form)  
+
+
+@app.route("/reset-password/token", methods=["GET", "POST"])
+def reset_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("choose_password.html", form=form) 
+
+
+@app.route("/change-password/<int:user_id>", methods=["GET", "POST"])
+def change_password(user_id):
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("choose_password.html", form=form)  
+
+ 
+@app.route("/post/create", methods=["GET", "POST"])
+def create_post():
+    form = CreatePostForm()
+    if form.validate_on_submit():
+        return "Pending"
+    return render_template("create_post.html", action="Create", form=form)  
+
+
+@app.route("/post/<int:post_id>/edit", methods=["GET", "POST"])
+def edit_post(post_id):
+    form=CreatePostForm()
+    post = posts[post_id]
+    if form.validate_on_submit():
+        return "Pending"
+    if request.method == "GET":
+        form.title.data = post["title"]
+        form.subheading.data = post["subheading"]
+        form.content.data = post["content"]
+        form.level.data = post["level"]
+    return render_template("create_post.html", action="Edit", form=form) 
+###
 
 
 @app.route("/")
@@ -18,24 +110,6 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
-
-
-@app.route("/register")
-def register():
-    return render_template("register.html")
-
-@app.route("/create/post")
-def create_post():
-    return render_template("create_post.html", action="Create", post=None)
-
-
-@app.route("/edit/post/<int:post_id>", methods=["GET", "POST"])
-def edit_post(post_id):
-    post = posts[post_id]
-    return render_template("create_post.html", action="Edit", post=post)
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
@@ -47,18 +121,3 @@ def posts_written_by(author):
     user = [user for user in users if user["full_name"] == author][0]
     posts_by_author = [post for post in posts if post["author"] == author]
     return render_template("posts_by_author.html", user=user, posts_by_author=posts_by_author)
-
-
-@app.route("/reset-password")
-def reset_before_email():
-    return render_template("reset_before_email.html")
-
-@app.route("/reset-password/token")
-def reset_after_email():
-    return render_template("reset_after_email.html")
-
-
-@app.route("/profile/<int:user_id>")
-def profile(user_id):
-    user = [user for user in users if user["user_id"] == user_id][0]
-    return render_template("profile.html", user=user)

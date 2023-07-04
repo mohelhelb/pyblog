@@ -7,9 +7,9 @@
     <!-- Post Header -->
     <header>
       <h1 class="post-title">{{ post.title }}</h1>    
-      {% if True %}       
+      {% if False %}       
         <div class="date-level-author clearfix">
-          <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
+          <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span> 
           <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
         </div> 
         <div class="sort-toggle">
@@ -40,8 +40,8 @@
       {% else %}      
         <div class="date-level-author clearfix">
           <span class="fleft width-third text-muted-light t-align-left">{{ post.date }}</span>
-          <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span>
-          <a href="{{ url_for('posts_written_by', author=post.author) }}" class="fleft width-third t-align-right">{{ post.author }}</a>
+          <span class="fleft width-third text-muted-light t-align-center">{{ post.level }}</span> 
+          <span class="fleft width-third text-muted-light t-align-right">{{ post.reading_time }} min read</span> 
         </div>
         <hr class="hr mt-0 mb-0">
       {% endif %}      
@@ -53,7 +53,7 @@
     <p class="l-height-6">{{ post.content }}</p>    
     <p class="l-height-6">{{ post.content }}</p>
 
-    <hr class="hr">
+    <hr class="hr mt-0">
 
     <!-- Post Footer -->
     <footer class="mt-20 mb-20">
@@ -78,17 +78,22 @@
 {% endblock content %}
 
 {% block sidebar %}
-  <div class="card mb-20">
-    <div class="mt-24">
-      <span class="fake-avatar width-40 height-40"></span>
-      <a href="{{ url_for('posts_written_by', author=post.author) }}" class="username">{{ post.author }}</a>
-    </div>
+  <div class="card mb-20"> 
+    <div class="avatar-username mt-24">
+      <a href="{{ url_for('posts_written_by', author=post.author) }}">
+        <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+        <span>{{ post.author }}</span>
+      </a>  
+    </div>  
     <p class="small l-height-6 text-muted-dark mt-14 mb-24">
       I am a lorem ipsum dolor sit amet, consetetur sadipscing elitr. I work for sed diam nonumy eirmod tempor invidunt ut labore. I like et dolore magna aliquyam.
     </p>
   </div>
   <div class="more-posts card mb-20">
-    <a class="see-all" href="{{ url_for('posts_written_by', author=post.author) }}">See all <i class="fa-solid fa-arrow-right"></i></a>
+    <a class="see-all" href="{{ url_for('posts_written_by', author=post.author) }}">
+      <span class="mr-3">See all</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
     <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by {{ post.author }}</p>    
     <h2>
       <a href="{{ url_for('post', post_id=post.post_id) }}">{{ post.title }}</a>

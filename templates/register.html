@@ -2,26 +2,101 @@
 
 {% block content %}
   <section class="card mb-20">
-    <form action="" method="POST" class="mt-40 mb-24">
+    <form action="" method="POST" class="mt-40">
       <fieldset>
-        <legend class="t-align-center">Become a Python Expert</legend>
-        <hr class="hr mt-0 mb-26">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="first_name" placeholder="Enter First Name" required>
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="last_name" placeholder="Enter Last Name" required>
-        <label for="emailAddress">Email</label>
-        <input type="email" id="emailAddress" name="email" placeholder="Enter Email Address" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter Password" required>
-        <label for="repeatPassword">Repeat Password</label>  
-        <input type="password" id="repeatPassword" name="repeat_password" placeholder="Repeat Password" required> 
-        <label for="aboutMe">About me</label>
-        <textarea id="aboutMe" name="about_me" placeholder="Enter a brief description of yourself" rows="3" required></textarea>
-        <div class="small mt-0 mb-0">By creating an account you agree to our <a href="#" class="nowrap">Terms & Conditions</a>.</div>
-        <input type="submit" value="Sign up">
-        <div class="mt-0 mb-0">Already have an account? <a href="{{ url_for("login") }}" class="ml-3">Sign in</a></div>
+        <legend>Become a Python Expert</legend>
+        <hr class="hr mt-0 mb-6"> 
+        <!-- >>> CSRF token -->
+        {{ form.hidden_tag() }}
+        <!-- <<< CSRF token -->
+        <!-- >>> First Name -->
+        {{ form.first_name.label }}
+        {% if form.first_name.errors %} 
+          {{ form.first_name(class="field-danger", placeholder=form.first_name.description) }} 
+          <ul>
+            {% for error in form.first_name.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.first_name(placeholder=form.first_name.description) }} 
+        {% endif %}
+        <!-- <<< First Name -->
+        <!-- >>> Last Name -->
+        {{ form.last_name.label }}
+        {% if form.last_name.errors %} 
+          {{ form.last_name(class="field-danger", placeholder=form.last_name.description) }} 
+          <ul>
+            {% for error in form.last_name.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.last_name(placeholder=form.last_name.description) }} 
+        {% endif %}
+        <!-- <<< Last Name --->  
+        <!-- >>> Email -->
+        {{ form.email.label }}
+        {% if form.email.errors %} 
+          {{ form.email(class="field-danger", placeholder=form.email.description) }} 
+          <ul>
+            {% for error in form.email.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.email(placeholder=form.email.description) }} 
+        {% endif %}
+        <!-- <<< Email -->
+        <!-- >>> Password -->
+        {{ form.password.label }}
+        {% if form.password.errors %} 
+          {{ form.password(class="field-danger", placeholder=form.password.description) }} 
+          <ul>
+            {% for error in form.password.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.password(placeholder=form.password.description) }} 
+        {% endif %} 
+        <!-- <<< Password -->
+        <!-- >>> Confirm Password -->
+        {{ form.confirm_password.label }}
+        {% if form.confirm_password.errors %} 
+          {{ form.confirm_password(class="field-danger", placeholder=form.confirm_password.description) }} 
+          <ul>
+            {% for error in form.confirm_password.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.confirm_password(placeholder=form.confirm_password.description) }} 
+        {% endif %} 
+        <!-- <<< Confirm Password -->
+        <!-- >>> About Me -->
+        {{ form.about_me.label }}
+        {% if form.about_me.errors %} 
+          {{ form.about_me(class="field-danger", placeholder=form.about_me.description, rows="3") }} 
+          <ul>
+            {% for error in form.about_me.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.about_me(placeholder=form.about_me.description, rows="3") }} 
+        {% endif %}
+        <!-- <<< About Me --> 
+        <p class="small mt-20 mb-6">By creating an account you agree to our <a href="#" class="nowrap">Terms & Conditions</a>.</p>
+        <!-- >>> Submit Button -->
+        {{ form.submit(class="btn-info") }}
+        <!-- <<< Submit Button -->
       </fieldset>
-    </form>
+    </form> 
+    <p class="mt-20 mb-24">Already have an account? <a href="{{ url_for("login") }}" class="ml-3">Sign in</a></p>  
   </section>
 {% endblock content %}
+
+{% block js %}
+  <script type="module" src="{{ url_for('static', filename='js/register.js') }}"></script>  
+{% endblock js %}

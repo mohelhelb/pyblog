@@ -11,9 +11,13 @@
     <hr class="hr mt-0">
     {% for post in trending_posts %}
       <article class="badge mt-30 mb-30">
-        <header>
-          <span class="fake-avatar width-40 height-40"></span>
-          <a href="{{ url_for('posts_written_by', author=post.author) }}" class="username">{{ post.author }}</a>
+        <header> 
+          <div class="avatar-username">
+            <a href="{{ url_for('posts_written_by', author=post.author) }}">
+              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+              <span>{{ post.author }}</span>
+            </a>  
+          </div>
           <h2>
             <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
           </h2>
@@ -22,7 +26,7 @@
         <footer class="small text-muted-light">
           <span>{{ post.date }}</span>
           <span class="middot">&middot;</span>
-          <span>5 min read</span>
+          <span>{{ post.reading_time }} min read</span> 
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
         </footer>
@@ -68,9 +72,13 @@
     </div>  
     {% for post in posts %}
       <article class="badge mt-30 mb-30">
-        <header>
-          <span class="fake-avatar width-40 height-40"></span>
-          <a href="{{ url_for('posts_written_by', author=post.author) }}" class="username">{{ post.author }}</a>
+        <header> 
+          <div class="avatar-username">
+            <a href="{{ url_for('posts_written_by', author=post.author) }}">
+              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+              <span>{{ post.author }}</span>
+            </a>  
+          </div>  
           <h2>
             <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
           </h2>
@@ -79,7 +87,7 @@
         <footer class="small text-muted-light">
           <span>{{ post.date }}</span>
           <span class="middot">&middot;</span>
-          <span>5 min read</span>
+          <span>{{ post.reading_time }} min read</span>
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
         </footer>

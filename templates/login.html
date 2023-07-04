@@ -1,21 +1,55 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 {% block content %}
   <section class="card mb-20">
-    <form action="" method="POST" class="mt-40 mb-24">
+    <form action="" method="POST" class="mt-40">
       <fieldset>
-        <legend class="t-align-center">PyBlog</legend> 
-        <hr class="hr mt-0 mb-26"> 
-        <label for="emailAddress">Email</label>
-        <input type="email" id="emailAddress" name="email" placeholder="Enter Email Address" required>
-        <label for="password">Password</label>
+        <legend>PyBlog</legend>
+        <hr class="hr mt-0 mb-6"> 
+        <!-- >>> CSRF token -->
+        {{ form.hidden_tag() }}
+        <!-- <<< CSRF token -->
+        <!-- >>> Email -->
+        {{ form.email.label }}
+        {% if form.email.errors %} 
+          {{ form.email(class="field-danger", placeholder=form.email.description) }} 
+          <ul>
+            {% for error in form.email.errors %}
+              <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
+          {{ form.email(placeholder=form.email.description) }} 
+        {% endif %}
+        <!-- <<< Email -->
+        <!-- >>> Password -->
+        {{ form.password.label }}
+        {% if form.password.errors %} 
+          <div class="forgot-password">
+            {{ form.password(class="field-danger", placeholder=form.password.description) }} 
+            <a href="{{ url_for('reset_before_email') }}">Forgot?</a>  
+          </div>
+          <ul>
+            {% for error in form.password.errors %}
+            <li class="small text-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}  
         <div class="forgot-password">
-          <input type="password" id="password" name="password" placeholder="Enter Password" required>
-          <a href="{{ url_for('reset_before_email') }}">Forgot?</a>
+          {{ form.password(placeholder=form.password.description) }} 
+          <a href="{{ url_for('email_token') }}">Forgot?</a>  
         </div>
-        <input type="submit" value="Sign in"> 
-        <div class="mt-0 mb-0">Need an account? <a href="{{ url_for("register") }}" class="ml-3">Sign up</a></div> 
+        {% endif %}
+        <!-- <<< Password -->
+        <!-- >>> Submit Button -->
+        {{ form.submit(class="btn-info mt-26") }} 
+        <!-- <<< Submit Button -->
       </fieldset>
-    </form>
+    </form> 
+    <p class="mt-20 mb-24">Need an account? <a href="{{ url_for("register") }}" class="ml-3">Sign up</a></p>  
   </section>
-{% endblock content %} 
+{% endblock content %}
+
+{% block js %}
+  <script type="module" src="{{ url_for('static', filename='js/login.js') }}"></script>  
+{% endblock js %}

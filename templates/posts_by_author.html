@@ -2,8 +2,8 @@
 
 {% block content %}
   <section class="card mb-20">
-    <div class="mt-40 mb-16 t-align-center">
-      <span class="fake-avatar width-100 height-100"></span>
+    <div class="avatar-username mt-40 mb-16 t-align-center">
+      <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
     </div>
     <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
     <hr class="hr mt-0">
@@ -76,7 +76,7 @@
         <footer class="small text-muted-light">
           <span>{{ post.date }}</span>
           <span class="middot">&middot;</span>
-          <span>5 min read</span>
+          <span>{{ post.reading_time }} min read</span>   
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
         </footer>
