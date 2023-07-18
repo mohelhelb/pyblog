@@ -376,16 +376,7 @@ form legend {
 
 .middot {
   padding: 0 4px;
-} 
-
-/* Pending
-.fake-avatar {
-  display: inline-block;
-  border-radius: 50%;
-  background-color: var(--gray-m);
-  line-height: 0;
 }
-*/
 
 .avatar-username {
   display: block;
@@ -408,12 +399,6 @@ form legend {
   color: var(--gray-xl);
   font-weight: 500;
 }
-
-/* Pending
-.fake-avatar, .avatar-username {
-  vertical-align: middle;
-}
-*/
 
 .circle {
   display: inline-block;
@@ -559,16 +544,16 @@ form legend {
   padding-right: 0;
 }
 
-article.badge {
+.post {
   display: none;
 }
 
-.badge .title {
+.post .title {
   display: block;
   font-size: 1.5rem;
 }
 
-.badge .level {
+.post .level {
   display: inline-block;
   border-radius: 2px;
   padding: 4px;

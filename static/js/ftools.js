@@ -9,52 +9,6 @@ function displayArticlesFromTo(articles, start, end) {
 }
 
 
-// Load more articles on mouse-clicking
-export function loadMoreArticles(articles, perPageNumArticles) {
-  let loadMoreButton = document.querySelector(".load-more .circle");
-  let totalNumArticles = articles.length;
-  let division = totalNumArticles / perPageNumArticles;
-  let floorDivision = Math.floor(totalNumArticles / perPageNumArticles);
-  let remainder = totalNumArticles % perPageNumArticles;
-  let start = 0;
-  let end = 0;
-  let i = 1;
-  if (!division) {
-    return false;
-  } else if (division > 0 && division <= 1) {
-    start = 0;
-    end = totalNumArticles - 1; // arr = ["a", "b", "c"] and end = arr.length - 1 --> arr[end] = "c"
-    displayArticlesFromTo(articles, start, end);
-    return false;
-  }
-  start = 0;
-  end = perPageNumArticles - 1;
-  displayArticlesFromTo(articles, start, end);
-  loadMoreButton.style.display = "inline-block";
-  loadMoreButton.addEventListener("click", function() {
-    i++;
-    if ((i === floorDivision + 1) && remainder) {
-      // Index of first article on page k: (k - 1) * perPageNumArticles
-      // Index of last article on page k: k * perPageNumArticles - 1
-      start = floorDivision * perPageNumArticles; 
-      end = totalNumArticles - 1;
-      displayArticlesFromTo(articles, start, end);
-      this.style.display = "none";
-      return false;
-    } else if ((i === floorDivision) && !remainder) {
-      start = (floorDivision - 1) * perPageNumArticles;
-      end = (floorDivision * perPageNumArticles) - 1;
-      displayArticlesFromTo(articles, start, end);
-      this.style.display = "none";
-      return false;
-    }
-    start = (i - 1) * perPageNumArticles;
-    end = (i * perPageNumArticles) - 1;
-    displayArticlesFromTo(articles, start, end);
-  });
-}
-
-
 // Outline fields with errors on focus
 export function outlineFieldDanger(inputFields, textAreaField) {
   for (let i = 0; i < inputFields.length; i++) {
@@ -83,10 +37,107 @@ export function outlineFieldDanger(inputFields, textAreaField) {
     } 
 }
 
-// Determine whether a form has errors or not
+// Determine if a form has errors
 export function hasErrors(form) {
   if (form.getElementsByClassName("field-danger").length != 0) {
     return true;
   }
   return false;
+}
+
+// Classes
+
+// Sorting/Load More Functionalities
+export class Post {
+
+ currentPage = 1;
+ perPagePostElements = 3;
+
+ static comparisonFunction(post1, post2) { 
+   let dateString1 = post1.getElementsByClassName("date")[0].innerText; 
+   let dateString2 = post2.getElementsByClassName("date")[0].innerText;
+   const date1 = new Date(dateString1);
+   const date2 = new Date(dateString2);
+   return date2 - date1;
+ }
+
+ constructor(postElements) {
+   this.postElements = Array.from(postElements);
+ }
+
+ clone() {
+   const clonePostElements = [];
+   for (let i = 0; i < this.postElements.length; i++) {
+     clonePostElements.push(this.postElements[i].cloneNode(true));
+   }
+   return clonePostElements;
+ }
+
+ display(start, end) {
+   for (let i = start; i <= end; i++) {
+     this.postElements[i].style.display = "block";
+   }
+ }  
+
+ hide() {
+   for (let i = 0; i < this.postElements.length; i++) {
+     if (this.postElements[i].style.display === "none") {
+       break;
+     }
+     this.postElements[i].style.display = "none";
+   }
+ }
+
+ replace(newPostElements) {
+   for (let i = 0; i < this.postElements.length; i++) {
+     this.postElements[i].replaceWith(newPostElements[i]);
+   }
+   return newPostElements;
+ }
+
+ loadMore() {
+   const loadMoreButton = document.querySelector(".load-more .circle");
+   let m = Math.floor(this.postElements.length / this.perPagePostElements);
+   let n = this.postElements.length % this.perPagePostElements;
+   if (this.postElements.length === 0) {
+     return false;
+   } else if (this.postElements.length <= this.perPagePostElements) {
+     // arr = ["a", "b", "c"] and end = arr.length - 1 --> arr[end] = "c"
+     this.display(0, this.postElements.length - 1);
+     return false;
+   }
+   this.display(0, this.perPagePostElements - 1);
+   loadMoreButton.style.display = "inline-block";
+   var that = this;
+   loadMoreButton.addEventListener("click", function() {
+     that.currentPage++;      
+     if (that.currentPage === m + 1 && n != 0) {
+       // Index of first post on page k: (k - 1) * that.perPagePostElements 
+       // Index of last post on page k: k * that.perPagePostElements - 1
+       that.display(m * that.perPagePostElements, that.postElements.length - 1);
+       this.style.display = "none";
+       return false;
+     } else if ((that.currentPage === m) && !n) {
+       that.display((m - 1) * that.perPagePostElements, (m * that.perPagePostElements) - 1);
+       this.style.display = "none";
+       return false;
+     }
+     that.display((that.currentPage - 1) * that.perPagePostElements, (that.currentPage * that.perPagePostElements) - 1);
+   });
+ }                     
+
+ sortByDate({reverse=false}={}) {
+   let m = Math.floor(this.postElements.length / this.perPagePostElements);
+   let n = this.postElements.length % this.perPagePostElements;
+   this.hide();
+   this.postElements = this.replace(this.clone().sort(this.constructor.comparisonFunction));
+   if (reverse) {
+     this.postElements = this.replace(this.clone().sort(this.constructor.comparisonFunction).reverse());
+   }
+   if (this.currentPage === m + 1 & n != 0) {
+     this.display(0, this.postElements.length - 1);
+     return false;
+   }
+   this.display(0, this.currentPage * this.perPagePostElements - 1);
+ }
 }

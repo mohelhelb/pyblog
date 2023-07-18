@@ -64,27 +64,35 @@
           </span>
         </div>
       </div>
-    </div>                  
-    {% for post in posts_by_author %} 
-      <article class="badge mt-30 mb-30">
+    </div> 
+    <!-- >>> Public Posts -->
+    {% for post in public_posts_by_author %}
+      <article class="post mt-30 mb-30">
         <header>
           <h2>
             <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
           </h2>
-        </header>
+        </header> 
         <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
         <footer class="small text-muted-light">
-          <span>{{ post.date }}</span>
+          <span class="date">{{ post.date }}</span>
           <span class="middot">&middot;</span>
-          <span>{{ post.reading_time }} min read</span>   
+          <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
         </footer>
-      </article>  
-    {% endfor %} 
-    <div class="load-more">
-      <button class="circle" type="button">
+      </article> 
+    {% endfor %}
+    <!-- <<< Public Posts -->
+    <div class="load-more t-align-center mb-20">
+      <span class="circle">
+        <span class="abs-center">
           <i class="fa-solid fa-angles-down fa-lg"></i>
-      </button>
+        </span>
+      </span>
     </div>   
-{% endblock content %}
+{% endblock content %}  
+
+{% block js %}
+  <script type="module" src="{{ url_for('static', filename='js/posts_by_author.js') }}"></script>  
+{% endblock js %} 

@@ -1,5 +1,3 @@
-import {loadMoreArticles} from "./ftools.js"
-
 
 // Toggle the navigation bar
 const topnavToggle = document.getElementById("topnavToggle-A");
@@ -13,7 +11,7 @@ topnavToggle.addEventListener("click", function() {
 }); 
 
 
-// Sorting Functionality
+// Toggle the sort options
 const sortToggle = document.querySelectorAll(".sort-toggle");
 for (let i = 0; i < sortToggle.length; i++) {
   const sortMenu = sortToggle[i].nextElementSibling;
@@ -28,9 +26,4 @@ for (let i = 0; i < sortToggle.length; i++) {
     sortMenu.style.display = "block";
     sortIcon.className = "fa-solid fa-angles-up";
   });
-}
-
-
-// Load More Functionality
-let articles = document.querySelectorAll("article.badge");
-loadMoreArticles(articles, 7);
+} 

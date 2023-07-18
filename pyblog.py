@@ -11,7 +11,24 @@ from random import shuffle
 app = Flask(__name__) 
 
 # Configuration
-app.config.from_object(DevelopmentConfig)
+app.config.from_object(DevelopmentConfig) 
+
+# Pending
+shuffle(posts)
+
+@app.route("/")
+@app.route("/index")
+def index():
+    public_posts = [post for post in posts if post["status"] == "public"]  
+    trending_posts = sorted(public_posts, key=lambda post: post["views"], reverse=True)[:3]
+    return render_template("index.html", public_posts=public_posts, trending_posts=trending_posts) 
+
+
+@app.route("/posts/<author>")
+def posts_written_by(author):
+    user = [user for user in users if user["full_name"] == author][0]
+    public_posts_by_author = [post for post in posts if post["author"] == author and post["status"] == "public"]
+    return render_template("posts_by_author.html", public_posts_by_author=public_posts_by_author, user=user) 
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -98,12 +115,6 @@ def edit_post(post_id):
 ###
 
 
-@app.route("/")
-@app.route("/index")
-def index():
-    trending_posts = posts[-3:]
-    return render_template("index.html", trending_posts=trending_posts, posts=posts)
-
 
 @app.route("/about")
 def about():
@@ -115,9 +126,3 @@ def about():
 def post(post_id):
     post = posts[post_id]
     return render_template("post.html", post=post)
-
-@app.route("/posts/<author>")
-def posts_written_by(author):
-    user = [user for user in users if user["full_name"] == author][0]
-    posts_by_author = [post for post in posts if post["author"] == author]
-    return render_template("posts_by_author.html", user=user, posts_by_author=posts_by_author)
