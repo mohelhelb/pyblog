@@ -9,29 +9,31 @@
       <span class="ml-3">Trending Posts</span>
     </h3>
     <hr class="hr mt-0">
+    <!-- Pending -->
     {% for post in trending_posts %}
       <article class="post mt-30 mb-30">
         <header> 
           <div class="avatar-username">
-            <a href="{{ url_for('posts_written_by', author=post.author) }}">
+            <a href="#">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>{{ post.author }}</span>
+              <span>{{ post["author"] }}</span>
             </a>  
           </div>
           <h2>
-            <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.post_id }} {{ post.title }}</a>
+            <a href="#" class="title mt-8 mb-8">{{ post["title"] }}</a>
           </h2>
         </header>
-        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post["subheading"] }}</p>
         <footer class="small text-muted-light">
-          <span class="date">{{ post.date }}</span>
+          <span class="date">{{ post["date_posted"] }}</span>
           <span class="middot">&middot;</span>
-          <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+          <span class="reading-time">{{ post["reading_time"] }}</span><span> min read</span>
           <span class="middot">&middot;</span>
-          <span class="level">{{ post.level }}</span>
+          <span class="level">{{ post["level"] }}</span>
         </footer>  
       </article> 
-    {% endfor %}   
+    {% endfor %}
+    <!---->
     <h3 class="mb-0" id="switchNewestOldest">
       <i class="fa-solid fa-arrow-up"></i>
       <span class="ml-3">Newest Releases</span>
@@ -75,23 +77,23 @@
       <article class="post mt-30 mb-30">
         <header> 
           <div class="avatar-username">
-            <a href="{{ url_for('posts_written_by', author=post.author) }}">
+            <a href="{{ url_for('posts_written_by', user_id=post.author.user_id) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>{{ post.author }}</span>
+              <span>{{ post.author.fullname }}</span>
             </a>  
           </div>  
           <h2>
-            <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.post_id }} {{ post.title }}</a>
+            <a href="{{ url_for('post', post_id=post.post_id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
           </h2>
         </header>
         <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
         <footer class="small text-muted-light">
-          <span class="date">{{ post.date }}</span>
+          <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
           <span class="middot">&middot;</span>
           <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
-        </footer>
+        </footer>  
       </article> 
     {% endfor %}
     <!-- <<< Public Posts -->

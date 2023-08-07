@@ -27,7 +27,7 @@
         {% if form.password.errors %} 
           <div class="forgot-password">
             {{ form.password(class="field-danger", placeholder=form.password.description) }} 
-            <a href="{{ url_for('reset_before_email') }}">Forgot?</a>  
+            <a href="{{ url_for('email_token') }}">Forgot?</a>  
           </div>
           <ul>
             {% for error in form.password.errors %}

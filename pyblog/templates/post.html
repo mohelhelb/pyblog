@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card mb-20">
+    <span class="waterdrop width-20 height-20"></span>
+
+    <!-- Post Header -->
+    <header>
+      <h1 class="post-title">{{ selected_post.title }}</h1>    
+      {% if False %}       
+        <div class="date-level-author clearfix">
+          <span class="fleft width-third text-muted-light t-align-left">{{ selected_post.date_posted }}</span> 
+          <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span>
+        </div> 
+        <div class="sort-toggle">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down"></i>
+            </span>
+          </span> 
+        </div> 
+        <div class="div-3 edit-hide-delete mt-30 clearfix"> 
+          <div class="fleft width-third t-align-center">
+            <a href="{{url_for('edit_post', post_id=selected_post.post_id)}}" class="circle">
+              <span class="abs-center">Edit</span>
+            </a> 
+          </div> 
+          <div class="fleft width-third t-align-center">
+            <div class="circle"> 
+              <span class="abs-center">Hide</span>
+            </div>  
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <div class="circle delete"> 
+              <span class="abs-center">Delete</span>
+            </div>
+          </div>
+        </div>
+      {% else %}      
+        <div class="date-level-author clearfix">
+          <span class="fleft width-third text-muted-light t-align-left">{{ selected_post.date_posted.strftime("%B %d, %Y") }}</span>
+          <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span> 
+          <span class="fleft width-third text-muted-light t-align-right">{{ selected_post.reading_time }} min read</span> 
+        </div>
+        <hr class="hr mt-0 mb-0">
+      {% endif %}      
+      <p class="l-height-6 text-muted-dark mt-24">{{ selected_post.subheading }}</p>
+    </header>
+
+    <!-- Post Body -->     
+    <p class="l-height-6">{{ selected_post.content }}</p>
+
+    <hr class="hr mt-0">
+
+    <!-- Post Footer -->
+    <footer class="mt-20 mb-20">
+      <div class="clearfix">
+        <div class="previous fleft width-half t-align-left">  
+          {% if previous_post %} 
+            <a href="{{ url_for('post', post_id=previous_post.post_id) }}" class="circle">
+              <span class="abs-center">
+                <i class="fa-solid fa-angles-left fa-lg"></i>
+              </span>
+            </a> 
+          {% endif %} 
+        </div>
+        <div class="next fright width-half t-align-right">  
+          {% if next_post %} 
+            <a href="{{ url_for('post', post_id=next_post.post_id) }}" class="circle">
+              <span class="abs-center">
+                <i class="fa-solid fa-angles-right fa-lg"></i>
+              </span>
+            </a>  
+          {% endif %} 
+        </div>
+      </div>
+    </footer>
+  </section>
+{% endblock content %}
+
+{% block sidebar %}
+  <div class="card mb-20"> 
+    <div class="avatar-username mt-24">
+      <a href="{{ url_for('posts_written_by', user_id=selected_post.author.user_id) }}">
+        <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+        <span>{{ selected_post.author.fullname }}</span>
+      </a>  
+    </div>  
+    <p class="small l-height-6 text-muted-dark mt-14 mb-24">{{ selected_post.author.about_me }}</p>
+  </div>
+  <div class="more-posts card mb-20">
+    <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by {{ selected_post.author.fullname }}</p>    
+    {% for post in more_posts %}
+      <h2>
+        <a href="{{ url_for('post', post_id=post.post_id) }}">{{ post.title }}</a>
+      </h2>  
+      <hr class="hr">
+  {% endfor %} 
+    <a class="see-all" href="{{ url_for('posts_written_by', user_id=selected_post.author.user_id) }}">
+      <span class="mr-3">See all</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a> 
+{% endblock sidebar %}

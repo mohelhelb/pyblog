@@ -79,7 +79,16 @@
   <div class="gap"></div>
 
   <!-- Body -->
-  <div class="container clearfix">
+  <div class="container clearfix"> 
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="alert alert-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <!-- Main Content -->
     <main id="main" class="fleft">
       {% block content %}
@@ -108,61 +117,61 @@
               <i class="fa-solid fa-arrow-up-1-9 fa-fw"></i>
               <span class="trending">Top Writers</span>
             </h3>
-          </header>         
+          </header>                 
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>  
+          </div>         
           <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', author='John Doe') }}">
+            <a href="{{ url_for('posts_written_by', user_id=1) }}">
               <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
               <span>John Doe</span>
             </a>  
-          </div>                        
+          </div>                     
         </div>
       {% endblock sidebar %}
     </aside>

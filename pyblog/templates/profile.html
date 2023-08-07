@@ -8,7 +8,7 @@
       <!-- <<< CSRF token -->    
       <!-- >>> Image -->
       <label class="avatar-username" for="image">
-        <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="100px" height="100px">
+        <img class="width-100 height-100" src={{ url_for('static', filename='images/{}'.format(user.image)) }} alt="Employee Avatar" width="100px" height="100px">
       </label> 
       {% if image_form.image.errors %} 
       {{ image_form.image(class="field-danger") }} 
@@ -25,26 +25,26 @@
       {{ image_form.submit_image(form="imageForm", style="display: none;") }}
       <!-- <<< Submit Button -->  
     </form>
-    <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
+    <p class="mt-0 mb-0">{{ user.fullname }}</p>
     <hr class="hr mt-0">
-    <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ user["about_me"] }}</p>
+    <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ user.about_me }}</p>
     <div class="div-3 chart mb-24 clearfix">    
       <div class="fleft width-third t-align-center">
         <span>Posts</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_posts"] }}</span>
+          <span class="abs-center">{{ user.num_public_posts() }}</span>
         </div>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_followers"] }}</span>
+          <span class="abs-center">00</span>
         </div>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_following"] }}</span>
+          <span class="abs-center">00</span>
         </div>                                        
       </div> 
     </div>    
@@ -65,14 +65,14 @@
         <div class="div-3 account mt-26 clearfix">
           <div class="fleft width-third t-align-center">
             <span>Password</span>
-            <a href="{{ url_for('change_password', user_id=user['user_id']) }}" class="circle">
+            <a href="{{ url_for('change_password', user_id=user.user_id) }}" class="circle">
               <span class="abs-center">Change</span>
             </a>
           </div>  
           <div class="fleft width-third t-align-center">
             <span>Country</span>
             <div class="circle"> 
-              <span class="abs-center">DE</span>
+              <span class="abs-center">XX</span>
             </div>
           </div>  
           <div class="fleft width-third t-align-center">

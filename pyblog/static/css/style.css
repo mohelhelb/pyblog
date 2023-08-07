@@ -337,6 +337,26 @@ form legend {
   color: var(--gray-xl);
 }  
 
+/* Predefined Alert */
+.alert {
+  margin: 0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 15px 8px;
+  text-align: center;
+  font-weight: 500; 
+} 
+.alert-success {
+  border-color: #c3e6cb;
+  background-color: #d4edda;
+  color: #155724;
+} 
+.alert-danger {
+  border-color: #f5c6cb; 
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 /* Predefined Field Color */ 
 .field-danger {
   border: 1px solid rgba(255, 102, 102, 0.5); 

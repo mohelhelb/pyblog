@@ -5,32 +5,32 @@
     <div class="avatar-username mt-40 mb-16 t-align-center">
       <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
     </div>
-    <p class="mt-0 mb-0">{{ user["full_name"] }}</p>
+    <p class="mt-0 mb-0">{{ user.fullname }}</p>
     <hr class="hr mt-0">
-    <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user["about_me"] }}</p>
+    <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user.about_me }}</p>
     <div class="div-3 chart mb-24 clearfix">    
       <div class="fleft width-third t-align-center">
         <span>Posts</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_posts"] }}</span>
+          <span class="abs-center">{{ user.num_public_posts() }}</span>
         </div>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_followers"] }}</span>
+          <span class="abs-center">00</span> <!-- Pending -->
         </div>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
-          <span class="abs-center">{{ user["num_following"] }}</span>
+          <span class="abs-center">00</span>  <!-- Pending -->
         </div>                                        
       </div> 
     </div>
   </section>
   <section class="card mb-20">
-    <h1 class="h1-2 text-muted-dark mb-0">{{ user["full_name"] }}</h1>   
+    <h1 class="h1-2 text-muted-dark mb-0">{{ user.fullname }}</h1>   
     <div class="sort-toggle">
       <hr class="hr mt-0 mb-3"> 
       <span class="circle">
@@ -66,7 +66,7 @@
       </div>
     </div> 
     <!-- >>> Public Posts -->
-    {% for post in public_posts_by_author %}
+    {% for post in user.public_posts() %}
       <article class="post mt-30 mb-30">
         <header>
           <h2>
@@ -75,12 +75,12 @@
         </header> 
         <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
         <footer class="small text-muted-light">
-          <span class="date">{{ post.date }}</span>
+          <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
           <span class="middot">&middot;</span>
           <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
           <span class="middot">&middot;</span>
           <span class="level">{{ post.level }}</span>
-        </footer>
+        </footer> 
       </article> 
     {% endfor %}
     <!-- <<< Public Posts -->
