@@ -38,34 +38,26 @@
         </div>               
         <a href="{{ url_for('index') }}">Home</a>  
         <a href="{{ url_for('about') }}">About</a>
-        {% if True %}
+        {% if not current_user.is_authenticated %}
           <div class="fright">
-            <a href="{{ url_for('login') }}">
-              <!--
-              <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              <span class="ml-3">Sign in</span>
-              -->
-              Sign in
-            </a>  
-            <a href="{{ url_for('register') }}" class="signup">
-              <!--
-              <i class="fa-solid fa-user-plus fa-sm"></i>
-              <span class="ml-3">Sign up</span>
-              -->
-              Sign up
-            </a>    
+            <a href="{{ url_for('login') }}">Sign in</a>  
+            <a href="{{ url_for('register') }}" class="signup">Sign up</a>    
           </div>
         {% else %} 
-          <div class="fright">
-            <a href="{{ url_for('login') }}">
-              <i class="fa-regular fa-clipboard"></i>
-              <span class="ml-3">Posts</span>
-            </a>                 
-            <a href="{{ url_for('register') }}">
-              <i class="fa-regular fa-user"></i>
-              <span class="ml-3">Profile</span>
+          <div class="fright"> 
+            <a href="{{ url_for('create_post') }}">
+              <i class="fa-solid fa-plus"></i>
+              <span class="ml-3">New Post</span>
             </a> 
-            <a href="{{ url_for('register') }}">
+            <a href="{{ url_for('posts_written_by', user_id=current_user.id) }}">
+              <i class="fa-regular fa-clipboard"></i>
+              <span class="ml-3">My Posts</span>
+            </a>                 
+            <a href="{{ url_for('profile') }}">
+              <i class="fa-regular fa-user"></i>
+              <span class="ml-3">My Profile</span>
+            </a> 
+            <a href="{{ url_for('logout') }}">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
               <span class="ml-3">Sign out</span>
             </a>   

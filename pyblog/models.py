@@ -1,10 +1,15 @@
 import os
 import datetime
+from flask_login import UserMixin
 
-from pyblog import app, bcrypt, db
+from pyblog import app, bcrypt, db, login_manager
 
-class User(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True)
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
     image = db.Column(db.String(70), default="default.png")
@@ -27,7 +32,7 @@ class User(db.Model):
         self.hash_password = bcrypt.generate_password_hash(new_password).decode("utf-8")
 
     def __repr__(self):
-        return f"User({self.user_id}: {self.first_name} {self.last_name})" 
+        return f"User({self.id}: {self.first_name} {self.last_name})" 
 
     def add(self):
         db.session.add(self)
@@ -65,7 +70,7 @@ class User(db.Model):
 
 
 class Post(db.Model):
-    post_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     subheading = db.Column(db.String(150), nullable=False)
     content = db.Column(db.Text, nullable=False)
@@ -73,7 +78,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     public = db.Column(db.Boolean, nullable=False, default=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     author = db.relationship("User", back_populates="posts")
 
     @property
@@ -85,11 +90,19 @@ class Post(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def hide(self):
+        self.public = False
+        db.session.commit()
+
     @classmethod
     def next_post(cls, current_post=None):
         """Given the current post, fetch the next public post, if any, written by the same author."""
         return db.session.execute(db.select(Post).filter(
-            cls.post_id > current_post.post_id, 
+            cls.id > current_post.id, 
             cls.user_id == current_post.user_id, 
             cls.public == True
             )).scalar()  
@@ -97,17 +110,21 @@ class Post(db.Model):
     @classmethod
     def public_posts(cls, author=None):
         if author:
-            return db.session.execute(db.select(cls).filter(cls.public==True, cls.user_id==author.user_id)).scalars()
+            return db.session.execute(db.select(cls).filter(cls.public==True, cls.user_id==author.id)).scalars()
         return db.session.execute(db.select(cls).filter(cls.public==True)).scalars() 
 
     @classmethod
     def previous_post(cls, current_post=None): 
         """Given the current post, fetch the next public post, if any, written by the same author.""" 
-        return db.session.execute(db.select(Post).order_by(cls.post_id.desc()).filter(
-            cls.post_id < current_post.post_id, 
+        return db.session.execute(db.select(Post).order_by(cls.id.desc()).filter(
+            cls.id < current_post.id, 
             cls.user_id == current_post.user_id, 
             cls.public == True
             )).scalar() 
+
+    def show(self):
+        self.public = True
+        db.session.commit()
 
     def update(self, **kwargs):
         for attr in kwargs.keys():

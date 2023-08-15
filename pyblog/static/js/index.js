@@ -12,9 +12,10 @@ for (let i = 0; i < trendingPostElements.length; i++) {
 }
 
 // Sorting Functionality
+// Pending: Duplicate Code (See posts_by_author.js)
 const newestButton = document.querySelector(".sort > div:nth-child(2) .circle"); 
 const oldestButton = document.querySelector(".sort > div:nth-child(3) .circle"); 
-const newestReleases = document.querySelector("#switchNewestOldest"); 
+const newestReleases = document.querySelector("#switchNewestOldest"); // Pending: Multiple elements with this id 
 const postElements = document.querySelectorAll(".post:nth-of-type(3) ~ .post"); 
 const posts = new Post(postElements);
 posts.loadMore(); 

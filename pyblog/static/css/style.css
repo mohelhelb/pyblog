@@ -157,6 +157,11 @@ form legend {
   font-size: 2rem;
 }
 
+.post-content {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -345,11 +350,16 @@ form legend {
   padding: 15px 8px;
   text-align: center;
   font-weight: 500; 
-} 
+}  
 .alert-success {
   border-color: #c3e6cb;
   background-color: #d4edda;
   color: #155724;
+} 
+.alert-info {
+  border-color: #b8daff;
+  background-color: #cce5ff;
+  color: #004085;
 } 
 .alert-danger {
   border-color: #f5c6cb; 

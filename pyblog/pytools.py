@@ -26,8 +26,8 @@ class Img:
         return filename.rsplit(".", 1)[-1].lower()
     
     @classmethod
-    def remove_current_imgs(cls, user_id=None):
-        images = glob.glob(pathname=f"img-{user_id}.*", root_dir=cls.root_img_dir)
+    def remove_current_imgs(cls, user=None):
+        images = glob.glob(pathname=f"img-{user.id}.*", root_dir=cls.root_img_dir)
         if images:
             for image in images:
                 os.remove(os.path.join(cls.root_img_dir, image))

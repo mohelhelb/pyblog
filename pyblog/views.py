@@ -2,6 +2,8 @@ import datetime
 import os
 import random
 from flask import abort, flash, redirect, render_template, request, url_for  
+from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
+from werkzeug.urls import url_parse
 
 from pyblog import app, db
 from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, ImageForm, ProfileForm, SigninForm, SignupForm   
@@ -47,12 +49,20 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    # If the current user is already authenticated and navigate to the login page, redirect them to their profile page.
+    if current_user.is_authenticated:
+        return redirect(url_for("profile"))
+    #
     form = SigninForm()
     if form.validate_on_submit():
         user = db.session.execute(db.select(User).filter_by(email=form.email.data)).scalar()
         if user and user.check_password(form.password.data):
+            login_user(user)
+            next_page = request.args.get("next")
+            if not next_page or url_parse(next_page).netloc:
+                next_page = url_for("profile")
             flash(f"Hi, {user.first_name}! How is it going?", category="success")
-            return redirect(url_for("profile", user_id=user.user_id))
+            return redirect(next_page)
         elif user: 
             flash("The password is incorrect. Please try again.", category="danger")
             return redirect(request.url) 
@@ -61,9 +71,16 @@ def login():
     return render_template("login.html", form=form) 
 
 
-@app.route("/profile/<int:user_id>", methods=["GET", "POST"])
-def profile(user_id): 
-    user = db.get_or_404(User, user_id) 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
+
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
     image_form = ImageForm() 
     profile_form = ProfileForm()
     if "submit_image" in request.form:
@@ -72,34 +89,48 @@ def profile(user_id):
             # If any, remove all the current images.
             # Save the uploaded image.
             img = Img(image_form.image.data)
-            img.fn = f"img-{user.user_id}.{img.ext}"
-            img.remove_current_imgs(user_id=user.user_id)
+            img.fn = f"img-{current_user.id}.{img.ext}"
+            img.remove_current_imgs(user=current_user)
             img.save_uploaded_img(size=(100, 100))
             #
             user.update(image=img.fname)
             return redirect(request.url)
-        profile_form.first_name.data = user.first_name
-        profile_form.last_name.data = user.last_name
-        profile_form.email.data = user.email
-        profile_form.about_me.data = user.about_me
+        profile_form.first_name.data = current_user.first_name
+        profile_form.last_name.data = current_user.last_name
+        profile_form.email.data = current_user.email
+        profile_form.about_me.data = current_user.about_me
     elif "submit_profile" in request.form and profile_form.validate():
-        user.update(
+        current_user.update(
                 first_name = profile_form.first_name.data,
                 last_name = profile_form.last_name.data,
                 email = profile_form.email.data,
                 about_me = profile_form.about_me.data
                 )
-        return redirect(url_for("profile", user_id=user.user_id))
+        return redirect(request.url)
     if request.method == "GET":
-        profile_form.first_name.data = user.first_name
-        profile_form.last_name.data = user.last_name
-        profile_form.email.data = user.email
-        profile_form.about_me.data = user.about_me 
-    return render_template("profile.html", image_form=image_form, profile_form=profile_form, user=user)
+        profile_form.first_name.data = current_user.first_name
+        profile_form.last_name.data = current_user.last_name
+        profile_form.email.data = current_user.email
+        profile_form.about_me.data = current_user.about_me 
+    return render_template("profile.html", image_form=image_form, profile_form=profile_form)  
+
+
+@app.route("/change-password", methods=["GET", "POST"])
+@fresh_login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        current_user.update(password=form.password.data)
+        flash("Your password has been changed successfully", category="success")
+        return redirect(url_for("profile", user_id=current_user.id))
+    return render_template("choose_password.html", form=form) 
 
 
 @app.route("/reset-password", methods=["GET", "POST"])
 def email_token():
+    if current_user.is_authenticated:
+        flash("Please sign out first to be able to recover your account.", category="info")
+        return redirect(url_for("profile"))
     form = EmailTokenForm()
     if form.validate_on_submit():
         user = db.session.execute(db.select(User).filter_by(email=form.email.data)).scalar()
@@ -115,18 +146,7 @@ def reset_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         return "Pending"
-    return render_template("choose_password.html", form=form) 
-
-
-@app.route("/change-password/<int:user_id>", methods=["GET", "POST"])
-def change_password(user_id):
-    user = db.get_or_404(User, user_id)
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        user.update(password=form.password.data)
-        flash("Your password has been changed successfully", category="success")
-        return redirect(url_for("profile", user_id=user.user_id))
-    return render_template("choose_password.html", form=form)   
+    return render_template("choose_password.html", form=form)  
 
 
 @app.route("/posts/<int:user_id>")
@@ -138,21 +158,21 @@ def posts_written_by(user_id):
 @app.route("/post/<int:post_id>")
 def post(post_id):
     selected_post = db.get_or_404(Post, post_id)
-    if not selected_post.public:
-        abort(404)
+    if not selected_post.public and selected_post.author != current_user:
+        abort(403)
     next_post = Post.next_post(current_post=selected_post)
     previous_post = Post.previous_post(current_post=selected_post)
     # Retrieve three or less random public posts written by the same author and distinct from the selected post
     posts = Post.public_posts(author=selected_post.author) 
-    random_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.post_id != selected_post.post_id][:3]
+    random_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.id != selected_post.id][:3]
     more_posts = (post for post in random_posts)
     #
     return render_template("post.html", more_posts=more_posts, selected_post=selected_post, next_post=next_post, previous_post=previous_post) 
 
  
 @app.route("/post/create", methods=["GET", "POST"])
+@login_required
 def create_post():
-    user = db.get_or_404(User, 1) # Pending
     form = CreatePostForm()
     if form.validate_on_submit():
         post = Post(
@@ -160,17 +180,20 @@ def create_post():
                 subheading = form.subheading.data,
                 content = form.content.data,
                 level = form.level.data,
-                author = user # Pending
+                author = current_user
                 )
         post.add()
         flash("Your post has been created successfully!", category="success")
-        return redirect(url_for("post", post_id=post.post_id)) 
+        return redirect(url_for("post", post_id=post.id)) 
     return render_template("create_post.html", action="Create", form=form)  
 
 
 @app.route("/post/<int:post_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit_post(post_id):
     post = db.get_or_404(Post, post_id)
+    if post.author != current_user:
+        abort(403)
     form=CreatePostForm()
     if form.validate_on_submit():
         post.update(
@@ -181,10 +204,40 @@ def edit_post(post_id):
                 date_posted = datetime.datetime.utcnow()
                 ) 
         flash("Your post has been updated successfully!", category="success") 
-        return redirect(url_for("post", post_id=post.post_id))
+        return redirect(url_for("post", post_id=post.id))
     if request.method == "GET":
         form.title.data = post.title
         form.subheading.data = post.subheading
         form.content.data = post.content
         form.level.data = post.level
     return render_template("create_post.html", action="Edit", form=form)          
+
+
+@app.route("/post/<int:post_id>/delete")
+@login_required
+def delete_post(post_id):
+    post = db.get_or_404(Post, post_id)
+    if post.author != current_user:
+        abort(403)
+    post.delete()
+    return redirect(url_for("posts_written_by", user_id=current_user.id)) 
+
+
+@app.route("/post/<int:post_id>/hide")
+@login_required
+def hide_post(post_id):
+    post = db.get_or_404(Post, post_id)
+    if post.author != current_user:
+        abort(403)
+    post.hide()
+    return redirect(url_for("post", post_id=post.id)) 
+
+
+@app.route("/post/<int:post_id>/show")
+@login_required
+def show_post(post_id):
+    post = db.get_or_404(Post, post_id)
+    if post.author != current_user:
+        abort(403)
+    post.show()
+    return redirect(url_for("post", post_id=post.id))
