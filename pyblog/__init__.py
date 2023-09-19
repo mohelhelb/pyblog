@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 
 from pyblog.config import ConfigDevelopment
@@ -17,6 +18,9 @@ db = SQLAlchemy(app)
 
 ## Flask: Bcrypt
 bcrypt = Bcrypt(app) 
+
+## Flask: Mail
+mail = Mail(app)
 
 ## Flask: Login
 login_manager = LoginManager(app)

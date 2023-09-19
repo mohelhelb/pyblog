@@ -1,6 +1,7 @@
 import os
 import datetime
 from flask_login import UserMixin
+import jwt
 
 from pyblog import app, bcrypt, db, login_manager
 
@@ -45,6 +46,14 @@ class User(db.Model, UserMixin):
         db.session.delete(self)
         db.session.commit()
 
+
+    def generate_jwt(self, seconds=1800):
+        return jwt.encode(
+                payload={"user_id": self.id, "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds)},
+                key=app.config["SECRET_KEY"],
+                algorithm="HS256"
+                )
+
     def num_public_posts(self):
         i = 0
         for _ in self.public_posts():
@@ -67,6 +76,14 @@ class User(db.Model, UserMixin):
             else:
                 setattr(self, attr, kwargs[attr])
         db.session.commit()
+
+    @classmethod
+    def verify_jwt(cls, token):
+        try:
+            user_id = jwt.decode(token, key=app.config["SECRET_KEY"], algorithms=["HS256"])["user_id"]
+        except Exception:
+            return None
+        return db.session.get(cls, user_id)
 
 
 class Post(db.Model):

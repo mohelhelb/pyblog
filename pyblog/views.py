@@ -3,9 +3,10 @@ import os
 import random
 from flask import abort, flash, redirect, render_template, request, url_for  
 from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
+from flask_mail import Message
 from werkzeug.urls import url_parse
 
-from pyblog import app, db
+from pyblog import app, db, mail
 from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, ImageForm, ProfileForm, SigninForm, SignupForm   
 from pyblog.models import Post, User
 from pyblog.pytools import Img
@@ -135,17 +136,34 @@ def email_token():
     if form.validate_on_submit():
         user = db.session.execute(db.select(User).filter_by(email=form.email.data)).scalar()
         if user:
-            return "Pending" 
+            msg = Message(
+                    sender="mohelhelb@gmail.com",
+                    recipients=[user.email],
+                    subject="PyBlog: Verification Link",
+                    body=f"""{url_for("reset_password", token=user.generate_jwt(), _external=True)}"""
+                    )
+            mail.send(msg)
+            flash("Please check your email inbox and follow the verification link", category="success")
+            return redirect(url_for("index")) 
         flash("There is no account with that email.", category="danger")
         return redirect(request.url) 
     return render_template("email_token.html", form=form)  
 
 
-@app.route("/reset-password/token", methods=["GET", "POST"])
-def reset_password():
+@app.route("/reset-password/<string:token>", methods=["GET", "POST"])
+def reset_password(token): 
+    if current_user.is_authenticated:
+        flash("Please sign out first to be able to recover your account.", category="info")
+        return redirect(url_for("profile")) 
+    user = User.verify_jwt(token)
+    if not user:
+        flash("The verification link is invalid. Please try again", category="danger")
+        return redirect(url_for("email_token"))
     form = ChangePasswordForm()
     if form.validate_on_submit():
-        return "Pending"
+        user.update(password=form.password.data)
+        flash("Your password has been changed successfully", category="success")
+        return redirect(url_for("login"))
     return render_template("choose_password.html", form=form)  
 
 
