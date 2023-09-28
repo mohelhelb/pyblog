@@ -9,6 +9,11 @@ from pyblog import app, bcrypt, db, login_manager
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+followers = db.Table("followers", 
+        db.Column("follower_id", db.Integer, primary_key=True),
+        db.Column("followed_id", db.Integer, primary_key=True)
+        )
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
@@ -18,6 +23,12 @@ class User(db.Model, UserMixin):
     hash_password = db.Column(db.String(60), nullable=False)
     about_me = db.Column(db.String(150), nullable=False)
 
+    following = db.relationship("User", 
+            secondary=followers, 
+            primaryjoin=(followers.c.follower_id == id), 
+            secondaryjoin=(followers.c.followed_id == id),
+            backref="followers"
+            )
     posts = db.relationship("Post", back_populates="author")
 
     @property
@@ -46,6 +57,9 @@ class User(db.Model, UserMixin):
         db.session.delete(self)
         db.session.commit()
 
+    def follow(self, other):
+        self.following.append(other)
+        db.session.commit()
 
     def generate_jwt(self, seconds=1800):
         return jwt.encode(
@@ -62,6 +76,10 @@ class User(db.Model, UserMixin):
 
     def public_posts(self):
         return (post for post in self.posts if post.public == True)
+
+    def unfollow(self, other):
+        self.following.remove(other)
+        db.session.commit()
 
     def update(self, **kwargs):
         for attr in kwargs.keys():
@@ -94,6 +112,7 @@ class Post(db.Model):
     level = db.Column(db.String, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     public = db.Column(db.Boolean, nullable=False, default=True)
+    views = db.Column(db.Integer, nullable=False, default=0)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     author = db.relationship("User", back_populates="posts")
@@ -115,6 +134,10 @@ class Post(db.Model):
         self.public = False
         db.session.commit()
 
+    def increase_view(self):
+        self.views += 1
+        db.session.commit()
+
     @classmethod
     def next_post(cls, current_post=None):
         """Given the current post, fetch the next public post, if any, written by the same author."""
@@ -132,7 +155,7 @@ class Post(db.Model):
 
     @classmethod
     def previous_post(cls, current_post=None): 
-        """Given the current post, fetch the next public post, if any, written by the same author.""" 
+        """Given the current post, fetch the previous public post, if any, written by the same author.""" 
         return db.session.execute(db.select(Post).order_by(cls.id.desc()).filter(
             cls.id < current_post.id, 
             cls.user_id == current_post.user_id, 
@@ -141,7 +164,11 @@ class Post(db.Model):
 
     def show(self):
         self.public = True
-        db.session.commit()
+        db.session.commit() 
+
+    @classmethod
+    def trending_posts(cls):
+        return db.session.execute(db.select(cls).filter(cls.public==True).order_by(cls.views.desc()).limit(3)).scalars() 
 
     def update(self, **kwargs):
         for attr in kwargs.keys():

@@ -107,6 +107,44 @@
 
 {% block sidebar %}
   <div class="card mb-20"> 
+    {% if current_user != selected_post.author %}
+      {% if current_user.is_authenticated %}
+        {% if current_user in selected_post.author.followers %}  
+          <form action="{{ url_for('unfollow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+            <fieldset>
+              <!-- >>> CSRF token -->
+              {{ form.hidden_tag() }}
+              <!-- <<< CSRF token -->
+              <!-- >>> Submit Button -->
+              {{ form.submit(class="follow small text-muted-dark", value="Unfollow") }}
+              <!-- <<< Submit Button -->
+            </fieldset>
+          </form> 
+        {% else %} 
+          <form action="{{ url_for('follow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+            <fieldset>
+              <!-- >>> CSRF token -->
+              {{ form.hidden_tag() }}
+              <!-- <<< CSRF token -->
+              <!-- >>> Submit Button -->
+              {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+              <!-- <<< Submit Button -->
+            </fieldset>
+          </form> 
+        {% endif %}
+      {% else %}
+        <form action="{{ url_for('follow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+          <fieldset>
+            <!-- >>> CSRF token -->
+            {{ form.hidden_tag() }}
+            <!-- <<< CSRF token -->
+            <!-- >>> Submit Button -->
+            {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+            <!-- <<< Submit Button -->
+          </fieldset>
+        </form>
+      {% endif %}
+    {% endif %}
     <div class="avatar-username mt-24">
       <a href="{{ url_for('posts_written_by', user_id=selected_post.author.id) }}">
         <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">

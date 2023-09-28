@@ -1,6 +1,7 @@
 import glob
 import os
 from PIL import Image
+from werkzeug.urls import url_parse
 
 from pyblog import app
 

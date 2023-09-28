@@ -19,14 +19,14 @@
         <div class="fleft width-third t-align-center">
           <span>Followers</span>
           <div class="circle">
-            <span class="abs-center">00</span> <!-- Pending -->
-          </div>
+            <span class="abs-center">{{ user.followers|length }}</span>
+          </div>  
         </div>  
         <div class="fleft width-third t-align-center">
           <span>Following</span>
           <div class="circle">
-            <span class="abs-center">00</span>  <!-- Pending -->
-          </div>                                        
+            <span class="abs-center">{{ user.following|length }}</span>
+          </div>                                       
         </div> 
       </div>
     </section>

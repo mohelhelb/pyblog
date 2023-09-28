@@ -31,25 +31,55 @@
     <div class="div-3 chart mb-24 clearfix">    
       <div class="fleft width-third t-align-center">
         <span>Posts</span>
-        <div class="circle">
+        <a class="circle" href="{{ url_for("posts_written_by", user_id=current_user.id) }}">
           <span class="abs-center">{{ current_user.num_public_posts() }}</span>
-        </div>
+        </a>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Followers</span>
         <div class="circle">
-          <span class="abs-center">00</span>
+          <span class="abs-center">{{ current_user.followers|length }}</span>
         </div>
       </div>  
       <div class="fleft width-third t-align-center">
         <span>Following</span>
         <div class="circle">
-          <span class="abs-center">00</span>
+          <span class="abs-center">{{ current_user.following|length }}</span>
         </div>                                        
       </div> 
     </div>    
     <button type="button" class="btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
   </section>
+  {% for follower in current_user.followers %} 
+    <section class="card mb-20">
+      <div class="avatar-username mt-40 mb-16 t-align-center">
+        <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
+      </div>
+      <p class="mt-0 mb-0">{{ follower.fullname }}</p>
+      <hr class="hr mt-0">
+      <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ follower.about_me }}</p>
+      <div class="div-3 chart mb-24 clearfix">    
+        <div class="fleft width-third t-align-center">
+          <span>Posts</span>
+          <div class="circle">
+            <span class="abs-center">{{ follower.num_public_posts() }}</span>
+          </div>
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Followers</span>
+          <div class="circle">
+            <span class="abs-center">{{ follower.followers|length }}</span>
+          </div>  
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Following</span>
+          <div class="circle">
+            <span class="abs-center">{{ follower.following|length }}</span>
+          </div>                                       
+        </div> 
+      </div>
+    </section>          
+  {% endfor %}
   <section class="card mb-20" id="profileFormCard">
     <form class="mt-40" id="profileForm" action="" method="POST" enctype="multipart/form-data">
       <fieldset form="profileForm">

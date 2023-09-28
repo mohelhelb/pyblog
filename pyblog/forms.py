@@ -79,6 +79,9 @@ class CreatePostForm(FlaskForm):
             )
     submit = SubmitField()
 
+class FollowerForm(FlaskForm):
+    submit = SubmitField()
+
 
 # Python Inheritance
 

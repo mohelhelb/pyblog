@@ -55,7 +55,7 @@
             </a>                 
             <a href="{{ url_for('profile') }}">
               <i class="fa-regular fa-user"></i>
-              <span class="ml-3">My Profile</span>
+              <span class="ml-3">{{ current_user.fullname }}</span>
             </a> 
             <a href="{{ url_for('logout') }}">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>

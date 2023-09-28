@@ -465,7 +465,18 @@ form legend {
   border: 1px solid var(--gray-m);
   border-radius: 50%;
   background-color: var(--gray-xs);
-} 
+}
+
+.follow {
+  position: absolute;
+  top: 8px;
+  right:8px;
+  width: 60px;
+  height: 60px; 
+  border: 1px solid var(--gray-m);
+  border-radius: 50%;
+  background-color: var(--gray-xs); 
+}
 
 /* In progress */
 

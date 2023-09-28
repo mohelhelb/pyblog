@@ -7,18 +7,16 @@ from flask_mail import Message
 from werkzeug.urls import url_parse
 
 from pyblog import app, db, mail
-from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, ImageForm, ProfileForm, SigninForm, SignupForm   
+from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, FollowerForm, ImageForm, ProfileForm, SigninForm, SignupForm   
 from pyblog.models import Post, User
 from pyblog.pytools import Img
-
-import pyblog.mock_data as mock_data # Pending 
 
 
 @app.route("/")
 @app.route("/index")
 def index():
     public_posts = Post.public_posts()
-    trending_posts = mock_data.trending_posts[:3] # Pending
+    trending_posts = Post.trending_posts()
     return render_template("index.html", public_posts=public_posts, trending_posts=trending_posts)  
 
 
@@ -62,7 +60,7 @@ def login():
             next_page = request.args.get("next")
             if not next_page or url_parse(next_page).netloc:
                 next_page = url_for("profile")
-            flash(f"Hi, {user.first_name}! How is it going?", category="success")
+            flash(f"Hi, {user.first_name}! How is it going?", category="success") 
             return redirect(next_page)
         elif user: 
             flash("The password is incorrect. Please try again.", category="danger")
@@ -175,6 +173,7 @@ def posts_written_by(user_id):
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
+    form = FollowerForm()
     selected_post = db.get_or_404(Post, post_id)
     if not selected_post.public and selected_post.author != current_user:
         abort(403)
@@ -185,7 +184,11 @@ def post(post_id):
     random_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.id != selected_post.id][:3]
     more_posts = (post for post in random_posts)
     #
-    return render_template("post.html", more_posts=more_posts, selected_post=selected_post, next_post=next_post, previous_post=previous_post) 
+    # Increase the number of views by one
+    if current_user != selected_post.author:
+        selected_post.increase_view()
+    #
+    return render_template("post.html", form=form, more_posts=more_posts, selected_post=selected_post, next_post=next_post, previous_post=previous_post) 
 
  
 @app.route("/post/create", methods=["GET", "POST"])
@@ -259,3 +262,37 @@ def show_post(post_id):
         abort(403)
     post.show()
     return redirect(url_for("post", post_id=post.id))
+
+
+@app.route("/follow/<int:post_id>", methods=["POST"])
+def follow(post_id):
+    if not current_user.is_authenticated:
+        flash("Please sign in first to be able to follow users", category="info")
+        return redirect(url_for("login"))
+    form = FollowerForm()
+    if form.validate_on_submit():
+        user = db.session.get(Post, post_id).author
+        if not user:
+            flash("The user you are trying to follow was not found", category="danger")
+        elif current_user == user:
+            flash("Oops! You cannot follow yourself", category="danger")
+        else:
+            current_user.follow(user)
+    return redirect(url_for("post", post_id=post_id))
+
+@app.route("/unfollow/<int:post_id>", methods=["POST"])
+def unfollow(post_id): 
+    if not current_user.is_authenticated:
+        flash("Please sign in first to be able to follow users", category="info")
+        return redirect(url_for("login"))
+    form = FollowerForm()
+    if form.validate_on_submit():
+        user = db.session.get(Post, post_id).author
+        if not user:
+            flash("The user you are trying to unfollow was not found", category="danger")
+        elif current_user == user:
+            flash("Oops! You cannot unfollow yourself", category="danger")
+        else:
+            current_user.unfollow(user)
+    return redirect(url_for("post", post_id=post_id)) 
+
