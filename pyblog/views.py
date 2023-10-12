@@ -1,22 +1,32 @@
 import datetime
 import os
 import random
-from flask import abort, flash, redirect, render_template, request, url_for  
+from flask import abort, flash, g, redirect, render_template, request, url_for  
 from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
 from flask_mail import Message
 from werkzeug.urls import url_parse
 
 from pyblog import app, db, mail
-from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, FollowerForm, ImageForm, ProfileForm, SigninForm, SignupForm   
+from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, EmptyForm, ImageForm, ProfileForm, SigninForm, SignupForm   
 from pyblog.models import Post, User
 from pyblog.pytools import Img
+
+
+@app.before_request
+def before_request():
+    '''Set the jinja2 variables in the base template.'''
+    g.total_users = User.num_users()
+    g.total_public_posts = Post.num_public_posts()
+    # Pending: Inefficiency
+    g.top_writers = sorted([user for user in db.session.execute(db.select(User)).scalars()][:9], reverse=True)
+    #
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    public_posts = Post.public_posts()
-    trending_posts = Post.trending_posts()
+    trending_posts = Post.trending_posts() if Post.num_trending_posts() else None 
+    public_posts = Post.public_posts() if Post.num_public_posts() else None
     return render_template("index.html", public_posts=public_posts, trending_posts=trending_posts)  
 
 
@@ -82,6 +92,9 @@ def logout():
 def profile():
     image_form = ImageForm() 
     profile_form = ProfileForm()
+    follower_form = EmptyForm()
+    if not current_user.is_authenticated and follower_form.validate_on_submit():
+        return redirect(request.url)
     if "submit_image" in request.form:
         if image_form.validate():
             # Change the filename of the uploaded image.
@@ -111,7 +124,7 @@ def profile():
         profile_form.last_name.data = current_user.last_name
         profile_form.email.data = current_user.email
         profile_form.about_me.data = current_user.about_me 
-    return render_template("profile.html", image_form=image_form, profile_form=profile_form)  
+    return render_template("profile.html", follower_form=follower_form, image_form=image_form, profile_form=profile_form)  
 
 
 @app.route("/change-password", methods=["GET", "POST"])
@@ -168,15 +181,23 @@ def reset_password(token):
 @app.route("/posts/<int:user_id>")
 def posts_written_by(user_id):
     user = db.get_or_404(User, user_id)
-    return render_template("posts_by_author.html", user=user) 
+    form = EmptyForm()
+    if form.validate_on_submit():
+        return redirect(request.url)
+    return render_template("posts_by_author.html", form=form, user=user) 
  
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
-    form = FollowerForm()
+    follower_form = EmptyForm()
+    bookmark_form = EmptyForm()
     selected_post = db.get_or_404(Post, post_id)
     if not selected_post.public and selected_post.author != current_user:
         abort(403)
+    if follower_form.validate_on_submit():
+        return redirect(request.url)
+    if bookmark_form.validate_on_submit():
+        return redirect(request.url)
     next_post = Post.next_post(current_post=selected_post)
     previous_post = Post.previous_post(current_post=selected_post)
     # Retrieve three or less random public posts written by the same author and distinct from the selected post
@@ -188,7 +209,13 @@ def post(post_id):
     if current_user != selected_post.author:
         selected_post.increase_view()
     #
-    return render_template("post.html", form=form, more_posts=more_posts, selected_post=selected_post, next_post=next_post, previous_post=previous_post) 
+    return render_template("post.html", 
+            bookmark_form=bookmark_form,
+            follower_form=follower_form, 
+            more_posts=more_posts, 
+            selected_post=selected_post, 
+            next_post=next_post, 
+            previous_post=previous_post) 
 
  
 @app.route("/post/create", methods=["GET", "POST"])
@@ -201,6 +228,7 @@ def create_post():
                 subheading = form.subheading.data,
                 content = form.content.data,
                 level = form.level.data,
+                public = True if form.status.data == "Now" else False,
                 author = current_user
                 )
         post.add()
@@ -261,38 +289,69 @@ def show_post(post_id):
     if post.author != current_user:
         abort(403)
     post.show()
-    return redirect(url_for("post", post_id=post.id))
+    return redirect(url_for("post", post_id=post.id)) 
 
 
-@app.route("/follow/<int:post_id>", methods=["POST"])
-def follow(post_id):
+@app.route("/follow/<int:user_id>", methods=["POST"])
+def follow(user_id):
+    user = db.get_or_404(User, user_id)
     if not current_user.is_authenticated:
-        flash("Please sign in first to be able to follow users", category="info")
+        flash(f"Please sign in first to be able to follow {user.fullname}", category="info")
         return redirect(url_for("login"))
-    form = FollowerForm()
+    form = EmptyForm()
     if form.validate_on_submit():
-        user = db.session.get(Post, post_id).author
-        if not user:
-            flash("The user you are trying to follow was not found", category="danger")
-        elif current_user == user:
+        if current_user == user:
             flash("Oops! You cannot follow yourself", category="danger")
         else:
             current_user.follow(user)
-    return redirect(url_for("post", post_id=post_id))
+            flash(f"You are now following {user.fullname}", category="success")
+    return redirect(url_for("posts_written_by", user_id=user.id)) 
 
-@app.route("/unfollow/<int:post_id>", methods=["POST"])
-def unfollow(post_id): 
+
+@app.route("/unfollow/<int:user_id>", methods=["POST"])
+def unfollow(user_id):
+    user = db.get_or_404(User, user_id)
     if not current_user.is_authenticated:
-        flash("Please sign in first to be able to follow users", category="info")
+        flash(f"Please sign in first to be able to unfollow {user.fullname}", category="info")
         return redirect(url_for("login"))
-    form = FollowerForm()
+    form = EmptyForm()
     if form.validate_on_submit():
-        user = db.session.get(Post, post_id).author
-        if not user:
-            flash("The user you are trying to unfollow was not found", category="danger")
-        elif current_user == user:
-            flash("Oops! You cannot unfollow yourself", category="danger")
+        if current_user == user: 
+            flash("Oops! This cannot be done", category="danger")
         else:
             current_user.unfollow(user)
+            flash(f"You are no longer following {user.fullname}", category="success")
+    return redirect(url_for("posts_written_by", user_id=user.id))    
+
+
+@app.route("/bookmark/<int:post_id>", methods=["POST"])
+def bookmark(post_id):
+    post = db.get_or_404(Post, post_id)
+    if not current_user.is_authenticated:
+        flash(f"Please sign in first to be able to add bookmarks", category="info")
+        return redirect(url_for("login"))
+    form = EmptyForm()
+    if form.validate_on_submit():
+        if current_user == post.author:
+            flash("Oops! This cannot be done", category="danger")
+        else:
+            current_user.bookmark(post)
+            flash("This post has been added to your bookmarks successfully", category="success")
+    return redirect(url_for("post", post_id=post_id))   
+
+
+@app.route("/unbookmark/<int:post_id>", methods=["POST"])
+def unbookmark(post_id):
+    post = db.get_or_404(Post, post_id)
+    if not current_user.is_authenticated:
+        flash(f"Please sign in first to be able to add this post to your bookmarks", category="info")
+        return redirect(url_for("login"))
+    form = EmptyForm()
+    if form.validate_on_submit():
+        if current_user == post.author:
+            flash("Oops! This cannot be done", category="danger")
+        else:
+            current_user.unbookmark(post)
+            flash("This post has been removed from your bookmarks successfully", category="success")
     return redirect(url_for("post", post_id=post_id)) 
 

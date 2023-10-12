@@ -1,38 +1,74 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if user != current_user %}
-    <section class="card mb-20">
-      <div class="avatar-username mt-40 mb-16 t-align-center">
-        <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
-      </div>
-      <p class="mt-0 mb-0">{{ user.fullname }}</p>
-      <hr class="hr mt-0">
-      <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user.about_me }}</p>
-      <div class="div-3 chart mb-24 clearfix">    
-        <div class="fleft width-third t-align-center">
-          <span>Posts</span>
-          <div class="circle">
-            <span class="abs-center">{{ user.num_public_posts() }}</span>
-          </div>
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Followers</span>
-          <div class="circle">
-            <span class="abs-center">{{ user.followers|length }}</span>
-          </div>  
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Following</span>
-          <div class="circle">
-            <span class="abs-center">{{ user.following|length }}</span>
-          </div>                                       
-        </div> 
-      </div>
-    </section>
-  {% endif %}
   <section class="card mb-20">
-    <h3 class="mt-30 mb-0" id="switchNewestOldest">
+    {% if current_user.is_authenticated %}
+      {% if current_user in user.followers %}  
+        <form action="{{ url_for('unfollow', user_id=user.id) }}" method="POST" class="mt-40">
+          <fieldset>
+            <!-- >>> CSRF token -->
+            {{ form.hidden_tag() }}
+            <!-- <<< CSRF token -->
+            <!-- >>> Submit Button -->
+            {{ form.submit(class="unfollow small text-muted-dark", value="Unfollow") }}
+            <!-- <<< Submit Button -->
+          </fieldset>
+        </form> 
+      {% else %} 
+        <form action="{{ url_for('follow', user_id=user.id) }}" method="POST" class="mt-40">
+          <fieldset>
+            <!-- >>> CSRF token -->
+            {{ form.hidden_tag() }}
+            <!-- <<< CSRF token -->
+            <!-- >>> Submit Button -->
+            {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+            <!-- <<< Submit Button -->
+          </fieldset>
+        </form> 
+      {% endif %}
+    {% else %}
+      <form action="{{ url_for('follow', user_id=user.id) }}" method="POST" class="mt-40">
+        <fieldset>
+          <!-- >>> CSRF token -->
+          {{ form.hidden_tag() }}
+          <!-- <<< CSRF token -->
+          <!-- >>> Submit Button -->
+          {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+          <!-- <<< Submit Button -->
+        </fieldset>
+      </form>
+    {% endif %}       
+    <div class="avatar-username mt-40 mb-16 t-align-center">
+      <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
+    </div>
+    <p class="mt-0 mb-0">{{ user.fullname }}</p>
+    <hr class="hr mt-0">
+    <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ user.about_me }}</p>
+    <div class="div-3 chart mb-24 clearfix">    
+      <div class="fleft width-third t-align-center">
+        <span>Posts</span>
+        <div class="circle">
+          <span class="abs-center">{{ user.num_public_posts() }}</span>
+        </div>
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Followers</span>
+        <div class="circle">
+          <span class="abs-center">{{ user.followers|length }}</span>
+        </div>  
+      </div>  
+      <div class="fleft width-third t-align-center">
+        <span>Following</span>
+        <div class="circle">
+          <span class="abs-center">{{ user.following|length }}</span>
+        </div>                                       
+      </div> 
+    </div>
+  </section> 
+
+  <!-- My Posts >> --> 
+  <section class="card mb-20" id="myPosts">
+    <h3 class="mt-30 mb-0">
       <i class="fa-solid fa-arrow-up"></i>
       <span class="ml-3">Newest Releases</span>
     </h3>   
@@ -69,50 +105,24 @@
           </span>
         </div>
       </div>
-    </div>          
-    {% if user == current_user %} 
-      {% for post in user.posts %}
-        <article class="post mt-30 mb-30">
-          <header>
-            <h2>
-              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
-            </h2>
-          </header> 
-          <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
-          <footer class="small text-muted-light">
-            <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
-            <span class="middot">&middot;</span>
-            <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
-            <span class="middot">&middot;</span> 
-            <span class="level">{{ post.level }}</span> 
-            <span class="middot">&middot;</span> 
-            {% if post.public %}
-              <span class="fa-regular fa-eye"></span>
-            {% else %}  
-              <span class="fa-regular fa-eye-slash"></span> 
-            {% endif %}
-          </footer> 
-        </article> 
-      {% endfor %} 
-    {% else %}
-      {% for post in user.public_posts() %}
-        <article class="post mt-30 mb-30">
-          <header>
-            <h2>
-              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
-            </h2>
-          </header> 
-          <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
-          <footer class="small text-muted-light">
-            <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
-            <span class="middot">&middot;</span>
-            <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
-            <span class="middot">&middot;</span>
-            <span class="level">{{ post.level }}</span>
-          </footer> 
-        </article> 
-      {% endfor %}
-    {% endif %}
+    </div> 
+    {% for post in user.public_posts() %}
+      <article class="post mt-30 mb-30">
+        <header>
+          <h2>
+            <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+          </h2>
+        </header> 
+        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+        <footer class="small text-muted-light">
+          <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+          <span class="middot">&middot;</span>
+          <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+          <span class="middot">&middot;</span> 
+          <span class="level">{{ post.level }}</span>
+        </footer> 
+      </article> 
+    {% endfor %} 
     <div class="load-more t-align-center mb-20">
       <span class="circle">
         <span class="abs-center">
@@ -120,6 +130,42 @@
         </span>
       </span>
     </div>   
+  </section>    
+  <!-- << My Posts --> 
+
+  <!-- Followers -->
+  <section class="card mb-20" id="followers"> 
+    <h3 class="mt-30 mb-0">
+      <span>Followers</span>
+    </h3>                 
+    <hr class="hr mt-0 mb-30">
+    {% for follower in user.followers %}
+      <div class="avatar-username mb-16">
+        <a href="{{ url_for('posts_written_by', user_id=follower.id) }}">
+          <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+          <span>{{ follower.fullname }}</span>
+        </a> 
+      </div>
+    {% endfor %}
+  </section>
+  <!-- Followers --> 
+
+  <!-- Following -->
+  <section class="card mb-20" id="following"> 
+    <h3 class="mt-30 mb-0">
+      <span>Following</span>
+    </h3>                 
+    <hr class="hr mt-0 mb-30">
+    {% for following in user.following %}
+      <div class="avatar-username mb-16">
+        <a href="{{ url_for('posts_written_by', user_id=following.id) }}">
+          <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+          <span>{{ following.fullname }}</span>
+        </a> 
+      </div>
+    {% endfor %}
+  </section>
+  <!-- Following -->    
 {% endblock content %}  
 
 {% block js %}

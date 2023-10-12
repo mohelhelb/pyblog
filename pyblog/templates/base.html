@@ -49,10 +49,12 @@
               <i class="fa-solid fa-plus"></i>
               <span class="ml-3">New Post</span>
             </a> 
+            <!--
             <a href="{{ url_for('posts_written_by', user_id=current_user.id) }}">
               <i class="fa-regular fa-clipboard"></i>
               <span class="ml-3">My Posts</span>
-            </a>                 
+            </a>
+            -->            
             <a href="{{ url_for('profile') }}">
               <i class="fa-regular fa-user"></i>
               <span class="ml-3">{{ current_user.fullname }}</span>
@@ -86,6 +88,7 @@
       {% block content %}
       {% endblock content %}
     </main>
+
     <!-- Aside Content -->
     <aside id="sidebar" class="fleft">
       {% block sidebar %}
@@ -93,11 +96,11 @@
         <div class="card mb-20">
           <div class="density mt-16 mb-16 clearfix">
             <div class="num-writers fleft width-third t-align-center">
-              <h2>+200</h2>
+              <h2>{{ g.total_users }}</h2>
               <p>Writers</p>
             </div>
             <div class="num-posts fleft width-third t-align-center">
-              <h2>+2K</h2>
+              <h2>{{ g.total_public_posts }}</h2>
               <p>Posts</p>
             </div>
           </div>
@@ -110,63 +113,17 @@
               <span class="trending">Top Writers</span>
             </h3>
           </header>                 
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>         
-          <div class="avatar-username mb-16">
-            <a href="{{ url_for('posts_written_by', user_id=1) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>John Doe</span>
-            </a>  
-          </div>                     
-        </div>
+          {% for writer in g.top_writers %}  
+            <div class="avatar-username mb-16">
+              <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
+                <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+                <span>{{ writer.fullname }}</span>
+              </a>  
+            </div>  
+          {% endfor %}
       {% endblock sidebar %}
     </aside>
+
   </div>
 
   <!-- Display 100px gap -->

@@ -4,99 +4,106 @@
   <section class="card mb-20">
     <h1 class="t-align-center">PyBlog</h1>                     
     <h2 class="t-align-center mb-48">A blog on Python and related technologies</h2> 
-    <h3 class="mb-0">
-      <i class="fa-solid fa-arrow-trend-up"></i>
-      <span class="ml-3">Trending Posts</span>
-    </h3>
-    <hr class="hr mt-0">
-    <!-- Pending -->
-    {% for post in trending_posts %}
-      <article class="post mt-30 mb-30">
-        <header> 
-          <div class="avatar-username">
-            <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>{{ post.author.fullname }}</span>
-            </a>  
-          </div>  
-          <h2>
-            <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
-          </h2>
-        </header>
-        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
-        <footer class="small text-muted-light">
-          <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
-          <span class="middot">&middot;</span>
-          <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
-          <span class="middot">&middot;</span>
-          <span class="level">{{ post.level }}</span>
-        </footer>  
-      </article> 
-    {% endfor %}
-    <!---->
-    <h3 class="mb-0" id="switchNewestOldest">
-      <i class="fa-solid fa-arrow-up"></i>
-      <span class="ml-3">Newest Releases</span>
-    </h3>   
-    <div class="sort-toggle">
-      <hr class="hr mt-0 mb-3"> 
-      <span class="circle">
-        <span class="abs-center">
-          <i class="fa-solid fa-angles-down"></i>
-        </span>
-      </span> 
-    </div>
-    <div class="div-3 sort mt-30 clearfix">    
-      <div class="fleft width-third t-align-center">
-        <span>Trending</span>
-        <div class="circle"> 
+
+    <!-- Trending Posts -->
+    {% if trending_posts %}
+      <h3 class="mb-0">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <span class="ml-3">Trending Posts</span>
+      </h3>
+      <hr class="hr mt-0">
+      {% for post in trending_posts %}
+        <article class="post mt-30 mb-30">
+          <header> 
+            <div class="avatar-username">
+              <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
+                <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+                <span>{{ post.author.fullname }}</span>
+              </a>  
+            </div>  
+            <h2>
+              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+            </h2>
+          </header>
+          <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+          <footer class="small text-muted-light">
+            <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
+            <span class="middot">&middot;</span>
+            <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+            <span class="middot">&middot;</span>
+            <span class="level">{{ post.level }}</span>
+          </footer>  
+        </article> 
+      {% endfor %}
+    {% endif %}
+    <!-- Trending Posts -->
+
+    <!-- Public Posts > -->
+    {% if public_posts %}
+      <h3 class="mb-0" id="switchNewestOldest">
+        <i class="fa-solid fa-arrow-up"></i>
+        <span class="ml-3">Newest Releases</span>
+      </h3>   
+      <div class="sort-toggle">
+        <hr class="hr mt-0 mb-3"> 
+        <span class="circle">
           <span class="abs-center">
-            <i class="fa-solid fa-arrow-trend-up"></i>
+            <i class="fa-solid fa-angles-down"></i>
           </span>
-        </div>
-      </div>  
-      <div class="fleft width-third t-align-center">
-        <span>Newest</span>
-        <div class="circle"> 
-          <span class="abs-center">
-            <i class="fa-solid fa-arrow-up"></i>
-          </span>
-        </div>  
-      </div>  
-      <div class="fleft width-third t-align-center">
-        <span>Oldest</span>
-        <div class="circle"> 
-          <span class="abs-center">
-            <i class="fa-solid fa-arrow-down"></i>
-          </span>
-        </div>
+        </span> 
       </div>
-    </div>  
-    <!-- >>> Public Posts -->
-    {% for post in public_posts %}
-      <article class="post mt-30 mb-30">
-        <header> 
-          <div class="avatar-username">
-            <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
-              <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-              <span>{{ post.author.fullname }}</span>
-            </a>  
+      <div class="div-3 sort mt-30 clearfix">    
+        <div class="fleft width-third t-align-center">
+          <span>Trending</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </span>
+          </div>
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Newest</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-up"></i>
+            </span>
           </div>  
-          <h2>
-            <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
-          </h2>
-        </header>
-        <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
-        <footer class="small text-muted-light">
-          <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
-          <span class="middot">&middot;</span>
-          <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
-          <span class="middot">&middot;</span>
-          <span class="level">{{ post.level }}</span>
-        </footer>  
-      </article> 
-    {% endfor %}
-    <!-- <<< Public Posts -->
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Oldest</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-down"></i>
+            </span>
+          </div>
+        </div>
+      </div> 
+      {% for post in public_posts %}
+        <article class="post mt-30 mb-30">
+          <header> 
+            <div class="avatar-username">
+              <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
+                <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+                <span>{{ post.author.fullname }}</span>
+              </a>  
+            </div>  
+            <h2>
+              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+            </h2>
+          </header>
+          <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+          <footer class="small text-muted-light">
+            <span class="date">{{ post.date_posted.strftime("%B %d, %Y") }}</span>
+            <span class="middot">&middot;</span>
+            <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+            <span class="middot">&middot;</span>
+            <span class="level">{{ post.level }}</span>
+          </footer>  
+        </article> 
+      {% endfor %}
+    {% endif %}
+    <!-- < Public Posts -->
+
     <div class="load-more t-align-center mb-20">
       <span class="circle">
         <span class="abs-center">

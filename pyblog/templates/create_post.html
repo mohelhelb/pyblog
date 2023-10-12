@@ -47,11 +47,11 @@
         {% else %}  
           {{ form.content(placeholder=form.content.description, rows="15") }} 
         {% endif %}
-        <!-- <<< Content -->
+        <!-- <<< Content -->  
         <!-- <<< Difficulty Level --> 
         {{ form.level.label(class="mb-0") }}
         {% for difficulty_level in form.level %}
-          <label for="{{ difficulty_level.id }}">
+          <label for="{{ difficulty_level.id }}" class="level-status">
             {% if difficulty_level.id == "level-0" %}
               {{ difficulty_level(checked="checked") }} 
             {% endif %}
@@ -60,7 +60,22 @@
             <span>{{ difficulty_level.label.text }}</span>
           </label>
         {% endfor %}
-        <!-- <<< Difficulty Level -->   
+        <!-- <<< Difficulty Level -->
+
+        <!-- <<< Status --> 
+        {{ form.status.label(class="mb-0") }}
+        {% for status in form.status %}
+          <label for="{{ status.id }}" class="level-status">
+            {% if status.id == "status-0" %}
+              {{ status(checked="checked") }} 
+            {% endif %}
+            {{ status }}
+            <span class="checkmark"></span>
+            <span>{{ status.label.text }}</span>
+          </label>
+        {% endfor %}
+        <!-- <<< Status -->
+
         <!-- >>> Submit Button -->
         {{ form.submit(class="btn-info mt-6 mb-24") }}
         <!-- <<< Submit Button -->  

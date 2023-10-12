@@ -96,7 +96,9 @@ export class Post {
  }
 
  loadMore() {
-   const loadMoreButton = document.querySelector(".load-more .circle");
+   // The button for loading more posts always follows the last post.
+   const loadMoreButton = this.postElements[this.postElements.length - 1].nextElementSibling.firstElementChild;
+   //
    let m = Math.floor(this.postElements.length / this.perPagePostElements);
    let n = this.postElements.length % this.perPagePostElements;
    if (this.postElements.length === 0) {

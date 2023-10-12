@@ -28,20 +28,28 @@
     <p class="mt-0 mb-0">{{ current_user.fullname }}</p>
     <hr class="hr mt-0">
     <p class="mt-0 mb-24 text-muted-dark l-height-6">{{ current_user.about_me }}</p>
-    <div class="div-3 chart mb-24 clearfix">    
-      <div class="fleft width-third t-align-center">
-        <span>Posts</span>
-        <a class="circle" href="{{ url_for("posts_written_by", user_id=current_user.id) }}">
-          <span class="abs-center">{{ current_user.num_public_posts() }}</span>
-        </a>
+    <div class="div-2 chart mb-30 clearfix">    
+      <div class="fleft width-50pc t-align-center">
+        <span>My Posts</span> 
+        <div class="circle">
+          <span class="abs-center">{{ current_user.num_public_posts() }}/{{ current_user.posts|length }}</span>
+        </div>
+      </div>   
+      <div class="fleft width-50pc t-align-center">
+        <span>My Bookmarks</span>
+        <div class="circle">
+          <span class="abs-center">{{ current_user.saved_posts|length }}</span>
+        </div>
       </div>  
-      <div class="fleft width-third t-align-center">
+    </div> 
+    <div class="div-2 chart mb-24 clearfix"> 
+      <div class="fleft width-50pc t-align-center">
         <span>Followers</span>
         <div class="circle">
           <span class="abs-center">{{ current_user.followers|length }}</span>
         </div>
       </div>  
-      <div class="fleft width-third t-align-center">
+      <div class="fleft width-50pc t-align-center">
         <span>Following</span>
         <div class="circle">
           <span class="abs-center">{{ current_user.following|length }}</span>
@@ -49,39 +57,10 @@
       </div> 
     </div>    
     <button type="button" class="btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
-  </section>
-  {% for follower in current_user.followers %} 
-    <section class="card mb-20">
-      <div class="avatar-username mt-40 mb-16 t-align-center">
-        <img class="width-100 height-100" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar">
-      </div>
-      <p class="mt-0 mb-0">{{ follower.fullname }}</p>
-      <hr class="hr mt-0">
-      <p class="mt-0 mb-24 l-height-6 text-muted-dark">{{ follower.about_me }}</p>
-      <div class="div-3 chart mb-24 clearfix">    
-        <div class="fleft width-third t-align-center">
-          <span>Posts</span>
-          <div class="circle">
-            <span class="abs-center">{{ follower.num_public_posts() }}</span>
-          </div>
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Followers</span>
-          <div class="circle">
-            <span class="abs-center">{{ follower.followers|length }}</span>
-          </div>  
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Following</span>
-          <div class="circle">
-            <span class="abs-center">{{ follower.following|length }}</span>
-          </div>                                       
-        </div> 
-      </div>
-    </section>          
-  {% endfor %}
+  </section> 
+  <!-- Edit Profile >> -->
   <section class="card mb-20" id="profileFormCard">
-    <form class="mt-40" id="profileForm" action="" method="POST" enctype="multipart/form-data">
+    <form class="mt-40" id="profileForm" action="" method="POST">
       <fieldset form="profileForm">
         <legend>Profile</legend>    
         <div class="sort-toggle mb-6">
@@ -193,7 +172,261 @@
         </form>
       </div>
     </div>  
-  </section>
+  </section>      
+  <!-- << Edit Profile -->  
+
+  <!-- My Posts > -->
+  <div id="myPosts">
+    <!-- Hidden Posts > --> 
+    {% if current_user.num_hidden_posts() %}
+      <section class="card mb-20" id="myHiddenPosts">
+        <h3 class="mt-30 mb-0">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span class="ml-3">My hidden posts</span>
+        </h3>   
+        <div class="sort-toggle">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down"></i>
+            </span>
+          </span> 
+        </div>
+        <div class="div-3 sort mt-30 clearfix">
+          <div class="fleft width-50pc t-align-center">
+            <span>Newest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-up"></i>
+              </span>
+            </div>  
+          </div>  
+          <div class="fleft width-50pc t-align-center">
+            <span>Oldest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-down"></i>
+              </span>
+            </div>
+          </div>
+        </div> 
+        {% for post in current_user.hidden_posts() %}
+          <article class="post mt-30 mb-30">
+            <header>
+              <h2>
+                <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+              </h2>
+            </header> 
+            <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+            <footer class="small text-muted-light">
+              <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+              <span class="middot">&middot;</span>
+              <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+              <span class="middot">&middot;</span>
+              {% if post.public %}
+                <span class="fa-regular fa-eye"></span>
+              {% else %}  
+                <span class="fa-regular fa-eye-slash"></span> 
+              {% endif %}   
+              <span class="middot">&middot;</span>  
+              <span class="level">{{ post.level }}</span>
+            </footer> 
+          </article> 
+        {% endfor %} 
+        <div class="load-more t-align-center mb-20">
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down fa-lg"></i>
+            </span>
+          </span>
+        </div>   
+      </section>    
+    {% endif %}
+    <!-- << Hidden Posts -->             
+
+    <!-- Released Posts > --> 
+    {% if current_user.num_public_posts() %}
+      <section class="card mb-20" id="myReleasedPosts">
+        <h3 class="mt-30 mb-0">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span class="ml-3">My released posts</span>
+        </h3>   
+        <div class="sort-toggle">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down"></i>
+            </span>
+          </span> 
+        </div>
+        <div class="div-3 sort mt-30 clearfix">    
+          <div class="fleft width-third t-align-center">
+            <span>Trending</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </span>
+            </div>
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Newest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-up"></i>
+              </span>
+            </div>  
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Oldest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-down"></i>
+              </span>
+            </div>
+          </div>
+        </div> 
+        {% for post in current_user.public_posts() %}
+          <article class="post mt-30 mb-30">
+            <header>
+              <h2>
+                <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+              </h2>
+            </header> 
+            <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+            <footer class="small text-muted-light">
+              <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+              <span class="middot">&middot;</span>
+              <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+              <span class="middot">&middot;</span>
+              {% if post.public %}
+                <span class="fa-regular fa-eye"></span>
+              {% else %}  
+                <span class="fa-regular fa-eye-slash"></span> 
+              {% endif %}   
+              <span class="middot">&middot;</span>  
+              <span class="level">{{ post.level }}</span>
+            </footer> 
+          </article> 
+        {% endfor %} 
+        <div class="load-more t-align-center mb-20">
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down fa-lg"></i>
+            </span>
+          </span>
+        </div>   
+      </section>    
+    {% endif %}
+    <!-- < Released Posts -->   
+  </div>
+  <!-- < My Posts -->
+
+  <!-- My Bookmarks > -->
+  {% if current_user.saved_posts|length %} 
+    <section class="card mb-20" id="myBookmarks">
+      <h3 class="mt-30 mb-0" id="switchNewestOldest">
+        <i class="fa-solid fa-arrow-up"></i>
+        <span class="ml-3">My Bookmarks</span>
+      </h3>   
+      <div class="sort-toggle">
+        <hr class="hr mt-0 mb-3"> 
+        <span class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-angles-down"></i>
+          </span>
+        </span> 
+      </div>
+      <div class="div-3 sort mt-30 clearfix">    
+        <div class="fleft width-third t-align-center">
+          <span>Trending</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </span>
+          </div>
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Newest</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-up"></i>
+            </span>
+          </div>  
+        </div>  
+        <div class="fleft width-third t-align-center">
+          <span>Oldest</span>
+          <div class="circle"> 
+            <span class="abs-center">
+              <i class="fa-solid fa-arrow-down"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      {% for post in current_user.saved_posts %}
+        <article class="post mt-30 mb-30">
+          <header>
+            <h2>
+              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+            </h2>
+          </header> 
+          <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
+          <footer class="small text-muted-light">
+            <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+            <span class="middot">&middot;</span>
+            <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
+            <span class="middot">&middot;</span>
+            <span class="level">{{ post.level }}</span>
+          </footer> 
+        </article> 
+      {% endfor %}
+      <div class="load-more t-align-center mb-20">
+        <span class="circle">
+          <span class="abs-center">
+            <i class="fa-solid fa-angles-down fa-lg"></i>
+          </span>
+        </span>
+      </div>   
+    </section>
+  {% endif %}    
+  <!-- < My Bookmarks -->  
+
+  <!-- Followers > --> 
+  {% if current_user.followers|length %}
+    <section class="card mb-20" id="followers"> 
+      <h3 class="mt-30 mb-0">
+        <span>Followers</span>
+      </h3>                 
+      <hr class="hr mt-0 mb-30">
+      {% for follower in current_user.followers %}
+        <div class="avatar-username mb-16">
+          <a href="{{ url_for('posts_written_by', user_id=follower.id) }}">
+            <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+            <span>{{ follower.fullname }}</span>
+          </a> 
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+  <!-- < Followers --> 
+
+  <!-- Following > -->
+  {% if current_user.following|length %}
+    <section class="card mb-20" id="following"> 
+      <h3 class="mt-30 mb-0">
+        <span>Following</span>
+      </h3>                 
+      <hr class="hr mt-0 mb-30">
+      {% for following in current_user.following %}
+        <div class="avatar-username mb-16">
+          <a href="{{ url_for('posts_written_by', user_id=following.id) }}">
+            <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
+            <span>{{ following.fullname }}</span>
+          </a> 
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+  <!-- < Following -->
 {% endblock content %}
 
 {% block js %}

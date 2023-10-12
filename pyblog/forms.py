@@ -77,9 +77,14 @@ class CreatePostForm(FlaskForm):
             id="level",
             choices = ["Beginner", "Intermediate", "Advanced"]
             )
+    status = RadioField(
+            label = "When do you want to publish your post?",
+            id="status",
+            choices = ["Now", "Later"]
+            )
     submit = SubmitField()
 
-class FollowerForm(FlaskForm):
+class EmptyForm(FlaskForm):
     submit = SubmitField()
 
 

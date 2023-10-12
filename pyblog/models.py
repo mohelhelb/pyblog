@@ -1,6 +1,7 @@
 import os
 import datetime
 from flask_login import UserMixin
+from sqlalchemy import func
 import jwt
 
 from pyblog import app, bcrypt, db, login_manager
@@ -10,8 +11,13 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 followers = db.Table("followers", 
-        db.Column("follower_id", db.Integer, primary_key=True),
-        db.Column("followed_id", db.Integer, primary_key=True)
+        db.Column("follower_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+        db.Column("followed_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
+        )
+
+starred_posts = db.Table("starred_posts",
+        db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+        db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True)
         )
 
 class User(db.Model, UserMixin):
@@ -43,12 +49,19 @@ class User(db.Model, UserMixin):
     def password(self, new_password):
         self.hash_password = bcrypt.generate_password_hash(new_password).decode("utf-8")
 
+    def __lt__(self, other):
+        return True if self.num_public_posts() < other.num_public_posts() else False
+
     def __repr__(self):
         return f"User({self.id}: {self.first_name} {self.last_name})" 
 
     def add(self):
         db.session.add(self)
-        db.session.commit()
+        db.session.commit() 
+
+    def bookmark(self, post):
+        self.saved_posts.append(post)
+        db.session.commit() 
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.hash_password, password)
@@ -68,17 +81,34 @@ class User(db.Model, UserMixin):
                 algorithm="HS256"
                 )
 
+    def hidden_posts(self):
+        return (post for post in self.posts if post.public == False)
+
+    def num_hidden_posts(self):
+        i = 0
+        for _ in self.hidden_posts():
+            i+= 1
+        return i
+
     def num_public_posts(self):
         i = 0
         for _ in self.public_posts():
             i += 1
-        return i
+        return i 
+
+    @classmethod
+    def num_users(cls):
+        return db.session.scalar(func.count(cls.id)) 
 
     def public_posts(self):
         return (post for post in self.posts if post.public == True)
 
     def unfollow(self, other):
         self.following.remove(other)
+        db.session.commit()
+
+    def unbookmark(self, post):
+        self.saved_posts.remove(post)
         db.session.commit()
 
     def update(self, **kwargs):
@@ -115,7 +145,13 @@ class Post(db.Model):
     views = db.Column(db.Integer, nullable=False, default=0)
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    author = db.relationship("User", back_populates="posts")
+    author = db.relationship("User", back_populates="posts") 
+    saved_by = db.relationship("User",
+            secondary=starred_posts,
+            primaryjoin=(starred_posts.c.post_id == id),
+            secondaryjoin=(starred_posts.c.user_id == User.id),
+            backref="saved_posts"
+            )   
 
     @property
     def reading_time(self):
@@ -137,6 +173,20 @@ class Post(db.Model):
     def increase_view(self):
         self.views += 1
         db.session.commit()
+
+    @classmethod
+    def num_public_posts(cls, author=None):
+        if author:
+            return db.session.scalar(db.select(func.count(cls.id)).filter(cls.user_id == author.id, cls.public == True))
+        return db.session.scalar(db.select(func.count(cls.id)).filter(cls.public == True))
+
+    @classmethod
+    def num_trending_posts(cls):
+        i = 0
+        for _ in cls.trending_posts():
+            i += 1
+        return i
+
 
     @classmethod
     def next_post(cls, current_post=None):
@@ -168,7 +218,7 @@ class Post(db.Model):
 
     @classmethod
     def trending_posts(cls):
-        return db.session.execute(db.select(cls).filter(cls.public==True).order_by(cls.views.desc()).limit(3)).scalars() 
+        return db.session.execute(db.select(cls).filter(cls.public==True).order_by(cls.views.desc()).limit(3)).scalars()
 
     def update(self, **kwargs):
         for attr in kwargs.keys():

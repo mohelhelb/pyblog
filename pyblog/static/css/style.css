@@ -7,6 +7,7 @@
   --gray-m: #ddd;
   --gray-l: #999;
   --gray-xl: #666;
+  /* --green-s: #d4edda;  */
   --blue-s: #619ccd; 
   /* --blue-m: #1a73e8; */
   --blue-l: #007bff;
@@ -131,7 +132,7 @@ form legend {
   width: 100%;
 }
 
-#profileFormCard {
+#profileFormCard, #myPosts, #myBookmarks, #followers, #following {
   display: none;
 }
 
@@ -458,24 +459,38 @@ form legend {
 
 .waterdrop {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 15px;
+  right: 15px;
   width: 20px;
   height: 20px;
   border: 1px solid var(--gray-m);
   border-radius: 50%;
   background-color: var(--gray-xs);
+}     
+
+input[type="submit"].bookmark, input[type="submit"].unbookmark, input[type="submit"].follow, input[type="submit"].unfollow {
+  padding-top: 8px;
+  padding-bottom: 8px; 
+  border: 1px solid var(--gray-m);
+  background: var(--white);
+}    
+
+input[type="submit"].follow, input[type="submit"].unfollow {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+} 
+
+input[type="submit"].follow, input[type="submit"].bookmark {
+  width: 60px;
+} 
+
+input[type="submit"].unfollow, input[type="submit"].unbookmark {
+  width: 80px;
 }
 
-.follow {
-  position: absolute;
-  top: 8px;
-  right:8px;
-  width: 60px;
-  height: 60px; 
-  border: 1px solid var(--gray-m);
-  border-radius: 50%;
-  background-color: var(--gray-xs); 
+.bookmark.fright, .unbookmark.fright {
+  float: right;
 }
 
 /* In progress */
@@ -616,12 +631,12 @@ form legend {
 
 .density .num-posts {
   animation-name: numPosts;
-  animation-delay: 100s; /* animation-delay = animation-duration / 2 */
+  animation-delay: 10s; /* animation-delay = animation-duration / 2 */
   opacity: 0;
 }
 
 .density .num-writers, .density .num-posts {
-  animation-duration: 200s;
+  animation-duration: 20s;
   animation-iteration-count: infinite;
 }
 
@@ -788,7 +803,7 @@ form legend {
 }
 */
 
-#createPostForm label[for="level-0"], #createPostForm label[for="level-1"], #createPostForm label[for="level-2"]{
+#createPostForm .level-status {
   display: block; 
   margin-bottom: 20px; 
   line-height: 0;

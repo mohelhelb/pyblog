@@ -56,8 +56,46 @@
 
     <!-- Post Body -->     
     <p class="post-content">{{ selected_post.content }}</p>
-
-    <hr class="hr mt-0">
+      
+    {% if current_user != selected_post.author %}
+      {% if current_user.is_authenticated %}
+        {% if current_user in selected_post.saved_by %}  
+          <form action="{{ url_for('unbookmark', post_id=selected_post.id) }}" method="POST">
+            <fieldset>
+              <!-- >>> CSRF token -->
+              {{ follower_form.hidden_tag() }}
+              <!-- <<< CSRF token -->
+              <!-- >>> Submit Button -->
+              {{ follower_form.submit(class="fright unbookmark small text-muted-dark", value="Unsave") }}
+              <!-- <<< Submit Button -->
+            </fieldset>
+          </form> 
+        {% else %} 
+          <form action="{{ url_for('bookmark', post_id=selected_post.id) }}" method="POST">
+            <fieldset>
+              <!-- >>> CSRF token -->
+              {{ follower_form.hidden_tag() }}
+              <!-- <<< CSRF token -->
+              <!-- >>> Submit Button -->
+              {{ follower_form.submit(class="fright bookmark small text-muted-dark", value="Save") }}
+              <!-- <<< Submit Button -->
+            </fieldset>
+          </form> 
+        {% endif %}
+      {% else %}
+        <form action="{{ url_for('bookmark', post_id=selected_post.id) }}" method="POST">
+          <fieldset>
+            <!-- >>> CSRF token -->
+            {{ follower_form.hidden_tag() }}
+            <!-- <<< CSRF token -->
+            <!-- >>> Submit Button -->
+            {{ follower_form.submit(class="fright bookmark small text-muted-dark", value="Save") }}
+            <!-- <<< Submit Button -->
+          </fieldset>
+        </form>
+      {% endif %}
+    {% endif %}          
+    <hr class="hr mt-6">
 
     <!-- Post Footer -->
     <footer class="mt-20 mb-20">
@@ -110,42 +148,42 @@
     {% if current_user != selected_post.author %}
       {% if current_user.is_authenticated %}
         {% if current_user in selected_post.author.followers %}  
-          <form action="{{ url_for('unfollow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+          <form action="{{ url_for('unfollow', user_id=selected_post.author.id) }}" method="POST">
             <fieldset>
               <!-- >>> CSRF token -->
-              {{ form.hidden_tag() }}
+              {{ follower_form.hidden_tag() }}
               <!-- <<< CSRF token -->
               <!-- >>> Submit Button -->
-              {{ form.submit(class="follow small text-muted-dark", value="Unfollow") }}
+              {{ follower_form.submit(class="unfollow small text-muted-dark", value="Unfollow") }}
               <!-- <<< Submit Button -->
             </fieldset>
           </form> 
         {% else %} 
-          <form action="{{ url_for('follow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+          <form action="{{ url_for('follow', user_id=selected_post.author.id) }}" method="POST">
             <fieldset>
               <!-- >>> CSRF token -->
-              {{ form.hidden_tag() }}
+              {{ follower_form.hidden_tag() }}
               <!-- <<< CSRF token -->
               <!-- >>> Submit Button -->
-              {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+              {{ follower_form.submit(class="follow small text-muted-dark", value="Follow") }}
               <!-- <<< Submit Button -->
             </fieldset>
           </form> 
         {% endif %}
       {% else %}
-        <form action="{{ url_for('follow', post_id=selected_post.id) }}" method="POST" class="mt-40">
+        <form action="{{ url_for('follow', user_id=selected_post.author.id) }}" method="POST">
           <fieldset>
             <!-- >>> CSRF token -->
-            {{ form.hidden_tag() }}
+            {{ follower_form.hidden_tag() }}
             <!-- <<< CSRF token -->
             <!-- >>> Submit Button -->
-            {{ form.submit(class="follow small text-muted-dark", value="Follow") }}
+            {{ follower_form.submit(class="follow small text-muted-dark", value="Follow") }}
             <!-- <<< Submit Button -->
           </fieldset>
         </form>
       {% endif %}
     {% endif %}
-    <div class="avatar-username mt-24">
+    <div class="avatar-username mt-40">
       <a href="{{ url_for('posts_written_by', user_id=selected_post.author.id) }}">
         <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
         <span>{{ selected_post.author.fullname }}</span>
