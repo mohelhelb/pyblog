@@ -183,11 +183,15 @@ def delete_account(user_id):
     user = db.get_or_404(User, user_id)
     if user != current_user:
         abort(403)
-    for post in user.posts:
-        post.delete()
-    user.delete()
-    flash("Your account has been deleted successfully", category="success")
-    return redirect(url_for("index"))
+    delete_account_form = EmptyForm()
+    if delete_account_form.validate_on_submit():
+        for post in user.posts:
+            post.delete()
+        user.delete()
+        flash("Your account has been deleted successfully", category="success")
+        return redirect(url_for("index"))
+    flash("Oops! Something unexpected happened. Please try again later", category="danger")
+    return redirect(url_for("profile"))
 
 
 
@@ -203,6 +207,7 @@ def posts_written_by(user_id):
 @app.route("/post/<int:post_id>")
 def post(post_id):
     follower_form = EmptyForm()
+    delete_post_form = EmptyForm()
     bookmark_form = EmptyForm()
     selected_post = db.get_or_404(Post, post_id)
     if not selected_post.public and selected_post.author != current_user:
@@ -221,8 +226,11 @@ def post(post_id):
     if current_user != selected_post.author:
         selected_post.increase_view()
     #
+    if delete_post_form.validate_on_submit():
+        return redirect(url_for("delete_post", post_id=post_id))
     return render_template("post.html", 
             bookmark_form=bookmark_form,
+            delete_post_form=delete_post_form,
             follower_form=follower_form, 
             more_posts=more_posts, 
             selected_post=selected_post, 
@@ -274,14 +282,19 @@ def edit_post(post_id):
     return render_template("create_post.html", action="Edit", form=form)          
 
 
-@app.route("/post/<int:post_id>/delete")
+@app.route("/post/<int:post_id>/delete", methods=["POST"])
 @login_required
 def delete_post(post_id):
+    delete_post_form = EmptyForm()
     post = db.get_or_404(Post, post_id)
     if post.author != current_user:
         abort(403)
-    post.delete()
-    return redirect(url_for("posts_written_by", user_id=current_user.id)) 
+    if delete_post_form.validate_on_submit():
+        post.delete()
+        flash("Your post has been deleted successfully", category="success")
+        return redirect(url_for("posts_written_by", user_id=current_user.id)) 
+    flash("Oops! Something unexpected happened. Please try again later", category="danger")
+    return redirect(url_for("post", post_id=post_id))
 
 
 @app.route("/post/<int:post_id>/hide")

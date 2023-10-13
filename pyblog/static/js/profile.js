@@ -1,4 +1,4 @@
-import {hasErrors, outlineFieldDanger, Post} from "./ftools.js"
+import {displayModal, hasErrors, outlineFieldDanger, Post} from "./ftools.js"
 
 // Display/Hide the profile form
 const editProfileButton = document.getElementById("editProfileButton");
@@ -23,23 +23,7 @@ window.addEventListener("load", function() {
   if (hasErrors(profileForm)) {
     editProfileButton.click();
   }
-}); 
-
-// Display/Hide Modal
-function displayModal(toggleModal, modal, cancelModal, targetForm) {
-  toggleModal.addEventListener("click", function() {
-    modal.style.display = "block"; 
-    cancelModal.addEventListener("click", function() {
-      targetForm.reset();
-      modal.style.display = "none";
-    }); 
-    window.onclick = function(e) {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-  });
-}
+});
 
 // Delete Account Modal 
 const deleteAccountToggle = document.querySelector(".account div:last-child .circle");

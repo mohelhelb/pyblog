@@ -1,5 +1,21 @@
 // Function Tools
 
+// Display/Hide Modal
+export function displayModal(toggleModal, modal, cancelModal, targetForm) {
+  toggleModal.addEventListener("click", function() {
+    modal.style.display = "block"; 
+    cancelModal.addEventListener("click", function() {
+      targetForm.reset();
+      modal.style.display = "none";
+    }); 
+    window.onclick = function(e) {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  });
+} 
+
 
 // Display a selected range of articles
 function displayArticlesFromTo(articles, start, end) {

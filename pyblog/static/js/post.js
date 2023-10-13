@@ -1,23 +1,8 @@
+import {displayModal} from "./ftools.js"
 
-// Display/Hide Modal
-function displayModal(toggleModal, modal, cancelModal, targetForm) {
-  toggleModal.addEventListener("click", function() {
-    modal.style.display = "block"; 
-    cancelModal.addEventListener("click", function() {
-      targetForm.reset();
-      modal.style.display = "none";
-    }); 
-    window.onclick = function(e) {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-  });
-}
-
-// Delete Account Modal 
-const deleteAccountToggle = document.querySelector(".account div:last-child .circle");
-const deleteAccountModal = document.querySelector("#deleteAccountModal"); 
-const cancelDeleteAccountModal = document.querySelector("#deleteAccountModal button");  
-const deleteAccountForm = document.querySelector("#deleteAccountModal form"); 
-displayModal(deleteAccountToggle, deleteAccountModal, cancelDeleteAccountModal, deleteAccountForm); 
+// Delete Post Modal 
+const deletePostToggle = document.querySelector(".edit-hide-delete .delete");
+const deletePostModal = document.querySelector("#deletePostModal"); 
+const cancelDeletePostModal = document.querySelector("#deletePostModal button");  
+const deletePostForm = document.querySelector("#deletePostModal form"); 
+displayModal(deletePostToggle, deletePostModal, cancelDeletePostModal, deletePostForm); 
