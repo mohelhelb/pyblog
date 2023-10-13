@@ -92,9 +92,9 @@ def logout():
 def profile():
     image_form = ImageForm() 
     profile_form = ProfileForm()
-    follower_form = EmptyForm()
-    if not current_user.is_authenticated and follower_form.validate_on_submit():
-        return redirect(request.url)
+    delete_account_form = EmptyForm()
+#    if not current_user.is_authenticated and follower_form.validate_on_submit():
+#        return redirect(request.url)
     if "submit_image" in request.form:
         if image_form.validate():
             # Change the filename of the uploaded image.
@@ -105,7 +105,7 @@ def profile():
             img.remove_current_imgs(user=current_user)
             img.save_uploaded_img(size=(100, 100))
             #
-            user.update(image=img.fname)
+            current_user.update(image=img.fn)
             return redirect(request.url)
         profile_form.first_name.data = current_user.first_name
         profile_form.last_name.data = current_user.last_name
@@ -124,7 +124,7 @@ def profile():
         profile_form.last_name.data = current_user.last_name
         profile_form.email.data = current_user.email
         profile_form.about_me.data = current_user.about_me 
-    return render_template("profile.html", follower_form=follower_form, image_form=image_form, profile_form=profile_form)  
+    return render_template("profile.html", delete_account_form=delete_account_form, image_form=image_form, profile_form=profile_form)  
 
 
 @app.route("/change-password", methods=["GET", "POST"])
@@ -177,6 +177,19 @@ def reset_password(token):
         return redirect(url_for("login"))
     return render_template("choose_password.html", form=form)  
 
+@app.route("/delete-account/<int:user_id>", methods=["POST"])
+@fresh_login_required
+def delete_account(user_id):
+    user = db.get_or_404(User, user_id)
+    if user != current_user:
+        abort(403)
+    for post in user.posts:
+        post.delete()
+    user.delete()
+    flash("Your account has been deleted successfully", category="success")
+    return redirect(url_for("index"))
+
+
 
 @app.route("/posts/<int:user_id>")
 def posts_written_by(user_id):
@@ -202,8 +215,7 @@ def post(post_id):
     previous_post = Post.previous_post(current_post=selected_post)
     # Retrieve three or less random public posts written by the same author and distinct from the selected post
     posts = Post.public_posts(author=selected_post.author) 
-    random_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.id != selected_post.id][:3]
-    more_posts = (post for post in random_posts)
+    more_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.id != selected_post.id]
     #
     # Increase the number of views by one
     if current_user != selected_post.author:

@@ -191,18 +191,44 @@
     </div>  
     <p class="small l-height-6 text-muted-dark mt-14 mb-24">{{ selected_post.author.about_me }}</p>
   </div>
-  <div class="more-posts card mb-20">
-    <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by {{ selected_post.author.fullname }}</p>    
-    {% for post in more_posts %}
-      <h2>
-        <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
-      </h2>  
-      <hr class="hr">
-  {% endfor %} 
-    <a class="see-all" href="{{ url_for('posts_written_by', user_id=selected_post.author.id) }}">
-      <span class="mr-3">See all</span>
-      <i class="fa-solid fa-arrow-right"></i>
-    </a> 
+
+  <!-- More Posts > -->
+  {% if more_posts %}
+    <div class="more-posts card mb-20">
+      <p class="f-weight-500 text-muted-dark mt-24 mb-14">More posts by {{ selected_post.author.fullname }}</p>    
+      {% for post in more_posts[:3] %}
+        <h2>
+          <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+        </h2>  
+        <hr class="hr">
+    {% endfor %}
+    {% if more_posts|length > 3 %} 
+      <a class="see-all" href="{{ url_for('posts_written_by', user_id=selected_post.author.id) }}">
+        <span class="mr-3">See all</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a> 
+    {% endif %} 
+    </div>
+  {% else %} 
+    <!-- Top Writers > -->
+    <div class="card">
+      <header class="mt-24 mb-16 t-align-center">
+        <h3>
+          <i class="fa-solid fa-arrow-up-1-9 fa-fw"></i>
+          <span class="trending">Top Writers</span>
+        </h3>
+      </header>                 
+      {% for writer in g.top_writers %}  
+        <div class="avatar-username mb-16">
+          <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
+            <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(writer.image)) }}" alt="Employee Avatar" width="50px" height="50px">
+            <span>{{ writer.fullname }}</span>
+          </a>  
+        </div>  
+      {% endfor %}
+    </div>
+    <!-- < Top Writers --> 
+  {% endif %}
 {% endblock sidebar %}   
 
 {% block js %}

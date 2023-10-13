@@ -22,20 +22,21 @@ const postsNewestButton = document.querySelector("#myPosts .sort > div:nth-child
 const postsOldestButton = document.querySelector("#myPosts .sort > div:nth-child(3) .circle"); 
 const postsSwitch = document.querySelector("#myPosts h3");
 const postElements = document.querySelectorAll("#myPosts .post");
-const posts = new Post(postElements);
-posts.loadMore(); 
-posts.sortByDate(); 
-postsNewestButton.addEventListener("click", function() { 
-  postsSwitch.children[0].className = "fa-solid fa-arrow-up";
-  postsSwitch.children[1].innerText = "Newest Releases";
-  posts.sortByDate();
-}); 
-postsOldestButton.addEventListener("click", function() {
-  postsSwitch.children[0].className = "fa-solid fa-arrow-down"; 
-  postsSwitch.children[1].innerText = "Oldest Releases"; 
-  posts.sortByDate({reverse: true}); 
-}); 
-
+if (postElements.length) {
+  const posts = new Post(postElements);
+  posts.loadMore(); 
+  posts.sortByDate(); 
+  postsNewestButton.addEventListener("click", function() { 
+    postsSwitch.children[0].className = "fa-solid fa-arrow-up";
+    postsSwitch.children[1].innerText = "Newest Releases";
+    posts.sortByDate();
+  }); 
+  postsOldestButton.addEventListener("click", function() {
+    postsSwitch.children[0].className = "fa-solid fa-arrow-down"; 
+    postsSwitch.children[1].innerText = "Oldest Releases"; 
+    posts.sortByDate({reverse: true}); 
+  }); 
+};
 
 // Dashboard
 const myPostsButton = document.querySelector(".chart div:first-child .circle");
@@ -51,19 +52,23 @@ const myButtons = new Map([
 ]);
 for (const button of myButtons.keys()) {
   button.addEventListener("click", function() {
-    for (const button of myButtons.keys()) {
-      if (button != this) {
-        button.style.outline = "none";
-        button.style.border = "1px solid #ddd"
-        button.style.color = "#666";
-        myButtons.get(button).style.display = "none";
-      };
+    for (const btn of myButtons.keys()) {
+      if (btn != this) {
+        btn.style.outline = "none";
+        btn.style.border = "1px solid #ddd";
+        btn.style.color = "#666";
+        if (myButtons.get(btn)) {
+          myButtons.get(btn).style.display = "none";
+        };
+      };                 
     };
     this.style.outline = "3px solid rgba(0, 123, 255, 0.3)";
     this.style.border = "none";
     this.style.color = "#007bff";
-    myButtons.get(this).style.display = "Block";
-    myButtons.get(this).scrollIntoView({behavior: "smooth"});
+    if (myButtons.get(this)) { 
+      myButtons.get(this).style.display = "Block";
+      myButtons.get(this).scrollIntoView({behavior: "smooth"}); 
+    };
   });
 }; 
 

@@ -8,7 +8,7 @@
       <!-- <<< CSRF token -->    
       <!-- >>> Image -->
       <label class="avatar-username" for="image">
-        <img class="width-100 height-100" src={{ url_for('static', filename='images/{}'.format(current_user.image)) }} alt="Employee Avatar" width="100px" height="100px">
+        <img class="width-100 height-100" src="{{ url_for('static', filename='images/{}'.format(current_user.image)) }}" alt="Employee Avatar" width="100px" height="100px">
       </label> 
       {% if image_form.image.errors %} 
       {{ image_form.image(class="field-danger") }} 
@@ -155,14 +155,19 @@
     <!-- Delete Account Modal -->
     <div class="modal" id="deleteAccountModal">
       <div class="card modal-content">
-        <form class="mt-40" method="Post" action="">
+        <form class="mt-40" method="Post" action="{{ url_for("delete_account", user_id=current_user.id) }}" id="deleteAccountForm">
           <fieldset>
             <legend>Delete Account</legend>
             <hr class="hr mt-0 mb-30">
-            <p>Are you sure you want to delete your account?</p>
+            <p class="l-height-6">All your posts and bookmarks will be deleted. Are you sure you want to delete your account?</p>
             <div class="div-2">
               <div class="fleft t-align-center width-50pc">
-                <input type="submit" value="Delete" class="btn-danger mb-16">
+                <!-- CSRF Token > -->
+                {{ delete_account_form.hidden_tag() }}
+                <!-- < CSRF Token -->
+                <!-- Submit > -->
+                {{ delete_account_form.submit(class="btn-danger mb-16", value="Delete", form="deleteAccountForm") }}
+                <!-- < Submit -->
               </div>
               <div class="fleft t-align-center width-50pc">
                 <button type="button" class="btn-default mt-0 mb-24">Cancel</button>  

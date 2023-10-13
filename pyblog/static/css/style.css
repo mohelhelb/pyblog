@@ -714,8 +714,16 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   font-size: 16px;
 }
 
+.more-posts .hr:last-of-type {
+  display: none;
+} 
+
 .more-posts h2 {
   font-size: 1rem;
+} 
+
+.more-posts h2:last-of-type {
+  margin-bottom: 45px;
 } 
 
 .div-3 .fleft , .div-2 .fleft {
@@ -762,10 +770,14 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   border: none;
   color: var(--red-m);
   cursor: pointer; 
-} 
+}  
 
 .previous.fleft, .next.fleft {
   float: left;
+} 
+
+.previous.fright, .next.fright {
+  float: right;
 }
 
 .sort-toggle {
@@ -896,7 +908,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     opacity: 0.7;
   }
 
-  .circle:hover, .account .avatar-username img:hover { 
+  .circle:hover, .account .avatar-username img:hover, #imageForm .avatar-username img:hover { 
     outline: 3px solid rgba(0, 123, 255, 0.3);
     border: none;
     color: var(--blue-l);

@@ -109,18 +109,19 @@ const bookmarksNewestButton = document.querySelector("#myBookmarks .sort > div:n
 const bookmarksOldestButton = document.querySelector("#myBookmarks .sort > div:nth-child(3) .circle"); 
 const bookmarksSwitch = document.querySelector("#myBookmarks h3");
 const bookmarkElements = document.querySelectorAll("#myBookmarks .post");
-const bookmarks = new Post(bookmarkElements);
-bookmarks.loadMore(); 
-bookmarks.sortByDate(); 
-bookmarksNewestButton.addEventListener("click", function() { 
-  bookmarksSwitch.children[0].className = "fa-solid fa-arrow-up";
-  bookmarks.sortByDate();
-}); 
-bookmarksOldestButton.addEventListener("click", function() {
-  bookmarksSwitch.children[0].className = "fa-solid fa-arrow-down";
-  bookmarks.sortByDate({reverse: true}); 
-});
-
+if (bookmarkElements.length) {
+  const bookmarks = new Post(bookmarkElements);
+  bookmarks.loadMore(); 
+  bookmarks.sortByDate(); 
+  bookmarksNewestButton.addEventListener("click", function() { 
+    bookmarksSwitch.children[0].className = "fa-solid fa-arrow-up";
+    bookmarks.sortByDate();
+  }); 
+  bookmarksOldestButton.addEventListener("click", function() {
+    bookmarksSwitch.children[0].className = "fa-solid fa-arrow-down";
+    bookmarks.sortByDate({reverse: true}); 
+  });
+};
 
 // Dashboard
 const myPostsButton = document.querySelector(".chart:first-of-type div:first-child .circle");
@@ -144,14 +145,18 @@ for (const button of myButtons.keys()) {
         btn.style.outline = "none";
         btn.style.border = "1px solid #ddd";
         btn.style.color = "#666";
-        myButtons.get(btn).style.display = "none";
+        if (myButtons.get(btn)) {
+          myButtons.get(btn).style.display = "none";
+        };
       };                 
     };
     this.style.outline = "3px solid rgba(0, 123, 255, 0.3)";
     this.style.border = "none";
     this.style.color = "#007bff";
-    myButtons.get(this).style.display = "Block";
-    myButtons.get(this).scrollIntoView({behavior: "smooth"});
+    if (myButtons.get(this)) { 
+      myButtons.get(this).style.display = "Block";
+      myButtons.get(this).scrollIntoView({behavior: "smooth"}); 
+    };
   });
 }; 
 

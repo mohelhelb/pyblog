@@ -105,22 +105,26 @@
             </div>
           </div>
         </div>
-        <!-- Top Writers -->
-        <div class="card">
-          <header class="mt-24 mb-16 t-align-center">
-            <h3>
-              <i class="fa-solid fa-arrow-up-1-9 fa-fw"></i>
-              <span class="trending">Top Writers</span>
-            </h3>
-          </header>                 
-          {% for writer in g.top_writers %}  
-            <div class="avatar-username mb-16">
-              <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
-                <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
-                <span>{{ writer.fullname }}</span>
-              </a>  
-            </div>  
-          {% endfor %}
+        <!-- Top Writers > -->
+        {% if g.top_writers|length %}
+          <div class="card">
+            <header class="mt-24 mb-16 t-align-center">
+              <h3>
+                <i class="fa-solid fa-arrow-up-1-9 fa-fw"></i>
+                <span class="trending">Top Writers</span>
+              </h3>
+            </header>                 
+            {% for writer in g.top_writers %}  
+              <div class="avatar-username mb-16">
+                <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
+                  <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(writer.image)) }}" alt="Employee Avatar" width="50px" height="50px">
+                  <span>{{ writer.fullname }}</span>
+                </a>  
+              </div>  
+            {% endfor %}
+          </div>
+        {% endif %}
+        <!-- < Top Writers -->
       {% endblock sidebar %}
     </aside>
 
