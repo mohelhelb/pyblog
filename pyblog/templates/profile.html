@@ -58,11 +58,13 @@
     </div>    
     <button type="button" class="btn-info mt-24 mb-24" id="editProfileButton">Edit Profile</button>
   </section> 
-  <!-- Edit Profile >> -->
+
+  <!-- Edit Profile > -->
   <section class="card mb-20" id="profileFormCard">
     <form class="mt-40" id="profileForm" action="" method="POST">
       <fieldset form="profileForm">
         <legend>Profile</legend>    
+        <!--
         <div class="sort-toggle mb-6">
           <hr class="hr mt-0 mb-3"> 
           <span class="circle">
@@ -71,20 +73,23 @@
             </span>
           </span> 
         </div>
-        <div class="div-3 account mt-26 clearfix">
-          <div class="fleft width-third t-align-center">
+        -->
+        <div class="div-2 account mt-20 clearfix">
+          <div class="fleft width-50pc t-align-center">
             <span>Password</span>
             <a href="{{ url_for('change_password') }}" class="circle">
               <span class="abs-center">Change</span>
             </a>
           </div>  
+          <!--
           <div class="fleft width-third t-align-center">
             <span>Country</span>
             <div class="circle"> 
               <span class="abs-center">XX</span>
             </div>
-          </div>  
-          <div class="fleft width-third t-align-center">
+          </div>
+          -->  
+          <div class="fleft width-50pc t-align-center">
             <span>Account</span>
             <div class="circle delete"> 
               <span class="abs-center">Delete</span>
@@ -158,7 +163,6 @@
         <form class="mt-40" method="Post" action="{{ url_for("delete_account", user_id=current_user.id) }}" id="deleteAccountForm">
           <fieldset>
             <legend>Delete Account</legend>
-            <hr class="hr mt-0 mb-30">
             <p class="l-height-6 mb-26">All your posts and bookmarks will be deleted. Are you sure you want to delete your account?</p>
             <div class="div-2">
               <div class="fleft t-align-center width-50pc">
