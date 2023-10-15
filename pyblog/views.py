@@ -252,7 +252,7 @@ def create_post():
                 author = current_user
                 )
         post.add()
-        flash("Your post has been created successfully!", category="success")
+        flash("Your post has been published successfully", category="success")
         return redirect(url_for("post", post_id=post.id)) 
     return render_template("create_post.html", action="Create", form=form)  
 
@@ -272,7 +272,7 @@ def edit_post(post_id):
                 level = form.level.data,
                 date_posted = datetime.datetime.utcnow()
                 ) 
-        flash("Your post has been updated successfully!", category="success") 
+        flash("Your post has been updated", category="success") 
         return redirect(url_for("post", post_id=post.id))
     if request.method == "GET":
         form.title.data = post.title
@@ -291,8 +291,8 @@ def delete_post(post_id):
         abort(403)
     if delete_post_form.validate_on_submit():
         post.delete()
-        flash("Your post has been deleted successfully", category="success")
-        return redirect(url_for("posts_written_by", user_id=current_user.id)) 
+        flash("Your post has been deleted", category="success")
+        return redirect(url_for("profile")) 
     flash("Oops! Something unexpected happened. Please try again later", category="danger")
     return redirect(url_for("post", post_id=post_id))
 
@@ -304,6 +304,7 @@ def hide_post(post_id):
     if post.author != current_user:
         abort(403)
     post.hide()
+    flash("Your post has been hidden", category="info")
     return redirect(url_for("post", post_id=post.id)) 
 
 
@@ -314,6 +315,7 @@ def show_post(post_id):
     if post.author != current_user:
         abort(403)
     post.show()
+    flash("Your post has been published", category="success")
     return redirect(url_for("post", post_id=post.id)) 
 
 

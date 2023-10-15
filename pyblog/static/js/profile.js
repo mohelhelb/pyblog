@@ -68,20 +68,28 @@ if (hiddenPostElements.length) {
  
 // Sorting Functionality: Released Posts
 // Pending: Duplicate Code (See index.js)
-const releasedposts = document.querySelector("#myReleasedPosts .sort > div:nth-child(2) .circle"); 
+const releasedPostsTrendingButton = document.querySelector("#myReleasedPosts .sort > div:first-child .circle");
+const releasedPostsNewestButton = document.querySelector("#myReleasedPosts .sort > div:nth-child(2) .circle"); 
 const releasedPostsOldestButton = document.querySelector("#myReleasedPosts .sort > div:nth-child(3) .circle"); 
-const releasedPostsSwitch = document.querySelector("#myReleasedPosts h3");
+const releases = document.querySelector("#myReleasedPosts h3");
 const releasedPostElements = document.querySelectorAll("#myReleasedPosts .post");
 if (releasedPostElements.length) { 
   const releasedPosts = new Post(releasedPostElements); 
   releasedPosts.loadMore(); 
-  releasedPosts.sortByDate(); 
-  releasedposts.addEventListener("click", function() { 
-    releasedPostsSwitch.children[0].className = "fa-solid fa-arrow-up";
+  releasedPosts.sortByDate();  
+  releasedPostsTrendingButton.addEventListener("click", function() { 
+    releases.children[0].className = "fa-solid fa-arrow-trend-up";
+    releases.children[1].innerText = "My Trending Releases";
+    releasedPosts.sortByViews();
+  }); 
+  releasedPostsNewestButton.addEventListener("click", function() { 
+    releases.children[0].className = "fa-solid fa-arrow-up";
+    releases.children[1].innerText = "My Newest Releases";
     releasedPosts.sortByDate();
   }); 
   releasedPostsOldestButton.addEventListener("click", function() {
-    releasedPostsSwitch.children[0].className = "fa-solid fa-arrow-down";
+    releases.children[0].className = "fa-solid fa-arrow-down"; 
+    releases.children[1].innerText = "My Oldest Releases";  
     releasedPosts.sortByDate({reverse: true}); 
   });  
 };
@@ -89,22 +97,30 @@ if (releasedPostElements.length) {
 
 // Sorting Functionality: Bookmarks
 // Pending: Duplicate Code (See index.js)
+const bookmarksTrendingButton = document.querySelector("#myBookmarks .sort > div:first-child .circle");
 const bookmarksNewestButton = document.querySelector("#myBookmarks .sort > div:nth-child(2) .circle"); 
 const bookmarksOldestButton = document.querySelector("#myBookmarks .sort > div:nth-child(3) .circle"); 
-const bookmarksSwitch = document.querySelector("#myBookmarks h3");
+const bookmarks = document.querySelector("#myBookmarks h3");
 const bookmarkElements = document.querySelectorAll("#myBookmarks .post");
 if (bookmarkElements.length) {
-  const bookmarks = new Post(bookmarkElements);
-  bookmarks.loadMore(); 
-  bookmarks.sortByDate(); 
+  const bookmarkedPosts = new Post(bookmarkElements);
+  bookmarkedPosts.loadMore(); 
+  bookmarkedPosts.sortByDate();  
+  bookmarksTrendingButton.addEventListener("click", function() { 
+    bookmarks.children[0].className = "fa-solid fa-arrow-trend-up";
+    bookmarks.children[1].innerText = "My Trending Bookmarks";
+    bookmarkedPosts.sortByViews();
+  }); 
   bookmarksNewestButton.addEventListener("click", function() { 
-    bookmarksSwitch.children[0].className = "fa-solid fa-arrow-up";
-    bookmarks.sortByDate();
+    bookmarks.children[0].className = "fa-solid fa-arrow-up";
+    bookmarks.children[1].innerText = "My Newest Bookmarks";
+    bookmarkedPosts.sortByDate();
   }); 
   bookmarksOldestButton.addEventListener("click", function() {
-    bookmarksSwitch.children[0].className = "fa-solid fa-arrow-down";
-    bookmarks.sortByDate({reverse: true}); 
-  });
+    bookmarks.children[0].className = "fa-solid fa-arrow-down"; 
+    bookmarks.children[1].innerText = "My Oldest Bookmarks";  
+    bookmarkedPosts.sortByDate({reverse: true}); 
+  }); 
 };
 
 // Dashboard

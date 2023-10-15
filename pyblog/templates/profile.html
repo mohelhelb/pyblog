@@ -159,7 +159,7 @@
           <fieldset>
             <legend>Delete Account</legend>
             <hr class="hr mt-0 mb-30">
-            <p class="l-height-6">All your posts and bookmarks will be deleted. Are you sure you want to delete your account?</p>
+            <p class="l-height-6 mb-26">All your posts and bookmarks will be deleted. Are you sure you want to delete your account?</p>
             <div class="div-2">
               <div class="fleft t-align-center width-50pc">
                 <!-- CSRF Token > -->
@@ -254,7 +254,7 @@
       <section class="card mb-20" id="myReleasedPosts">
         <h3 class="mt-30 mb-0">
           <i class="fa-solid fa-arrow-up"></i>
-          <span class="ml-3">My released posts</span>
+          <span class="ml-3">My Newest Releases</span>
         </h3>   
         <div class="sort-toggle">
           <hr class="hr mt-0 mb-3"> 
@@ -307,7 +307,9 @@
                 <span class="fa-regular fa-eye"></span>
               {% else %}  
                 <span class="fa-regular fa-eye-slash"></span> 
-              {% endif %}   
+              {% endif %}     
+              <span class="middot">&middot;</span> 
+              <span class="views">{{ post.views }}</span>   
               <span class="middot">&middot;</span>  
               <span class="level">{{ post.level }}</span>
             </footer> 
@@ -331,7 +333,7 @@
     <section class="card mb-20" id="myBookmarks">
       <h3 class="mt-30 mb-0" id="switchNewestOldest">
         <i class="fa-solid fa-arrow-up"></i>
-        <span class="ml-3">My Bookmarks</span>
+        <span class="ml-3">My Newest Bookmarks</span>
       </h3>   
       <div class="sort-toggle">
         <hr class="hr mt-0 mb-3"> 
@@ -381,6 +383,7 @@
             <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
             <span class="middot">&middot;</span>
             <span class="level">{{ post.level }}</span>
+            <span class="views" hidden>{{ post.views }}</span> 
           </footer> 
         </article> 
       {% endfor %}

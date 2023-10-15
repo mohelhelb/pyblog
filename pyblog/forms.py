@@ -10,13 +10,13 @@ from pyblog.models import User
 class UserBaseForm(FlaskForm):
     first_name = StringField(
             label="First Name",
-            validators=[DataRequired(), Length(max=20)],
+            validators=[DataRequired(), Length(max=30)],
             id="firstName",
             description="e.g. John"
             )
     last_name = StringField(
             label="Last Name", 
-            validators=[DataRequired(), Length(max=20)],
+            validators=[DataRequired(), Length(max=30)],
             id="lastName",
             description="e.g. Doe"
             )

@@ -17,23 +17,29 @@ import {Post} from "./ftools.js"
 
 
 // Sorting Functionality: Posts
-// Pending: Duplicate Code (See index.js)
+// Pending: Duplicate Code (See index.js) 
+const postsTrendingButton = document.querySelector("#myPosts .sort > div:first-child .circle"); 
 const postsNewestButton = document.querySelector("#myPosts .sort > div:nth-child(2) .circle"); 
 const postsOldestButton = document.querySelector("#myPosts .sort > div:nth-child(3) .circle"); 
-const postsSwitch = document.querySelector("#myPosts h3");
+const releases = document.querySelector("#myPosts h3");
 const postElements = document.querySelectorAll("#myPosts .post");
 if (postElements.length) {
   const posts = new Post(postElements);
   posts.loadMore(); 
-  posts.sortByDate(); 
+  posts.sortByDate();  
+  postsTrendingButton.addEventListener("click", function() { 
+    releases.children[0].className = "fa-solid fa-arrow-trend-up";
+    releases.children[1].innerText = "Trending Releases";
+    posts.sortByViews();
+  }); 
   postsNewestButton.addEventListener("click", function() { 
-    postsSwitch.children[0].className = "fa-solid fa-arrow-up";
-    postsSwitch.children[1].innerText = "Newest Releases";
+    releases.children[0].className = "fa-solid fa-arrow-up";
+    releases.children[1].innerText = "Newest Releases";
     posts.sortByDate();
   }); 
   postsOldestButton.addEventListener("click", function() {
-    postsSwitch.children[0].className = "fa-solid fa-arrow-down"; 
-    postsSwitch.children[1].innerText = "Oldest Releases"; 
+    releases.children[0].className = "fa-solid fa-arrow-down"; 
+    releases.children[1].innerText = "Oldest Releases"; 
     posts.sortByDate({reverse: true}); 
   }); 
 };

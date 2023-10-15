@@ -7,13 +7,14 @@
   --gray-m: #ddd;
   --gray-l: #999;
   --gray-xl: #666;
-  /* --green-s: #d4edda;  */
+  --green-s: #d4edda;
+  --green-l: #155724;
   --blue-s: #619ccd; 
   /* --blue-m: #1a73e8; */
   --blue-l: #007bff;
   --blue-xxl: #18354c;
   --red-m: #f66;
-}
+} 
 
 * {
   box-sizing: border-box;
@@ -112,12 +113,26 @@ form label {
   margin-bottom: 9px;
 }
 
+
 form legend {
   padding: 0;
-  /* color: var(--gray-xl); */
   font-size: 1.5rem;
   font-weight: 500;
-}
+} 
+
+#signUpForm legend, #signInForm legend {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 15px 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: var(--green-s);
+  color: var(--green-l);
+} 
+
+
 
 #header {
   background-color: var(--blue-xxl);
@@ -240,12 +255,24 @@ form legend {
   height: 20px;
 }
 
-/* Predefined Margin */
+/* Predefined Margin */ 
+.mt-54 {
+  margin-top: 54px;
+}
+.mb-54 {
+  margin-bottom: 54px;
+}   
 .mt-48 {
   margin-top: 48px;
 }
 .mb-48 {
   margin-bottom: 48px;
+}  
+.mt-40 {
+  margin-top: 40px;
+}
+.mb-40 {
+  margin-bottom: 40px;
 }  
 .mt-30 {
   margin-top: 30px;
@@ -253,12 +280,6 @@ form legend {
 .mb-30 {
   margin-bottom: 30px;
 } 
-.mt-40 {
-  margin-top: 40px;
-}
-.mb-40 {
-  margin-bottom: 40px;
-}  
 .mt-26 {
   margin-top: 26px;
 }
@@ -412,6 +433,11 @@ form legend {
 .avatar-username {
   display: block;
   line-height: 0;
+  /* Ellipsis > */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  /* < Ellipsis */
 }
 
 .avatar-username img, .avatar-username span {

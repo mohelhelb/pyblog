@@ -2,19 +2,21 @@
 
 // Display/Hide Modal
 export function displayModal(toggleModal, modal, cancelModal, targetForm) {
-  toggleModal.addEventListener("click", function() {
-    modal.style.display = "block"; 
-    cancelModal.addEventListener("click", function() {
-      targetForm.reset();
-      modal.style.display = "none";
-    }); 
-    window.onclick = function(e) {
-      if (e.target === modal) {
+  if (toggleModal) {
+    toggleModal.addEventListener("click", function() {
+      modal.style.display = "block"; 
+      cancelModal.addEventListener("click", function() {
+        targetForm.reset();
         modal.style.display = "none";
+      }); 
+      window.onclick = function(e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
       }
-    }
-  });
-} 
+    });   
+  };
+}
 
 
 // Display a selected range of articles
@@ -67,14 +69,20 @@ export function hasErrors(form) {
 export class Post {
 
  currentPage = 1;
- perPagePostElements = 3;
+ perPagePostElements = 3; 
 
- static comparisonFunction(post1, post2) { 
+ static sortByDateCompFunc(post1, post2) { 
    let dateString1 = post1.getElementsByClassName("date")[0].innerText; 
    let dateString2 = post2.getElementsByClassName("date")[0].innerText;
    const date1 = new Date(dateString1);
    const date2 = new Date(dateString2);
    return date2 - date1;
+ } 
+
+ static sortByViewsCompFunc(post1, post2) { 
+   let numViews1 = post1.getElementsByClassName("views")[0].innerText; 
+   let numViews2 = post2.getElementsByClassName("views")[0].innerText;
+   return numViews2 - numViews1;
  }
 
  constructor(postElements) {
@@ -112,9 +120,7 @@ export class Post {
  }
 
  loadMore() {
-   // The button for loading more posts always follows the last post.
-   const loadMoreButton = this.postElements[this.postElements.length - 1].nextElementSibling.firstElementChild;
-   //
+   const loadMoreButton = document.querySelector(".load-more .circle")
    let m = Math.floor(this.postElements.length / this.perPagePostElements);
    let n = this.postElements.length % this.perPagePostElements;
    if (this.postElements.length === 0) {
@@ -142,16 +148,28 @@ export class Post {
      }
      that.display((that.currentPage - 1) * that.perPagePostElements, (that.currentPage * that.perPagePostElements) - 1);
    });
- }                     
+ }                      
 
  sortByDate({reverse=false}={}) {
    let m = Math.floor(this.postElements.length / this.perPagePostElements);
    let n = this.postElements.length % this.perPagePostElements;
    this.hide();
-   this.postElements = this.replace(this.clone().sort(this.constructor.comparisonFunction));
+   this.postElements = this.replace(this.clone().sort(this.constructor.sortByDateCompFunc));
    if (reverse) {
-     this.postElements = this.replace(this.clone().sort(this.constructor.comparisonFunction).reverse());
+     this.postElements = this.replace(this.clone().sort(this.constructor.sortByDateCompFunc).reverse());
    }
+   if (this.currentPage === m + 1 & n != 0) {
+     this.display(0, this.postElements.length - 1);
+     return false;
+   }
+   this.display(0, this.currentPage * this.perPagePostElements - 1);
+ }                     
+
+ sortByViews() {
+   let m = Math.floor(this.postElements.length / this.perPagePostElements);
+   let n = this.postElements.length % this.perPagePostElements;
+   this.hide();
+   this.postElements = this.replace(this.clone().sort(this.constructor.sortByViewsCompFunc));
    if (this.currentPage === m + 1 & n != 0) {
      this.display(0, this.postElements.length - 1);
      return false;

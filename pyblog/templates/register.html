@@ -2,10 +2,9 @@
 
 {% block content %}
   <section class="card mb-20">
-    <form action="" method="POST" class="mt-40">
+    <form action="" method="POST" class="mt-40" id="signUpForm">
       <fieldset>
         <legend>Become a Python Expert</legend>
-        <hr class="hr mt-0 mb-6"> 
         <!-- >>> CSRF token -->
         {{ form.hidden_tag() }}
         <!-- <<< CSRF token -->

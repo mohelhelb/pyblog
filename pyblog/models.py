@@ -22,8 +22,8 @@ starred_posts = db.Table("starred_posts",
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(20), nullable=False)
-    last_name = db.Column(db.String(20), nullable=False)
+    first_name = db.Column(db.String(30), nullable=False)
+    last_name = db.Column(db.String(30), nullable=False)
     image = db.Column(db.String(70), default="default.png")
     email = db.Column(db.String(50), nullable=False, unique=True)
     hash_password = db.Column(db.String(60), nullable=False)

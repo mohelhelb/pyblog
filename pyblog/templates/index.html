@@ -5,15 +5,16 @@
     <h1 class="t-align-center">PyBlog</h1>                     
     <h2 class="t-align-center mb-48">A blog on Python and related technologies</h2> 
 
-    <!-- Trending Posts -->
+    <!-- Trending Posts > -->
     {% if trending_posts %}
-      <h3 class="mb-0">
-        <i class="fa-solid fa-arrow-trend-up"></i>
-        <span class="ml-3">Trending Posts</span>
-      </h3>
-      <hr class="hr mt-0">
-      {% for post in trending_posts %}
-        <article class="post mt-30 mb-30">
+      <section id="trendingPosts"> <!-- JS-only id: trendingPosts -->
+        <h3 class="mb-0">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <span class="ml-3">Trending Posts</span>
+        </h3>
+        <hr class="hr mt-0">
+        {% for post in trending_posts %}
+        <article class="post trending-post mt-30 mb-30">
           <header> 
             <div class="avatar-username">
               <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
@@ -34,51 +35,53 @@
             <span class="level">{{ post.level }}</span>
           </footer>  
         </article> 
-      {% endfor %}
+        {% endfor %}
+      </section>
     {% endif %}
-    <!-- Trending Posts -->
+    <!-- < Trending Posts -->
 
     <!-- Public Posts > -->
     {% if public_posts %}
-      <h3 class="mb-0" id="switchNewestOldest">
-        <i class="fa-solid fa-arrow-up"></i>
-        <span class="ml-3">Newest Releases</span>
-      </h3>   
-      <div class="sort-toggle">
-        <hr class="hr mt-0 mb-3"> 
-        <span class="circle">
-          <span class="abs-center">
-            <i class="fa-solid fa-angles-down"></i>
-          </span>
-        </span> 
-      </div>
-      <div class="div-3 sort mt-30 clearfix">    
-        <div class="fleft width-third t-align-center">
-          <span>Trending</span>
-          <div class="circle"> 
+      <section id="publicPosts"> <!-- JS-only id: publicPosts -->
+        <h3 class="mb-0">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span class="ml-3">Newest Releases</span>
+        </h3>   
+        <div class="sort-toggle">
+          <hr class="hr mt-0 mb-3"> 
+          <span class="circle">
             <span class="abs-center">
-              <i class="fa-solid fa-arrow-trend-up"></i>
+              <i class="fa-solid fa-angles-down"></i>
             </span>
-          </div>
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Newest</span>
-          <div class="circle"> 
-            <span class="abs-center">
-              <i class="fa-solid fa-arrow-up"></i>
-            </span>
-          </div>  
-        </div>  
-        <div class="fleft width-third t-align-center">
-          <span>Oldest</span>
-          <div class="circle"> 
-            <span class="abs-center">
-              <i class="fa-solid fa-arrow-down"></i>
-            </span>
-          </div>
+          </span> 
         </div>
-      </div> 
-      {% for post in public_posts %}
+        <div class="div-3 sort mt-30 clearfix">    
+          <div class="fleft width-third t-align-center">
+            <span>Trending</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </span>
+            </div>
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Newest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-up"></i>
+              </span>
+            </div>  
+          </div>  
+          <div class="fleft width-third t-align-center">
+            <span>Oldest</span>
+            <div class="circle"> 
+              <span class="abs-center">
+                <i class="fa-solid fa-arrow-down"></i>
+              </span>
+            </div>
+          </div>
+        </div> 
+        {% for post in public_posts %}
         <article class="post mt-30 mb-30">
           <header> 
             <div class="avatar-username">
@@ -98,9 +101,11 @@
             <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
             <span class="middot">&middot;</span>
             <span class="level">{{ post.level }}</span>
+            <span class="views" hidden>{{ post.views }}</span>
           </footer>  
         </article> 
-      {% endfor %}
+        {% endfor %}
+      </section>
     {% endif %}
     <!-- < Public Posts -->
 
