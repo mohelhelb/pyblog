@@ -458,9 +458,9 @@ form legend {
   margin-left: 5px;
   color: var(--gray-xl);
   font-weight: 500;
-}
+}  
 
-.circle {
+.circle, .circle.disabled {
   display: inline-block;
   position: relative;
   width: 60px;
@@ -470,13 +470,24 @@ form legend {
   color: var(--gray-xl);
   font-weight: 500;
   transition: none;
-}
+} 
+
+.circle.disabled {
+  opacity: 0.4;
+} 
 
 .circle:active { 
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l);
 } 
+
+.circle.disabled:active {
+  outline: none;
+  border: 1px solid var(--gray-m);
+  color: var(--gray-xl);
+  opacity: 0.4;
+}
 
 .abs-center {
   position: absolute;
@@ -801,14 +812,6 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   cursor: pointer; 
 }  
 
-.previous.fleft, .next.fleft {
-  float: left;
-} 
-
-.previous.fright, .next.fright {
-  float: right;
-}
-
 .sort-toggle {
   position: relative;
 }
@@ -837,7 +840,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 } 
 
 /*
-.previous .circle:active, .next .circle:active, .load-more .circle:active, .sort-toggle .circle:active {
+.previous .circle:active, .next .circle:active, .load-more .circle:active, .sort-toggle e:hover circle:active {
   outline: 3px solid rgba(0, 123, 255, 0.3);
   border: none;
   color: var(--blue-l); 
@@ -935,7 +938,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 
   .footer a:hover {
     opacity: 0.7;
-  }
+  } 
 
   .circle:hover, #imageForm .avatar-username img:hover { 
     outline: 3px solid rgba(0, 123, 255, 0.3);
@@ -943,7 +946,14 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     border: none;
     color: var(--blue-l);
     cursor: pointer;
-  } 
+  }  
+
+  .circle.disabled:hover {
+    outline: none;
+    border: 1px solid var(--gray-m);
+    color: var(--gray-xl);
+    opacity: 0.4;
+  }
 
   .circle.delete:hover {  
     outline: 3px solid rgba(255, 51, 51, 0.3);

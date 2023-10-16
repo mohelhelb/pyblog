@@ -97,29 +97,50 @@
     {% endif %}          
     <hr class="hr mt-6">
 
-    <!-- Post Footer -->
+    <!-- Post Footer > -->
     <footer class="mt-20 mb-20">
-      <div class="clearfix">
-        <div class="previous fleft width-half t-align-left">  
+      <div class="div-3 clearfix">
+        <div class="fleft width-third t-align-left">  
           {% if previous_post %} 
             <a href="{{ url_for('post', post_id=previous_post.id) }}" class="circle">
               <span class="abs-center">
                 <i class="fa-solid fa-angles-left fa-lg"></i>
               </span>
-            </a> 
+            </a>
+            {% else %}  
+            <div class="circle disabled">
+              <span class="abs-center t-align-center">
+                <i class="fa-solid fa-angles-left fa-lg"></i>
+              </span>
+            </div> 
           {% endif %} 
-        </div>
-        <div class="next fright width-half t-align-right">  
+        </div> 
+        <div class="fleft width-third t-align-center">
+          <a href="{{ url_for('index') }}" class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-house fa-lg"></i>
+            </span>
+          </a>
+        </div>   
+        <div class="fleft width-third t-align-right">  
           {% if next_post %} 
             <a href="{{ url_for('post', post_id=next_post.id) }}" class="circle">
               <span class="abs-center">
                 <i class="fa-solid fa-angles-right fa-lg"></i>
               </span>
-            </a>  
-          {% endif %} 
+            </a> 
+            {% else %}  
+            <div class="circle disabled">
+              <span class="abs-center t-align-center">
+                <i class="fa-solid fa-angles-right fa-lg"></i>
+              </span>
+            </div> 
+          {% endif %}
         </div>
       </div>
-    </footer>    
+    </footer>
+    <!-- < Post Footer -->
+
     <!-- Delete Post Modal -->
     <div class="modal" id="deletePostModal">
       <div class="card modal-content">
