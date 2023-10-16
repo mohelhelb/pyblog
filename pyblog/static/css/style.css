@@ -655,7 +655,113 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   padding: 4px;
   background-color: var(--gray-s);
   font-weight: 500;
+}
+
+/* In progress */
+
+.slogan .fleft {
+  float: left;
+}
+
+.slogan > div {
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.slogan div:nth-child(1) {
+  animation-name: pythonBlogger; 
+  animation-delay: -5s; /* pythonBlogger keyframe starts at 25% */ 
 } 
+
+.slogan div:nth-child(2) {
+  animation-name: pythonLover;
+  opacity: 0;
+} 
+
+.slogan div:nth-child(3) {
+  animation-name: pythonExpert;
+  animation-delay: 5s;
+  opacity: 0;
+} 
+
+@keyframes pythonBlogger {   
+  0% {
+    transform: translateX(0%);
+    opacity: 0;
+  }  
+  25% {
+    transform: translateX(0%);
+    opacity: 0; 
+  }  
+  50% {
+    transform: translateX(100%);
+    opacity: 1;
+  } 
+  75% {
+    transform: translateX(200%);
+    opacity: 0; 
+  } 
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}  
+
+@keyframes pythonLover {   
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }  
+  25% {
+    transform: translateX(-100%);
+    opacity: 0; 
+  }  
+  50% {
+    transform: translateX(0%);
+    opacity: 1;
+  } 
+  75% {
+    transform: translateX(100%);
+    opacity: 0; 
+  } 
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  } 
+} 
+
+@keyframes pythonExpert {   
+  0% {
+    transform: translateX(-200%);
+    opacity: 0;
+  }  
+  25% {
+    transform: translateX(-200%);
+    opacity: 0; 
+  }  
+  50% {
+    transform: translateX(-100%);
+    opacity: 1;
+  } 
+  75% {
+    transform: translateX(0%);
+    opacity: 0; 
+  } 
+  100% {
+    transform: translateX(0%);
+    opacity: 0;
+  } 
+}
+
+.slogan .circle {
+  width: 115px;
+  height: 115px;
+  outline: 5px solid var(--green-s);
+  border: none;
+  color: var(--green-l);
+  font-size: 1.2rem;
+}
 
 .density {
   visibility: visible;
