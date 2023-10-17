@@ -55,7 +55,7 @@
               <span class="ml-3">My Posts</span>
             </a>
             -->            
-            <a href="{{ url_for('profile') }}">
+            <a href="{{ url_for('profile') }}" class="ellipsis">
               <i class="fa-regular fa-user"></i>
               <span class="ml-3">{{ current_user.fullname }}</span>
             </a> 
@@ -115,7 +115,7 @@
               </h3>
             </header>                 
             {% for writer in g.top_writers %}  
-              <div class="avatar-username mb-16">
+              <div class="avatar-username ellipsis mb-16">
                 <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
                   <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(writer.image)) }}" alt="Employee Avatar" width="50px" height="50px">
                   <span>{{ writer.fullname }}</span>

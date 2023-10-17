@@ -21,6 +21,24 @@ def before_request():
     g.top_writers = sorted([user for user in db.session.execute(db.select(User)).scalars()][:9], reverse=True)
     #
 
+# Error Handling >  
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template("error_404.html"), 404  
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template("error_403.html"), 403  
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template("error_500.html"), 500
+
+# < Error Handling
+
+
+# View Functions >
 
 @app.route("/")
 @app.route("/index")
@@ -177,6 +195,7 @@ def reset_password(token):
         return redirect(url_for("login"))
     return render_template("choose_password.html", form=form)  
 
+
 @app.route("/delete-account/<int:user_id>", methods=["POST"])
 @fresh_login_required
 def delete_account(user_id):
@@ -192,7 +211,6 @@ def delete_account(user_id):
         return redirect(url_for("index"))
     flash("Oops! Something unexpected happened. Please try again later", category="danger")
     return redirect(url_for("profile"))
-
 
 
 @app.route("/posts/<int:user_id>")
@@ -382,3 +400,5 @@ def unbookmark(post_id):
             flash("This post has been removed from your bookmarks successfully", category="success")
     return redirect(url_for("post", post_id=post_id)) 
 
+
+# < View Functions

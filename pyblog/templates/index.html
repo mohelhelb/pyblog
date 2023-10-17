@@ -33,7 +33,7 @@
         {% for post in trending_posts %}
         <article class="post trending-post mt-30 mb-30">
           <header> 
-            <div class="avatar-username">
+            <div class="avatar-username ellipsis">
               <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
                 <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(post.author.image)) }}" alt="Employee Avatar" width="50px" height="50px">
                 <span>{{ post.author.fullname }}</span>
@@ -101,7 +101,7 @@
         {% for post in public_posts %}
         <article class="post mt-30 mb-30">
           <header> 
-            <div class="avatar-username">
+            <div class="avatar-username ellipsis">
               <a href="{{ url_for('posts_written_by', user_id=post.author.id) }}">
                 <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(post.author.image)) }}" alt="Employee Avatar" width="50px" height="50px">
                 <span>{{ post.author.fullname }}</span>

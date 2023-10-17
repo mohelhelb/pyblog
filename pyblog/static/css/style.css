@@ -172,6 +172,10 @@ form legend {
   font-size: 2rem;
 }
 
+.h2-error {
+  font-size: 1.3rem;
+}
+
 .post-title {
   font-size: 2rem;
 }
@@ -433,14 +437,17 @@ form legend {
   padding: 0 4px;
 }
 
-.avatar-username {
-  display: block;
-  line-height: 0;
+.ellipsis { 
   /* Ellipsis > */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
-  /* < Ellipsis */
+  /* < Ellipsis */ 
+}
+
+.avatar-username {
+  display: block;
+  line-height: 0;
 }
 
 .avatar-username img, .avatar-username span {
@@ -532,8 +539,6 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 .bookmark.fright, .unbookmark.fright {
   float: right;
 }
-
-/* In progress */
 
 .modal {
   display: none;
@@ -657,8 +662,6 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   font-weight: 500;
 }
 
-/* In progress */
-
 .slogan .fleft {
   float: left;
 }
@@ -754,14 +757,23 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   } 
 }
 
-.slogan .circle {
+.slogan .circle, .slogan .circle:active, .error .circle, .error .circle:active {
+  outline: 5px solid var(--blue-xxl);
+  border: none;
+  color: var(--blue-xxl); 
+}
+
+.slogan .circle, .slogan .circle:active {
   width: 115px;
   height: 115px;
-  outline: 5px solid var(--green-s);
-  border: none;
-  color: var(--green-l);
   font-size: 1.2rem;
-}
+} 
+
+.error .circle, .error .circle:active {
+  width: 150px;
+  height: 150px;
+  font-size: 3rem;
+}  
 
 .density {
   visibility: visible;
@@ -1052,7 +1064,14 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     border: none;
     color: var(--blue-l);
     cursor: pointer;
-  }  
+  }
+
+  .slogan .circle:hover, .error .circle:hover {
+    outline: 5px solid var(--blue-xxl);
+    outline-offset: 0;
+    color: var(--blue-xxl);
+    cursor: default;
+  } 
 
   .circle.disabled:hover {
     outline: none;
