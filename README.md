@@ -15,21 +15,21 @@ The steps that should be taken to set up this application are as follows:
 
 - Clone the GitHub repository into the preferred directory (e.g. *~/projects/*).
   ~~~	
-		[mkdir -p ~/projects/]
-		git clone git@github.com:mohelhelb/pyblog.git [~/projects/pyblog/]
+  mkdir -p ~/projects/
+  git clone git@github.com:mohelhelb/pyblog.git ~/projects/pyblog/
   ~~~	
 - Isolate the application by creating and activating a virtual environment.
 	~~~	
-		[pip install virtualenv]
-		virtualenv ~/projects/pyblog/venv/
-    source ~/projects/pyblog/venv/bin/activate
+  [pip install -U virtualenv]
+  virtualenv ~/projects/pyblog/venv/
+  source ~/projects/pyblog/venv/bin/activate
   ~~~	
 - Install the application's dependencies (See the *requirements.txt* file).
   ~~~	
 	pip install -r ~/projects/pyblog/requirements.txt
   ~~~
 - Set the application's configuration keys (See the *config.py* file)[^1].
-  [^1]: [Google: Sign in with app passwords] (https://support.google.com/accounts/answer/185833?hl=en)
+  [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en)
   ~~~
   export PYBLOG_DEVELOPMENT_SECRET_KEY="Substitute this for a random string"
   export PYBLOG_MAIL_USERNAME="Substitute this for your gmail address"
