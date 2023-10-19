@@ -53,7 +53,8 @@ const hiddenPostsSwitch = document.querySelector("#myHiddenPosts h3");
 const hiddenPostElements = document.querySelectorAll("#myHiddenPosts .post");
 if (hiddenPostElements.length) { 
   const hiddenPosts = new Post(hiddenPostElements);
-  hiddenPosts.loadMore(); 
+  const loadMoreButton = document.querySelector("#myHiddenPosts .load-more .circle");
+  hiddenPosts.loadMore(loadMoreButton); 
   hiddenPosts.sortByDate(); 
   hiddenPostsNewestButton.addEventListener("click", function() { 
     hiddenPostsSwitch.children[0].className = "fa-solid fa-arrow-up";
@@ -67,15 +68,15 @@ if (hiddenPostElements.length) {
 
  
 // Sorting Functionality: Released Posts
-// Pending: Duplicate Code (See index.js)
 const releasedPostsTrendingButton = document.querySelector("#myReleasedPosts .sort > div:first-child .circle");
 const releasedPostsNewestButton = document.querySelector("#myReleasedPosts .sort > div:nth-child(2) .circle"); 
 const releasedPostsOldestButton = document.querySelector("#myReleasedPosts .sort > div:nth-child(3) .circle"); 
 const releases = document.querySelector("#myReleasedPosts h3");
 const releasedPostElements = document.querySelectorAll("#myReleasedPosts .post");
 if (releasedPostElements.length) { 
-  const releasedPosts = new Post(releasedPostElements); 
-  releasedPosts.loadMore(); 
+  const releasedPosts = new Post(releasedPostElements);
+  const loadMoreButton = document.querySelector("#myReleasedPosts .load-more .circle");
+  releasedPosts.loadMore(loadMoreButton); 
   releasedPosts.sortByDate();  
   releasedPostsTrendingButton.addEventListener("click", function() { 
     releases.children[0].className = "fa-solid fa-arrow-trend-up";
@@ -96,7 +97,6 @@ if (releasedPostElements.length) {
 
 
 // Sorting Functionality: Bookmarks
-// Pending: Duplicate Code (See index.js)
 const bookmarksTrendingButton = document.querySelector("#myBookmarks .sort > div:first-child .circle");
 const bookmarksNewestButton = document.querySelector("#myBookmarks .sort > div:nth-child(2) .circle"); 
 const bookmarksOldestButton = document.querySelector("#myBookmarks .sort > div:nth-child(3) .circle"); 
@@ -104,7 +104,8 @@ const bookmarks = document.querySelector("#myBookmarks h3");
 const bookmarkElements = document.querySelectorAll("#myBookmarks .post");
 if (bookmarkElements.length) {
   const bookmarkedPosts = new Post(bookmarkElements);
-  bookmarkedPosts.loadMore(); 
+  const loadMoreButton = document.querySelector("#myBookmarks .load-more .circle");
+  bookmarkedPosts.loadMore(loadMoreButton); 
   bookmarkedPosts.sortByDate();  
   bookmarksTrendingButton.addEventListener("click", function() { 
     bookmarks.children[0].className = "fa-solid fa-arrow-trend-up";

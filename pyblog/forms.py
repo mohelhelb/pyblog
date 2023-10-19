@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import Form, EmailField, PasswordField, RadioField, StringField, SubmitField, TextAreaField
+from wtforms import EmailField, PasswordField, RadioField, StringField, SubmitField, TextAreaField
 from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError
 
 from pyblog import db
@@ -45,50 +45,53 @@ class UserBaseForm(FlaskForm):
             description="Enter a brief description of yourself"
             )
 
+
 class ImageForm(FlaskForm):
     image = FileField(
-            label = "Image",
-            validators = [FileAllowed(["jpg", "jpeg", "png"], "Invalid image file. Allowed extensions: jpg, jpeg, png.")],
-            id = "image"
+            label="Image",
+            validators=[FileAllowed(["jpg", "jpeg", "png"], "Invalid image file. Allowed extensions: jpg, jpeg, png.")],
+            id="image"
             )
     submit_image = SubmitField()
 
+
 class CreatePostForm(FlaskForm):
     title = StringField(
-            label = "Title",
-            validators = [DataRequired(), Length(max=100)],
-            id = "postTitle",
-            description = "Enter Post Title"
+            label="Title",
+            validators=[DataRequired(), Length(max=100)],
+            id="postTitle",
+            description="Enter Post Title"
             )
     subheading = TextAreaField(
-            label = "Subheading",
-            validators = [DataRequired(), Length(max=150)],
-            id = "postSubheading",
-            description = "Enter Post Subheading"
+            label="Subheading",
+            validators=[DataRequired(), Length(max=150)],
+            id="postSubheading",
+            description="Enter Post Subheading"
             )
     content = TextAreaField(
-            label = "Content",
-            validators = [DataRequired()],
-            id = "content",
-            description = "Enter Post Content"
+            label="Content",
+            validators=[DataRequired()],
+            id="content",
+            description="Enter Post Content"
             )
     level = RadioField(
-            label = "Difficulty Level",
+            label="Difficulty Level",
             id="level",
-            choices = ["Beginner", "Intermediate", "Advanced"]
+            choices=["Beginner", "Intermediate", "Advanced"]
             )
     status = RadioField(
-            label = "When do you want to publish your post?",
+            label="When do you want to publish your post?",
             id="status",
-            choices = ["Now", "Later"]
+            choices=["Now", "Later"]
             )
     submit = SubmitField()
+
 
 class EmptyForm(FlaskForm):
     submit = SubmitField()
 
 
-# Python Inheritance
+# Python Inheritance >
 
 class SignupForm(UserBaseForm):
     submit = SubmitField(label="Sign up") 
@@ -97,19 +100,16 @@ class SignupForm(UserBaseForm):
         """Check if the provided email is assigned to an existing account. If so, raise a validation error."""
         user = db.session.execute(db.select(User).filter_by(email=field.data)).scalar()
         if user:
-            raise ValidationError("The email is already assigned to an account. Please choose another one.") 
+            raise ValidationError("The email is already assigned to an account. Please choose another one.")
 
-# Python Composition
+# < Python Inheritance
+
+# Python Composition >
 
 class SigninForm(FlaskForm):
     email = UserBaseForm.email
     password = UserBaseForm.password
     submit = SubmitField(label="Sign in")
-
-#    def validate_email(form, field):
-#        user = db.session.execute(db.select(User).filter_by(email=field.data)).scalar()
-#        if not user:
-#            raise ValidationError("There is no account with that email.")
 
 
 class EmailTokenForm(FlaskForm):
@@ -128,7 +128,9 @@ class ProfileForm(FlaskForm):
     last_name = UserBaseForm.last_name
     email = UserBaseForm.email
     about_me = UserBaseForm.about_me
-    submit_profile = SubmitField(label="Edit") 
+    submit_profile = SubmitField(label="Edit")
+
+# < Python Composition
 
 
     

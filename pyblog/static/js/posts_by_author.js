@@ -1,23 +1,7 @@
 
 import {Post} from "./ftools.js"
 
-// Sorting Functionality
-// const newestButton = document.querySelector(".sort > div:nth-child(2) .circle"); 
-// const oldestButton = document.querySelector(".sort > div:nth-child(3) .circle");
-// const postElements = document.querySelectorAll(".post"); 
-// const posts = new Post(postElements);
-// posts.loadMore(); 
-// posts.sortByDate();
-// newestButton.addEventListener("click", function() {
-//   posts.sortByDate();
-// }); 
-// oldestButton.addEventListener("click", function() {
-//   posts.sortByDate({reverse: true}); 
-// }); 
-
-
 // Sorting Functionality: Posts
-// Pending: Duplicate Code (See index.js) 
 const postsTrendingButton = document.querySelector("#myPosts .sort > div:first-child .circle"); 
 const postsNewestButton = document.querySelector("#myPosts .sort > div:nth-child(2) .circle"); 
 const postsOldestButton = document.querySelector("#myPosts .sort > div:nth-child(3) .circle"); 
@@ -25,7 +9,8 @@ const releases = document.querySelector("#myPosts h3");
 const postElements = document.querySelectorAll("#myPosts .post");
 if (postElements.length) {
   const posts = new Post(postElements);
-  posts.loadMore(); 
+  const loadMoreButton = document.querySelector("#myPosts .load-more .circle");
+  posts.loadMore(loadMoreButton); 
   posts.sortByDate();  
   postsTrendingButton.addEventListener("click", function() { 
     releases.children[0].className = "fa-solid fa-arrow-trend-up";

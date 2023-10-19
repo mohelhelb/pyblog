@@ -121,18 +121,17 @@
             <span class="views" hidden>{{ post.views }}</span>
           </footer>  
         </article> 
-        {% endfor %}
+        {% endfor %} 
+        <div class="load-more t-align-center mb-20">
+          <span class="circle">
+            <span class="abs-center">
+              <i class="fa-solid fa-angles-down fa-lg"></i>
+            </span>
+          </span>
+        </div>    
       </section>
     {% endif %}
     <!-- < Public Posts -->
-
-    <div class="load-more t-align-center mb-20">
-      <span class="circle">
-        <span class="abs-center">
-          <i class="fa-solid fa-angles-down fa-lg"></i>
-        </span>
-      </span>
-    </div>
 {% endblock content %}
 
 {% block js %}

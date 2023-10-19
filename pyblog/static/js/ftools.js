@@ -119,8 +119,7 @@ export class Post {
    return newPostElements;
  }
 
- loadMore() {
-   const loadMoreButton = document.querySelector(".load-more .circle")
+ loadMore(loadMoreButton) {
    let m = Math.floor(this.postElements.length / this.perPagePostElements);
    let n = this.postElements.length % this.perPagePostElements;
    if (this.postElements.length === 0) {

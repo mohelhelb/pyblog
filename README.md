@@ -26,14 +26,14 @@ The steps that should be taken to set up this application are as follows:
   ~~~	
 - Install the application's dependencies (See the *requirements.txt* file).
   ~~~	
-	pip install -r ~/projects/pyblog/requirements.txt
+  pip install -r ~/projects/pyblog/requirements.txt
   ~~~
 - Set the application's configuration keys (See the *config.py* file)[^1].
   [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en)
   ~~~
   export PYBLOG_DEVELOPMENT_SECRET_KEY="Substitute this for a random string"
   export PYBLOG_MAIL_USERNAME="Substitute this for your gmail address"
-  export PYBLOG_MAIL_PASSWORD="Substitute this for your Google app password"
+  export PYBLOG_MAIL_PASSWORD="Substitute this for your Google app password with no spaces"
   ~~~
 - Create a SQLite database.
   ~~~

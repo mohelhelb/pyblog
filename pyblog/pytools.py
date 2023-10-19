@@ -1,7 +1,6 @@
 import glob
 import os
 from PIL import Image
-from werkzeug.urls import url_parse
 
 from pyblog import app
 
@@ -32,7 +31,6 @@ class Img:
         if images:
             for image in images:
                 os.remove(os.path.join(cls.root_img_dir, image))
-
 
     def save_uploaded_img(self, size=None):
         with Image.open(self.img) as img:

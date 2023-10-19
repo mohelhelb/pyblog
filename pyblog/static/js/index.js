@@ -17,7 +17,8 @@ const releases = document.querySelector("#publicPosts h3");
 const postElements = document.querySelectorAll("#publicPosts .post"); 
 if (postElements.length) { 
   const posts = new Post(postElements);
-  posts.loadMore(); 
+  const loadMoreButton = document.querySelector("#publicPosts .load-more .circle");
+  posts.loadMore(loadMoreButton); 
   posts.sortByDate();
   postsTrendingButton.addEventListener("click", function() {
     releases.children[0].className = "fa-solid fa-arrow-trend-up";

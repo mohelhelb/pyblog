@@ -1,5 +1,4 @@
 import datetime
-import os
 import random
 from flask import abort, flash, g, redirect, render_template, request, url_for  
 from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
@@ -17,9 +16,7 @@ def before_request():
     '''Set the jinja2 variables in the base template.'''
     g.total_users = User.num_users()
     g.total_public_posts = Post.num_public_posts()
-    # Pending: Inefficiency
-    g.top_writers = sorted([user for user in db.session.execute(db.select(User)).scalars()][:9], reverse=True)
-    #
+    g.top_writers = Post.top_writers() 
 
 # Error Handling >  
 
@@ -27,9 +24,11 @@ def before_request():
 def error_404(error):
     return render_template("error_404.html"), 404  
 
+
 @app.errorhandler(403)
 def error_403(error):
     return render_template("error_403.html"), 403  
+
 
 @app.errorhandler(500)
 def error_500(error):
@@ -62,11 +61,11 @@ def register():
     form = SignupForm()
     if form.validate_on_submit():
         user = User(
-                first_name = form.first_name.data,
-                last_name = form.last_name.data,
-                email = form.email.data,
-                password = form.password.data,
-                about_me = form.about_me.data
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                password=form.password.data,
+                about_me=form.about_me.data
                 )
         user.add()
         flash("Your account has been created successfully", category="success")
@@ -131,10 +130,10 @@ def profile():
         profile_form.about_me.data = current_user.about_me
     elif "submit_profile" in request.form and profile_form.validate():
         current_user.update(
-                first_name = profile_form.first_name.data,
-                last_name = profile_form.last_name.data,
-                email = profile_form.email.data,
-                about_me = profile_form.about_me.data
+                first_name=profile_form.first_name.data,
+                last_name=profile_form.last_name.data,
+                email=profile_form.email.data,
+                about_me=profile_form.about_me.data
                 )
         return redirect(request.url)
     if request.method == "GET":
@@ -246,7 +245,8 @@ def post(post_id):
     #
     if delete_post_form.validate_on_submit():
         return redirect(url_for("delete_post", post_id=post_id))
-    return render_template("post.html", 
+    return render_template(
+            "post.html", 
             bookmark_form=bookmark_form,
             delete_post_form=delete_post_form,
             follower_form=follower_form, 
@@ -262,14 +262,17 @@ def create_post():
     form = CreatePostForm()
     if form.validate_on_submit():
         post = Post(
-                title = form.title.data,
-                subheading = form.subheading.data,
-                content = form.content.data,
-                level = form.level.data,
-                public = True if form.status.data == "Now" else False,
-                author = current_user
+                title=form.title.data,
+                subheading=form.subheading.data,
+                content=form.content.data,
+                level=form.level.data,
+                public=True if form.status.data == "Now" else False,
+                author=current_user
                 )
         post.add()
+        if not post.public:
+            flash("Your post was saved, but not published. Please check your profile", category="info")
+            return redirect(url_for("post", post_id=post.id))
         flash("Your post has been published successfully", category="success")
         return redirect(url_for("post", post_id=post.id)) 
     return render_template("create_post.html", action="Create", form=form)  
@@ -281,14 +284,14 @@ def edit_post(post_id):
     post = db.get_or_404(Post, post_id)
     if post.author != current_user:
         abort(403)
-    form=CreatePostForm()
+    form = CreatePostForm()
     if form.validate_on_submit():
         post.update(
-                title = form.title.data,
-                subheading = form.subheading.data,
-                content = form.content.data,
-                level = form.level.data,
-                date_posted = datetime.datetime.utcnow()
+                title=form.title.data,
+                subheading=form.subheading.data,
+                content=form.content.data,
+                level=form.level.data,
+                date_posted=datetime.datetime.utcnow()
                 ) 
         flash("Your post has been updated", category="success") 
         return redirect(url_for("post", post_id=post.id))
@@ -373,7 +376,7 @@ def unfollow(user_id):
 def bookmark(post_id):
     post = db.get_or_404(Post, post_id)
     if not current_user.is_authenticated:
-        flash(f"Please sign in first to be able to add bookmarks", category="info")
+        flash("Please sign in first to be able to add bookmarks", category="info")
         return redirect(url_for("login"))
     form = EmptyForm()
     if form.validate_on_submit():
@@ -389,7 +392,7 @@ def bookmark(post_id):
 def unbookmark(post_id):
     post = db.get_or_404(Post, post_id)
     if not current_user.is_authenticated:
-        flash(f"Please sign in first to be able to add this post to your bookmarks", category="info")
+        flash("Please sign in first to be able to add this post to your bookmarks", category="info")
         return redirect(url_for("login"))
     form = EmptyForm()
     if form.validate_on_submit():

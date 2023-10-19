@@ -8,26 +8,25 @@ from pyblog.config import ConfigDevelopment
 
 app = Flask(__name__)
 
-# Configuration
-app.config.from_object(ConfigDevelopment) 
+app.config.from_object(ConfigDevelopment)  # Configuration 
 
-# Extensions
+# Extensions >
 
-## Flask: SQLAlchemy
-db = SQLAlchemy(app) 
+db = SQLAlchemy(app)  # Flask: SQLAlchemy
 
-## Flask: Bcrypt
-bcrypt = Bcrypt(app) 
+bcrypt = Bcrypt(app)  # Flask: Bcrypt 
 
-## Flask: Mail
-mail = Mail(app)
+mail = Mail(app)  # Flask: Mail
 
-## Flask: Login
+# Flask: Login >
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 login_manager.refresh_view = "login"
 login_manager.needs_refresh_message_category = "info"
+# < Flask: Login
+
+# < Extensions
 
 import pyblog.views  
 
