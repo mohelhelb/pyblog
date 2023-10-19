@@ -4,10 +4,10 @@ import {Post} from "./ftools.js"
 // Display trending posts
 const trendingPostElements = document.querySelectorAll("#trendingPosts .post");
 if (trendingPostElements.length) {
-  for (let i = 0; i < trendingPostElements.length; i++) {
-    trendingPostElements[i].style.display = "block";
-  }
-};
+  const trendingPosts = new Post(trendingPostElements);
+  trendingPosts.display(0, trendingPostElements.length - 1);
+  trendingPosts.substituteStampForLag();
+}
 
 // Sorting Functionality
 const postsTrendingButton = document.querySelector("#publicPosts .sort > div:first-child .circle");
@@ -18,6 +18,7 @@ const postElements = document.querySelectorAll("#publicPosts .post");
 if (postElements.length) { 
   const posts = new Post(postElements);
   const loadMoreButton = document.querySelector("#publicPosts .load-more .circle");
+  posts.substituteStampForLag();
   posts.loadMore(loadMoreButton); 
   posts.sortByDate();
   postsTrendingButton.addEventListener("click", function() {

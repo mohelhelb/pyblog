@@ -116,7 +116,8 @@
           </header> 
           <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
           <footer class="small text-muted-light">
-            <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+            <span class="time-stamp" hidden>{{ post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+            <span class="lag"></span> <!-- JS-only class: lag --> 
             <span class="middot">&middot;</span>
             <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
             <span class="middot">&middot;</span> 

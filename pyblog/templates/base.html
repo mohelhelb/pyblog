@@ -23,7 +23,7 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Header > -->
   <header id="header">
     <div class="container">
       <nav class="topnav" id="topnav-A">
@@ -48,13 +48,7 @@
             <a href="{{ url_for('create_post') }}">
               <i class="fa-solid fa-plus"></i>
               <span class="ml-3">New Post</span>
-            </a> 
-            <!--
-            <a href="{{ url_for('posts_written_by', user_id=current_user.id) }}">
-              <i class="fa-regular fa-clipboard"></i>
-              <span class="ml-3">My Posts</span>
-            </a>
-            -->            
+            </a>           
             <a href="{{ url_for('profile') }}" class="ellipsis">
               <i class="fa-regular fa-user"></i>
               <span class="ml-3">{{ current_user.fullname }}</span>
@@ -68,11 +62,11 @@
       </nav>   
     </div>
   </header>
+  <!-- < Header -->
 
-  <!-- Display 100px gap -->
-  <div class="gap"></div>
+  <div class="gap"></div> <!-- Gap -->
 
-  <!-- Body -->
+  <!-- Body > -->
   <div class="container clearfix"> 
     {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages %}
@@ -83,16 +77,17 @@
         </ul>
       {% endif %}
     {% endwith %}
-    <!-- Main Content -->
+
+    <!-- Main Content > -->
     <main id="main" class="fleft">
       {% block content %}
       {% endblock content %}
     </main>
+    <!-- < Main Content -->
 
-    <!-- Aside Content -->
+    <!-- Aside Content > -->
     <aside id="sidebar" class="fleft">
       {% block sidebar %}
-        <!-- Number of Writers/Posts -->
         <div class="card mb-20">
           <div class="density mt-16 mb-16 clearfix">
             <div class="num-writers fleft width-third t-align-center">
@@ -105,7 +100,6 @@
             </div>
           </div>
         </div>
-        <!-- Top Writers > -->
         {% if g.top_writers|length %}
           <div class="card">
             <header class="mt-24 mb-16 t-align-center">
@@ -124,16 +118,15 @@
             {% endfor %}
           </div>
         {% endif %}
-        <!-- < Top Writers -->
       {% endblock sidebar %}
     </aside>
-
+    <!-- < Aside Content -->
   </div>
+  <!-- < Body -->
 
-  <!-- Display 100px gap -->
-  <div class="gap"></div>
+  <div class="gap"></div> <!-- Gap -->
 
-  <!-- Footer -->
+  <!-- Footer > -->
   <footer class="footer">
     <nav>
       <a href="{{ url_for('index') }}" class="nowrap">
@@ -150,10 +143,12 @@
       </a> 
     </nav>
   </footer>
+  <!-- < Footer -->
 
-  <!-- JavaScript -->
+  <!-- JavaScript > -->
   <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
   {% block js %}
   {% endblock js %}
+  <!-- < JavaScript -->
 </body>
 </html>

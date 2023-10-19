@@ -46,14 +46,14 @@ imageField.addEventListener("change", function() {
 
  
 // Sorting Functionality: Hidden Posts
-// Pending: Duplicate Code (See index.js)
 const hiddenPostsNewestButton = document.querySelector("#myHiddenPosts .sort > div:first-child .circle"); 
 const hiddenPostsOldestButton = document.querySelector("#myHiddenPosts .sort > div:last-child .circle"); 
 const hiddenPostsSwitch = document.querySelector("#myHiddenPosts h3");
 const hiddenPostElements = document.querySelectorAll("#myHiddenPosts .post");
 if (hiddenPostElements.length) { 
   const hiddenPosts = new Post(hiddenPostElements);
-  const loadMoreButton = document.querySelector("#myHiddenPosts .load-more .circle");
+  const loadMoreButton = document.querySelector("#myHiddenPosts .load-more .circle");  
+  hiddenPosts.substituteStampForLag(); 
   hiddenPosts.loadMore(loadMoreButton); 
   hiddenPosts.sortByDate(); 
   hiddenPostsNewestButton.addEventListener("click", function() { 
@@ -75,7 +75,8 @@ const releases = document.querySelector("#myReleasedPosts h3");
 const releasedPostElements = document.querySelectorAll("#myReleasedPosts .post");
 if (releasedPostElements.length) { 
   const releasedPosts = new Post(releasedPostElements);
-  const loadMoreButton = document.querySelector("#myReleasedPosts .load-more .circle");
+  const loadMoreButton = document.querySelector("#myReleasedPosts .load-more .circle");   
+  releasedPosts.substituteStampForLag(); 
   releasedPosts.loadMore(loadMoreButton); 
   releasedPosts.sortByDate();  
   releasedPostsTrendingButton.addEventListener("click", function() { 
@@ -104,7 +105,8 @@ const bookmarks = document.querySelector("#myBookmarks h3");
 const bookmarkElements = document.querySelectorAll("#myBookmarks .post");
 if (bookmarkElements.length) {
   const bookmarkedPosts = new Post(bookmarkElements);
-  const loadMoreButton = document.querySelector("#myBookmarks .load-more .circle");
+  const loadMoreButton = document.querySelector("#myBookmarks .load-more .circle");    
+  bookmarkedPosts.substituteStampForLag(); 
   bookmarkedPosts.loadMore(loadMoreButton); 
   bookmarkedPosts.sortByDate();  
   bookmarksTrendingButton.addEventListener("click", function() { 

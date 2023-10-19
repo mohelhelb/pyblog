@@ -9,7 +9,8 @@ const releases = document.querySelector("#myPosts h3");
 const postElements = document.querySelectorAll("#myPosts .post");
 if (postElements.length) {
   const posts = new Post(postElements);
-  const loadMoreButton = document.querySelector("#myPosts .load-more .circle");
+  const loadMoreButton = document.querySelector("#myPosts .load-more .circle"); 
+  posts.substituteStampForLag(); 
   posts.loadMore(loadMoreButton); 
   posts.sortByDate();  
   postsTrendingButton.addEventListener("click", function() { 

@@ -164,6 +164,9 @@ class Post(db.Model):
         avg_reading_speed = 250  # Average Reading Speed: 250 wpm
         return round(self.content.count(" ") / avg_reading_speed)
 
+    def __repr__(self):
+        return f"Post(post_id={self.id}, user_id={self.author.id})"
+
     def add(self):
         db.session.add(self)
         db.session.commit()
@@ -220,6 +223,10 @@ class Post(db.Model):
     def show(self):
         self.public = True
         db.session.commit()
+
+    def time_stamp(self):
+        td = datetime.datetime.utcnow() - self.date_posted
+        return round(td.total_seconds())
 
     @classmethod
     def top_writers(cls):

@@ -72,11 +72,9 @@ export class Post {
  perPagePostElements = 3; 
 
  static sortByDateCompFunc(post1, post2) { 
-   let dateString1 = post1.getElementsByClassName("date")[0].innerText; 
-   let dateString2 = post2.getElementsByClassName("date")[0].innerText;
-   const date1 = new Date(dateString1);
-   const date2 = new Date(dateString2);
-   return date2 - date1;
+   let timeStamp1 = post1.getElementsByClassName("time-stamp")[0].innerText; 
+   let timeStamp2 = post2.getElementsByClassName("time-stamp")[0].innerText;
+   return timeStamp2 - timeStamp1;
  } 
 
  static sortByViewsCompFunc(post1, post2) { 
@@ -84,6 +82,37 @@ export class Post {
    let numViews2 = post2.getElementsByClassName("views")[0].innerText;
    return numViews2 - numViews1;
  }
+
+  static convertStampToLag(post) {
+    let timeStamp = post.getElementsByClassName("time-stamp")[0].innerText;
+    let minute = 60;
+    let hour = 60 * 60;
+    let day = 24 * 60 * 60;
+    let month = 30 * 24 * 60 * 60;
+    let year = 12 * 30 * 24 * 60 * 60;
+    switch (true) {
+      case 0 < timeStamp && timeStamp < 2 * minute:
+        return "1 minute ago";
+      case 2 * minute <= timeStamp && timeStamp < hour:
+        return Math.floor(timeStamp / minute) + " minutes ago";
+      case hour <= timeStamp && timeStamp < 2 * hour:
+        return "1 hour ago";
+      case 2 * hour <= timeStamp && timeStamp < day:
+        return Math.floor(timeStamp / hour) + " hours ago";
+      case day <= timeStamp && timeStamp < 2 * day:
+        return "1 day ago";
+      case 2 * day <= timeStamp && timeStamp < month:
+        return Math.floor(timeStamp / day) + " days ago";
+      case month <= timeStamp && timeStamp < 2 * month:
+        return "1 month ago";
+      case 2 * month <= timeStamp && timeStamp < year:
+        return Math.floor(timeStamp / month) + " months ago";
+      case year <= timeStamp && timeStamp < 2 * year:
+        return "1 year ago";
+      case 2 * year <= timeStamp:
+        return Math.floor(timeStamp / year) + " years ago";
+    }
+  }
 
  constructor(postElements) {
    this.postElements = Array.from(postElements);
@@ -118,6 +147,13 @@ export class Post {
    }
    return newPostElements;
  }
+
+  substituteStampForLag() {
+    for (let i = 0; i < this.postElements.length; i++) {
+      const timeLagElemnt = this.postElements[i].getElementsByClassName("lag")[0];
+      timeLagElemnt.innerText = this.constructor.convertStampToLag(this.postElements[i]);
+    }
+  }
 
  loadMore(loadMoreButton) {
    let m = Math.floor(this.postElements.length / this.perPagePostElements);

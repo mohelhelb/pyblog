@@ -154,7 +154,6 @@ form legend {
   display: none;
 }
 
-/* General CSS Classes >>> */
 
 /* Clear floating elements */
 .clearfix::after {
@@ -574,10 +573,6 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   }
 }
 
-/* <<< General CSS Classes */
-
-/* Specific CSS Classes >>> */
-
 .topnav {
   background-color: inherit;
 } 
@@ -893,21 +888,6 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   width: 100%;
   margin-bottom: 12px;
 }
-
-/*
-.div-2 div > span {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 12px;
-} 
-*/
-/*
-.div-3.chart .circle {
-  outline: 3px solid rgba(0, 123, 255, 0.3);
-  border: none;
-  color: var(--blue-l);
-}
-*/
  
 .avatar .circle {
   width: 100px;
@@ -955,15 +935,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 
 .load-more .circle {
   display: none;
-} 
-
-/*
-.previous .circle:active, .next .circle:active, .load-more .circle:active, .sort-toggle e:hover circle:active {
-  outline: 3px solid rgba(0, 123, 255, 0.3);
-  border: none;
-  color: var(--blue-l); 
 }
-*/
 
 #createPostForm .level-status {
   display: block; 
@@ -1014,7 +986,9 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   vertical-align: middle;
 }
 
-/* <<< Specific CSS Classes */
+#singlePost .time-stamp {
+  display: none;
+}
 
 /* Disable hover effect on mobile devices */
 @media (hover: hover) {
@@ -1035,33 +1009,13 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     color: var(--blue-l);
   }   
 
-  .avatar-username a:hover img { 
-    outline: 3px solid rgba(0, 123, 255, 0.3);
-    border: none;
-  } 
-
-  /*
-  .topnav a:hover {
-    background-color: var(--gray-s);
-    color: var(--blue-xxl);
-    opacity: 1;
-  }
-
-  .topnav .topnav-logo:hover, .topnav .topnav-toggle:hover {
-    background-color: inherit;
-    color: var(--gray-s);
-    opacity: 0.7;
-  }
-  */  
-
-  .footer a:hover {
-    opacity: 0.7;
-  } 
-
-  .circle:hover, #imageForm .avatar-username img:hover { 
+  .avatar-username a:hover img, .circle:hover, #imageForm .avatar-username img:hover { 
     outline: 3px solid rgba(0, 123, 255, 0.3);
     outline-offset: -3px;
-    border: none;
+    border: none; 
+  }
+
+  .circle:hover, #imageForm .avatar-username img:hover {
     color: var(--blue-l);
     cursor: pointer;
   }
@@ -1085,7 +1039,11 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     border: none;
     color: var(--red-m);
     cursor: pointer; 
-  }
+  }  
+
+  .footer a:hover {
+    opacity: 0.7;
+  } 
 
   /*
   .previous .circle:hover, .next .circle:hover, .load-more .circle:hover, .sort-toggle .circle:hover, .sort .circle:hover, .account .circle:hover {

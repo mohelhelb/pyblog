@@ -87,10 +87,10 @@ def login():
             next_page = request.args.get("next")
             if not next_page or url_parse(next_page).netloc:
                 next_page = url_for("profile")
-            flash(f"Hi, {user.first_name}! How is it going?", category="success") 
+            flash(f"Hi, {user.first_name}!", category="success") 
             return redirect(next_page)
         elif user: 
-            flash("The password is incorrect. Please try again.", category="danger")
+            flash("The password is incorrect. Please try again", category="danger")
             return redirect(request.url) 
         flash("There is no account with that email", category="danger")
         return redirect(request.url)
@@ -110,8 +110,6 @@ def profile():
     image_form = ImageForm() 
     profile_form = ProfileForm()
     delete_account_form = EmptyForm()
-#    if not current_user.is_authenticated and follower_form.validate_on_submit():
-#        return redirect(request.url)
     if "submit_image" in request.form:
         if image_form.validate():
             # Change the filename of the uploaded image.
@@ -239,7 +237,7 @@ def post(post_id):
     posts = Post.public_posts(author=selected_post.author) 
     more_posts = [post for post in sorted(posts, key=lambda post: random.random()) if post.id != selected_post.id]
     #
-    # Increase the number of views by one
+    # Increase the number of post views by one
     if current_user != selected_post.author:
         selected_post.increase_view()
     #

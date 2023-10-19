@@ -3,10 +3,10 @@
 {% block content %}
   <section class="card mb-20"> 
     <form class="mt-26 t-align-center" id="imageForm" action="" method="POST" enctype="multipart/form-data">
-      <!-- >>> CSRF token -->
+      <!-- > CSRF token -->
       {{ image_form.hidden_tag() }}
-      <!-- <<< CSRF token -->    
-      <!-- >>> Image -->
+      <!-- < CSRF token -->    
+      <!-- > Image -->
       <label class="avatar-username" for="image">
         <img class="width-100 height-100" src="{{ url_for('static', filename='images/{}'.format(current_user.image)) }}" alt="Employee Avatar" width="100px" height="100px">
       </label> 
@@ -20,10 +20,10 @@
       {% else %}  
       {{ image_form.image() }} 
       {% endif %}
-      <!-- <<< Image -->  
-      <!-- >>> Submit Button -->
+      <!-- < Image -->  
+      <!-- > Submit Button -->
       {{ image_form.submit_image(form="imageForm", style="display: none;") }}
-      <!-- <<< Submit Button -->  
+      <!-- < Submit Button -->  
     </form>
     <p class="ellipsis mt-0 mb-0">{{ current_user.fullname }}</p>
     <hr class="hr mt-0">
@@ -63,32 +63,14 @@
   <section class="card mb-20" id="profileFormCard">
     <form class="mt-40" id="profileForm" action="" method="POST">
       <fieldset form="profileForm">
-        <legend>Profile</legend>    
-        <!--
-        <div class="sort-toggle mb-6">
-          <hr class="hr mt-0 mb-3"> 
-          <span class="circle">
-            <span class="abs-center">
-              <i class="fa-solid fa-angles-down"></i>
-            </span>
-          </span> 
-        </div>
-        -->
+        <legend>Profile</legend>
         <div class="div-2 account mt-20 clearfix">
           <div class="fleft width-50pc t-align-center">
             <span>Password</span>
             <a href="{{ url_for('change_password') }}" class="circle">
               <span class="abs-center">Change</span>
             </a>
-          </div>  
-          <!--
-          <div class="fleft width-third t-align-center">
-            <span>Country</span>
-            <div class="circle"> 
-              <span class="abs-center">XX</span>
-            </div>
-          </div>
-          -->  
+          </div> 
           <div class="fleft width-50pc t-align-center">
             <span>Account</span>
             <div class="circle delete"> 
@@ -96,10 +78,10 @@
             </div>
           </div>
         </div>
-        <!-- >>> CSRF token -->
+        <!-- > CSRF token -->
         {{ profile_form.hidden_tag() }}
-        <!-- <<< CSRF token -->  
-        <!-- >>> First Name -->
+        <!-- < CSRF token -->  
+        <!-- > First Name -->
         {{ profile_form.first_name.label }}
         {% if profile_form.first_name.errors %} 
           {{ profile_form.first_name(class="field-danger", placeholder=profile_form.first_name.description) }} 
@@ -111,8 +93,8 @@
         {% else %}  
           {{ profile_form.first_name(placeholder=profile_form.first_name.description) }} 
         {% endif %}
-        <!-- <<< First Name -->
-        <!-- >>> Last Name -->
+        <!-- < First Name -->
+        <!-- > Last Name -->
         {{ profile_form.last_name.label }}
         {% if profile_form.last_name.errors %} 
           {{ profile_form.last_name(class="field-danger", placeholder=profile_form.last_name.description) }} 
@@ -124,8 +106,8 @@
         {% else %}  
           {{ profile_form.last_name(placeholder=profile_form.last_name.description) }} 
         {% endif %}
-        <!-- <<< Last Name --->    
-        <!-- >>> Email -->
+        <!-- < Last Name --->    
+        <!-- > Email -->
         {{ profile_form.email.label }}
         {% if profile_form.email.errors %} 
           {{ profile_form.email(class="field-danger", placeholder=profile_form.email.description) }} 
@@ -137,8 +119,8 @@
         {% else %}  
           {{ profile_form.email(placeholder=profile_form.email.description) }} 
         {% endif %}
-        <!-- <<< Email -->
-        <!-- >>> About Me -->
+        <!-- < Email -->
+        <!-- > About Me -->
         {{ profile_form.about_me.label }}
         {% if profile_form.about_me.errors %} 
           {{ profile_form.about_me(class="field-danger", placeholder=profile_form.about_me.description, rows="3") }} 
@@ -150,10 +132,10 @@
         {% else %}  
           {{ profile_form.about_me(placeholder=profile_form.about_me.description, rows="3") }} 
         {% endif %}
-        <!-- <<< About Me --> 
-        <!-- >>> Submit Button -->
+        <!-- < About Me --> 
+        <!-- > Submit Button -->
         {{ profile_form.submit_profile(class="btn-info mt-26", form="profileForm") }}
-        <!-- <<< Submit Button -->         
+        <!-- < Submit Button -->         
         <button type="button" class="btn-default mt-8 mb-24" id="cancelProfileButton">Cancel</button>
       </fieldset>
     </form>   
@@ -180,9 +162,10 @@
           </fieldset>
         </form>
       </div>
-    </div>  
+    </div>
+    <!-- < Delete Account Modal -->  
   </section>      
-  <!-- << Edit Profile -->  
+  <!-- < Edit Profile -->  
 
   <!-- My Posts > -->
   <div id="myPosts">
@@ -228,7 +211,8 @@
             </header> 
             <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
             <footer class="small text-muted-light">
-              <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+              <span class="time-stamp" hidden>{{ post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+              <span class="lag"></span> <!-- JS-only class: lag --> 
               <span class="middot">&middot;</span>
               <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
               <span class="middot">&middot;</span>
@@ -251,7 +235,7 @@
         </div>   
       </section>    
     {% endif %}
-    <!-- << Hidden Posts -->             
+    <!-- < Hidden Posts -->             
 
     <!-- Released Posts > --> 
     {% if current_user.num_public_posts() %}
@@ -303,7 +287,8 @@
             </header> 
             <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
             <footer class="small text-muted-light">
-              <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+              <span class="time-stamp" hidden>{{ post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+              <span class="lag"></span> <!-- JS-only class: lag --> 
               <span class="middot">&middot;</span>
               <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
               <span class="middot">&middot;</span>
@@ -382,7 +367,8 @@
           </header> 
           <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
           <footer class="small text-muted-light">
-            <span class="date">{{ post.date_posted.strftime("%b %d, %Y") }}</span>
+            <span class="time-stamp" hidden>{{ post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+            <span class="lag"></span> <!-- JS-only class: lag --> 
             <span class="middot">&middot;</span>
             <span class="reading-time">{{ post.reading_time }}</span><span> min read</span>
             <span class="middot">&middot;</span>

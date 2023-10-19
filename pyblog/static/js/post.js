@@ -1,4 +1,12 @@
-import {displayModal} from "./ftools.js"
+import {displayModal, Post} from "./ftools.js"
+
+// Pending
+const postElements = document.querySelectorAll("#singlePost");
+if (postElements.length) {
+  const post = new Post(postElements);
+  post.display(0, 0);
+  post.substituteStampForLag();
+}
 
 // Delete Post Modal 
 const deletePostToggle = document.querySelector(".edit-hide-delete .delete");
