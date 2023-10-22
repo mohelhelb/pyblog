@@ -6,7 +6,7 @@ from flask_mail import Message
 from werkzeug.urls import url_parse
 
 from pyblog import app, db, mail
-from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, EmptyForm, ImageForm, ProfileForm, SigninForm, SignupForm   
+from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, EmptyForm, ImageForm, LogoutForm, ProfileForm, ResetPasswordForm, SigninForm, SignupForm   
 from pyblog.models import Post, User
 from pyblog.pytools import Img
 
@@ -145,18 +145,25 @@ def profile():
 @app.route("/change-password", methods=["GET", "POST"])
 @fresh_login_required
 def change_password():
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        current_user.update(password=form.password.data)
-        flash("Your password has been changed successfully", category="success")
-        return redirect(url_for("profile", user_id=current_user.id))
-    return render_template("choose_password.html", form=form) 
+    change_password_form = ChangePasswordForm()
+    logout_form = LogoutForm()
+    if "submit_change_password_form" in request.form and change_password_form.validate():
+        if current_user.check_password(change_password_form.current_password.data):
+            current_user.update(password=change_password_form.password.data)
+            flash("Your password has been changed successfully", category="success")
+            return redirect(url_for("profile", user_id=current_user.id))
+        flash("The current password is incorrect. Please try again", category="danger")
+        return redirect(request.url)
+    if "submit_logout_form" in request.form and logout_form.validate():
+        logout_user()
+        return redirect(url_for("email_token"))
+    return render_template("change_password.html", change_password_form=change_password_form, logout_form=logout_form) 
 
 
 @app.route("/reset-password", methods=["GET", "POST"])
 def email_token():
     if current_user.is_authenticated:
-        flash("Please sign out first to be able to recover your account.", category="info")
+        flash("Please sign out first to be able to reset your password", category="info")
         return redirect(url_for("profile"))
     form = EmailTokenForm()
     if form.validate_on_submit():
@@ -185,12 +192,12 @@ def reset_password(token):
     if not user:
         flash("The verification link is invalid. Please try again", category="danger")
         return redirect(url_for("email_token"))
-    form = ChangePasswordForm()
+    form = ResetPasswordForm()
     if form.validate_on_submit():
         user.update(password=form.password.data)
         flash("Your password has been changed successfully", category="success")
         return redirect(url_for("login"))
-    return render_template("choose_password.html", form=form)  
+    return render_template("reset_password.html", form=form)  
 
 
 @app.route("/delete-account/<int:user_id>", methods=["POST"])

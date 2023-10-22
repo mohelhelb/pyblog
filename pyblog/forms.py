@@ -52,7 +52,11 @@ class ImageForm(FlaskForm):
             validators=[FileAllowed(["jpg", "jpeg", "png"], "Invalid image file. Allowed extensions: jpg, jpeg, png.")],
             id="image"
             )
-    submit_image = SubmitField()
+    submit_image = SubmitField()  
+ 
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField() 
 
 
 class CreatePostForm(FlaskForm):
@@ -84,11 +88,33 @@ class CreatePostForm(FlaskForm):
             id="status",
             choices=["Now", "Later"]
             )
-    submit = SubmitField()
+    submit = SubmitField()  
 
 
-class EmptyForm(FlaskForm):
-    submit = SubmitField()
+class ChangePasswordForm(FlaskForm):
+    current_password = PasswordField(
+            label="Current Password",
+            validators=[Length(min=4, max=20)],
+            id="currentPassword",
+            description="Enter current password"
+            )
+    password = PasswordField(
+            label="New Password",
+            validators=[Length(min=4, max=20)],
+            id="password",
+            description="At least 4 characters long"
+            )
+    confirm_password = PasswordField(
+            label="Repeat Password",
+            validators=[EqualTo("password")],
+            id="confirmPassword",
+            description="Repeat new password"
+            ) 
+    submit_change_password_form = SubmitField(label="Confirm")  
+
+
+class LogoutForm(FlaskForm):
+    submit_logout_form = SubmitField(label="Sign out")
 
 
 # Python Inheritance >
@@ -106,6 +132,12 @@ class SignupForm(UserBaseForm):
 
 # Python Composition >
 
+class ResetPasswordForm(FlaskForm):
+    password = ChangePasswordForm.password
+    confirm_password = ChangePasswordForm.confirm_password
+    submit = SubmitField(label="Reset Password")
+
+
 class SigninForm(FlaskForm):
     email = UserBaseForm.email
     password = UserBaseForm.password
@@ -115,12 +147,6 @@ class SigninForm(FlaskForm):
 class EmailTokenForm(FlaskForm):
     email = UserBaseForm.email
     submit = SubmitField(label="Reset Password")
-
-
-class ChangePasswordForm(FlaskForm):
-    password = UserBaseForm.password
-    confirm_password = UserBaseForm.confirm_password
-    submit = SubmitField(label="Confirm") 
 
 
 class ProfileForm(FlaskForm):
