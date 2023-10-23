@@ -1,9 +1,11 @@
 import datetime
+from flask import render_template
 from flask_login import UserMixin
+from flask_mail import Message
 from sqlalchemy import func
 import jwt
 
-from pyblog import app, bcrypt, db, login_manager
+from pyblog import app, bcrypt, db, login_manager, mail
 
 
 @login_manager.user_loader
@@ -107,6 +109,15 @@ class User(db.Model, UserMixin):
 
     def public_posts(self):
         return (post for post in self.posts if post.public)
+
+    def send_reset_password_link(self):
+        msg = Message(
+                sender=app.config["MAIL_USERNAME"],
+                recipients=[self.email],
+                subject="PyBlog: Reset Password",
+                body=render_template("mail/reset_password.txt", user=self, token=self.generate_jwt())
+                )
+        mail.send(msg) 
 
     def unfollow(self, other):
         self.following.remove(other)

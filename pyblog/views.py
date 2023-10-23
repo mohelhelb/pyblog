@@ -2,10 +2,9 @@ import datetime
 import random
 from flask import abort, flash, g, redirect, render_template, request, url_for  
 from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
-from flask_mail import Message
 from werkzeug.urls import url_parse
 
-from pyblog import app, db, mail
+from pyblog import app, db
 from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, EmptyForm, ImageForm, LogoutForm, ProfileForm, ResetPasswordForm, SigninForm, SignupForm   
 from pyblog.models import Post, User
 from pyblog.pytools import Img
@@ -169,14 +168,8 @@ def email_token():
     if form.validate_on_submit():
         user = db.session.execute(db.select(User).filter_by(email=form.email.data)).scalar()
         if user:
-            msg = Message(
-                    sender="mohelhelb@gmail.com",
-                    recipients=[user.email],
-                    subject="PyBlog: Verification Link",
-                    body=f"""{url_for("reset_password", token=user.generate_jwt(), _external=True)}"""
-                    )
-            mail.send(msg)
-            flash("Please check your email inbox and follow the verification link", category="success")
+            user.send_reset_password_link()
+            flash("Please check your email inbox and follow the reset password link", category="success")
             return redirect(url_for("index")) 
         flash("There is no account with that email.", category="danger")
         return redirect(request.url) 
