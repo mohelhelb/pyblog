@@ -113,14 +113,6 @@ form label {
   margin-bottom: 9px;
 }
 
-/*
-form legend {
-  padding: 0;
-  font-size: 1.5rem;
-  font-weight: 500;
-} 
-*/
-
 form legend {
   width: 100%;
   margin: 0;
@@ -135,11 +127,9 @@ form legend {
   color: var(--blue-xxl);
 } 
 
-
-
 #header {
   background-color: var(--blue-xxl);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 } 
 
 #main {
@@ -153,7 +143,6 @@ form legend {
 #profileFormCard, #myPosts, #myBookmarks, #followers, #following {
   display: none;
 }
-
 
 /* Clear floating elements */
 .clearfix::after {
@@ -189,10 +178,17 @@ form legend {
   margin: 0 auto;
 } 
 
-.gap {
-  height: 40px;
-  margin: 30px;
+/* > Gap */
+.gap .gap-l {
+  position: relative;
+  width: 100%;
+  height: 100px;
+} 
+.gap .gap-r {
+  width: 100%;
+  height: 0;
 }
+/* < Gap */
 
 .card {
   position: relative;
@@ -206,7 +202,10 @@ form legend {
   border: 1px solid var(--gray-xs);
 } 
 
-/* Predefined Width */
+/* > Predefined width */  
+.width-100pc {
+  width: 100%;
+} 
 .width-half {
   width: 50%;
 } 
@@ -239,9 +238,10 @@ form legend {
 } 
 .width-20 {
   width: 20px;
-}
+}  
+/* < Predefined width */ 
 
-/* Predefined Height */
+/* > Predefined height */
 .height-100 {
   height: 100px;
 }    
@@ -259,9 +259,10 @@ form legend {
 } 
 .height-20 {
   height: 20px;
-}
+} 
+/* < Predefined height */ 
 
-/* Predefined Margin */ 
+/* > Predefined margin */ 
 .mt-54 {
   margin-top: 54px;
 }
@@ -339,9 +340,10 @@ form legend {
 } 
 .mb-0 {
   margin-bottom: 0;
-}
+}  
+/* < Predefined margin */ 
 
-/* Predefined Text Alignment */
+/* > Predefined text alignment */
 .t-align-left {
   text-align: left;
 }
@@ -350,7 +352,8 @@ form legend {
 }
 .t-align-right {
   text-align: right;
-}
+} 
+/* < Predefined text alignment */ 
 
 /* Predefined Line Height */
 .l-height-6 {
@@ -370,10 +373,10 @@ form legend {
   color: var(--gray-xl);
 }  
 
-/* Predefined Alert */
+/* > Predefined alert */
 .alert {
-  margin: 0;
-  margin-bottom: 20px;
+  width: 97%;
+  margin: auto;
   border-radius: 5px;
   padding: 15px 8px;
   text-align: center;
@@ -393,7 +396,8 @@ form legend {
   border-color: #f5c6cb; 
   background-color: #f8d7da;
   color: #721c24;
-}
+} 
+/* < Predefined alert */ 
 
 /* Predefined Field Color */ 
 .field-danger {
@@ -571,6 +575,13 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     top: 15vh;
     opacity: 1;
   }
+}
+
+.message {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
 }
 
 .topnav {
@@ -938,8 +949,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 }
 
 #createPostForm .level-status {
-  display: block; 
-  margin-bottom: 20px; 
+  display: inline-block;
   line-height: 0;
   user-select: none;
   cursor: pointer;
@@ -1043,32 +1053,25 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 
   .footer a:hover {
     opacity: 0.7;
-  } 
-
-  /*
-  .previous .circle:hover, .next .circle:hover, .load-more .circle:hover, .sort-toggle .circle:hover, .sort .circle:hover, .account .circle:hover {
-    outline: 3px solid rgba(0, 123, 255, 0.3);
-    border: none;
-    color: var(--blue-l);
-    cursor: pointer;
   }
- */ 
 }
-
-/* 
-@media screen and (min-width: 576px) {
-}
-
-@media screen and (min-width: 768px) {
-}
-*/
  
-@media screen and (min-width: 992px) {
-  /*
-  p {
-    font-size: 1.11rem;
+@media screen and (min-width: 992px) { 
+
+  /* > Gap */
+  .gap .gap-l {
+    width: calc(70% - 20px);
+    height: 100px;
+  } 
+  .gap .gap-r {
+    width: calc(30% + 20px);
+    height: 100px;
   }
-  */
+  /* < Gap */
+
+  .alert {
+    width: 100%;
+  } 
 
   #main {
     width: 70%;
@@ -1130,7 +1133,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
     border: 1px solid var(--gray-s);
     border-radius: 5px;
     padding: 6px 16px;
-  }
+  } 
 }
 
 @media screen and (min-width: 1200px) {
