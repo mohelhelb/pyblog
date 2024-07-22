@@ -123,10 +123,10 @@ class SignupForm(UserBaseForm):
     submit = SubmitField(label="Sign up") 
 
     def validate_email(form, field):
-        """Check if the provided email is assigned to an existing account. If so, raise a validation error."""
+        """Check if the provided email is assigned to an existing account. If so, provide feedback to users."""
         user = db.session.execute(db.select(User).filter_by(email=field.data)).scalar()
         if user:
-            raise ValidationError("The email is already assigned to an account. Please choose another one.")
+            raise ValidationError("This email is already assigned to an account. Please choose another one.")
 
 # < Python Inheritance
 
