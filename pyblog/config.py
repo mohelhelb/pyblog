@@ -6,12 +6,9 @@ class Config:
 
 
 class ConfigDevelopment(Config):
-    # If the environment variable, PYBLOG_DEVELOPMENT_SECRET_KEY, exists and is not empty, assign SECRET_KEY to its value.
-    # Otherwise, assign SECRET_KEY to "development".
-    SECRET_KEY = os.environ.get("PYBLOG_DEVELOPMENT_SECRET_KEY") or "development"
-    #
+    SECRET_KEY = os.environ.get("PYBLOG_SECRET_KEY") or "development"
     SQLALCHEMY_DATABASE_URI = "sqlite:///pyblog.db"
-    # UPLOAD_FOLDER = os.path.join(app.static_folder, "images") # Pending: Resolve circular import
+    # SMTP Server Setup
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = "587"
     MAIL_USE_TLS = "True"
