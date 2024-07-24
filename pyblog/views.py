@@ -36,7 +36,7 @@ from pyblog.forms import (
         SignupForm
         )
 from pyblog.models import Post, User
-from pyblog.pytools import Img
+from pyblog.helpers import Img
 
 
 ### FUNCTIONS  #################################################################
