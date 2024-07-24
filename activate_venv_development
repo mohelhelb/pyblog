@@ -1,10 +1,10 @@
-
+ 
 # This file cannot be run directly, it must be used with the "source" command.
-# Even though this file can be added to a version control system, sensitive
-# variables, if any, should be declared in a separate file and not be committed
-# to version control.
+# Since all the environment variables, including sensitive ones, are defined
+# in a separate file (.env_development), this file can be added to a version
+# control system.
 
-# Set the Current project's root directory:
+# Set the current project's root directory:
 PROJECT_ROOT_DIR="/home/mo/projects/pyblog"
   
 # Activate the virtual environment for the current project:
@@ -13,17 +13,11 @@ source "${PROJECT_ROOT_DIR}/venv/bin/activate"
 # Change prompt:
 PS1="${PS1/venv/$(basename ${PROJECT_ROOT_DIR}): Development}"
 
-# Set user-defined development environment variables. Each defined variable
-# should be unset in the "deactivate" function defined in "venv/bin/activate".
+# Set user-defined environment variables. Each defined variable should be
+# unset in the "deactivate" function defined in the "venv/bin/activate" file.
 # 
 # deactivate () {
 #   ...
 #   unset VARIABLE 
 # }
-
-## Non-sensitive variables:
-export FLASK_APP=run_app
-export FLASK_DEBUG=True
-
-## Sensitive variables:
-export $(cat "${PROJECT_ROOT_DIR}/.env_development") 
+export $(cat "${PROJECT_ROOT_DIR}/.env_development")  
