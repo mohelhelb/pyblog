@@ -1,3 +1,6 @@
+
+### IMPORTS  ###################################################################  
+
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -7,26 +10,31 @@ from flask_sqlalchemy import SQLAlchemy
 from pyblog.config import ConfigDevelopment
 
 app = Flask(__name__)
+                       
 
-app.config.from_object(ConfigDevelopment)  # Configuration 
+### CONFIGURATION ##############################################################
 
-# Extensions >
+app.config.from_object(ConfigDevelopment) 
 
-db = SQLAlchemy(app)  # Flask: SQLAlchemy
+                       
+### EXTENSIONS #################################################################
 
-bcrypt = Bcrypt(app)  # Flask: Bcrypt 
+# Flask-SQLAlchemy
+db = SQLAlchemy(app)
 
-mail = Mail(app)  # Flask: Mail
+# Flask-Bcrypt
+bcrypt = Bcrypt(app)
 
-# Flask: Login >
+# Flask-mail
+mail = Mail(app)
+
+# Flask-login
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 login_manager.refresh_view = "login"
 login_manager.needs_refresh_message_category = "info"
-# < Flask: Login
 
-# < Extensions
 
 import pyblog.views  
 

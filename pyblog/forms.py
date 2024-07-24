@@ -1,11 +1,29 @@
+
+### IMPORTS  ###################################################################  
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import EmailField, PasswordField, RadioField, StringField, SubmitField, TextAreaField
-from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError
+from wtforms import (
+        EmailField,
+        PasswordField,
+        RadioField,
+        StringField,
+        SubmitField,
+        TextAreaField
+        )
+from wtforms.validators import (
+        Email,
+        EqualTo,
+        DataRequired,
+        Length,
+        ValidationError
+        )
 
 from pyblog import db
 from pyblog.models import User
- 
+
+
+### FORMS  #####################################################################
  
 class UserBaseForm(FlaskForm):
     first_name = StringField(
@@ -117,8 +135,6 @@ class LogoutForm(FlaskForm):
     submit_logout_form = SubmitField(label="Sign out")
 
 
-# Python Inheritance >
-
 class SignupForm(UserBaseForm):
     submit = SubmitField(label="Sign up") 
 
@@ -128,9 +144,6 @@ class SignupForm(UserBaseForm):
         if user:
             raise ValidationError("This email is already assigned to an account. Please choose another one.")
 
-# < Python Inheritance
-
-# Python Composition >
 
 class ResetPasswordForm(FlaskForm):
     password = ChangePasswordForm.password
@@ -154,9 +167,4 @@ class ProfileForm(FlaskForm):
     last_name = UserBaseForm.last_name
     email = UserBaseForm.email
     about_me = UserBaseForm.about_me
-    submit_profile = SubmitField(label="Edit")
-
-# < Python Composition
-
-
-    
+    submit_profile = SubmitField(label="Edit")   

@@ -1,3 +1,6 @@
+
+### IMPORTS  ###################################################################  
+
 import datetime
 from flask import render_template
 from flask_login import UserMixin
@@ -7,11 +10,15 @@ import jwt
 
 from pyblog import app, bcrypt, db, login_manager, mail
 
+ 
+### FUNCTIONS  #################################################################
 
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+                    
+### ASSOCIATION TABLES #########################################################
 
 followers = db.Table(
         "followers", 
@@ -25,6 +32,8 @@ starred_posts = db.Table(
         db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True)
         )
 
+               
+### MODEL: USER  ###############################################################
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -149,6 +158,8 @@ class User(db.Model, UserMixin):
             return None
         return db.session.get(cls, user_id)
 
+                      
+### MODEL: POST ################################################################
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,9 +1,14 @@
+
+### IMPORTS  ###################################################################  
+
 import glob
 import os
 from PIL import Image
 
 from pyblog import app
 
+ 
+### Classes  ###################################################################
 
 class Img:
 

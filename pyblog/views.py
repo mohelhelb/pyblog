@@ -1,14 +1,45 @@
+
+### IMPORTS  ###################################################################
+
 import datetime
 import random
-from flask import abort, flash, g, redirect, render_template, request, url_for  
-from flask_login import current_user, fresh_login_required, login_required, login_user, logout_user
+
+from flask import (
+        abort,
+        flash,
+        g,
+        redirect,
+        render_template,
+        request,
+        url_for
+        )
+from flask_login import (
+        current_user,
+        fresh_login_required,
+        login_required,
+        login_user,
+        logout_user
+        )
 from werkzeug.urls import url_parse
 
 from pyblog import app, db
-from pyblog.forms import ChangePasswordForm, CreatePostForm, EmailTokenForm, EmptyForm, ImageForm, LogoutForm, ProfileForm, ResetPasswordForm, SigninForm, SignupForm   
+from pyblog.forms import (
+        ChangePasswordForm,
+        CreatePostForm,
+        EmailTokenForm,
+        EmptyForm,
+        ImageForm,
+        LogoutForm,
+        ProfileForm,
+        ResetPasswordForm,
+        SigninForm,
+        SignupForm
+        )
 from pyblog.models import Post, User
 from pyblog.pytools import Img
 
+
+### FUNCTIONS  #################################################################
 
 @app.before_request
 def before_request():
@@ -17,7 +48,8 @@ def before_request():
     g.total_public_posts = Post.num_public_posts()
     g.top_writers = Post.top_writers() 
 
-# Error Handling >  
+
+### ERROR HANDLERS  ############################################################  
 
 @app.errorhandler(404)
 def error_404(error):
@@ -33,10 +65,8 @@ def error_403(error):
 def error_500(error):
     return render_template("error_500.html"), 500
 
-# < Error Handling
 
-
-# View Functions >
+### VIEW FUNCTIONS #############################################################
 
 @app.route("/")
 @app.route("/index")
@@ -399,7 +429,4 @@ def unbookmark(post_id):
         else:
             current_user.unbookmark(post)
             flash("This post has been removed from your bookmarks successfully", category="success")
-    return redirect(url_for("post", post_id=post_id)) 
-
-
-# < View Functions
+    return redirect(url_for("post", post_id=post_id))
