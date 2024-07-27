@@ -2,13 +2,13 @@
 ### IMPORTS  ###################################################################  
 
 import datetime
-from flask import render_template
+from flask import current_app, render_template
 from flask_login import UserMixin
 from flask_mail import Message
 from sqlalchemy import func
 import jwt
 
-from pyblog import app, bcrypt, db, login_manager, mail
+from pyblog import bcrypt, db, login_manager, mail
 
  
 ### FUNCTIONS  #################################################################
@@ -93,7 +93,7 @@ class User(db.Model, UserMixin):
     def generate_jwt(self, seconds=1800):
         return jwt.encode(
                 payload={"user_id": self.id, "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=seconds)},
-                key=app.config["SECRET_KEY"],
+                key=current_app.config["SECRET_KEY"],
                 algorithm="HS256"
                 )
 
@@ -121,7 +121,7 @@ class User(db.Model, UserMixin):
 
     def send_reset_password_link(self):
         msg = Message(
-                sender=app.config["MAIL_USERNAME"],
+                sender=current_app.config["MAIL_USERNAME"],
                 recipients=[self.email],
                 subject="PyBlog: Reset Password",
                 body=render_template("mail/reset_password.txt", user=self, token=self.generate_jwt())
@@ -153,7 +153,7 @@ class User(db.Model, UserMixin):
     @classmethod
     def verify_jwt(cls, token):
         try:
-            user_id = jwt.decode(token, key=app.config["SECRET_KEY"], algorithms=["HS256"])["user_id"]
+            user_id = jwt.decode(token, key=current_app.config["SECRET_KEY"], algorithms=["HS256"])["user_id"]
         except Exception:
             return None
         return db.session.get(cls, user_id)

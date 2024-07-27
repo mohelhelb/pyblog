@@ -28,7 +28,7 @@
     <div class="container">
       <nav class="topnav" id="topnav-A">
         <div>
-          <a href="{{ url_for('index') }}" class="topnav-logo">
+          <a href="{{ url_for('bp_main.index') }}" class="topnav-logo">
             <i class="fa-brands fa-python"></i>
             PyBlog
           </a>
@@ -36,24 +36,24 @@
             <i class="fa-solid fa-bars"></i>
           </a>
         </div>               
-        <a href="{{ url_for('index') }}">Home</a>  
-        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('bp_main.index') }}">Home</a>  
+        <a href="{{ url_for('bp_main.about') }}">About</a>
         {% if not current_user.is_authenticated %}
           <div class="fright">
-            <a href="{{ url_for('login') }}">Sign in</a>  
-            <a href="{{ url_for('register') }}" class="signup">Sign up</a>    
+            <a href="{{ url_for('bp_auth.login') }}">Sign in</a>  
+            <a href="{{ url_for('bp_auth.register') }}" class="signup">Sign up</a>    
           </div>
         {% else %} 
           <div class="fright"> 
-            <a href="{{ url_for('create_post') }}">
+            <a href="{{ url_for('bp_post.create_post') }}">
               <i class="fa-solid fa-plus"></i>
               <span class="ml-3">New Post</span>
             </a>           
-            <a href="{{ url_for('profile') }}" class="ellipsis">
+            <a href="{{ url_for('bp_user.profile') }}" class="ellipsis">
               <i class="fa-regular fa-user"></i>
               <span class="ml-3">{{ current_user.fullname }}</span>
             </a> 
-            <a href="{{ url_for('logout') }}">
+            <a href="{{ url_for('bp_auth.logout') }}">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
               <span class="ml-3">Sign out</span>
             </a>   
@@ -114,7 +114,7 @@
             </header>                 
             {% for writer in g.top_writers %}  
               <div class="avatar-username ellipsis mb-16">
-                <a href="{{ url_for('posts_written_by', user_id=writer.id) }}">
+                <a href="{{ url_for('bp_post.posts_written_by', user_id=writer.id) }}">
                   <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(writer.image)) }}" alt="Employee Avatar" width="50px" height="50px">
                   <span>{{ writer.fullname }}</span>
                 </a>  
@@ -138,7 +138,7 @@
   <!-- Footer > -->
   <footer class="footer">
     <nav>
-      <a href="{{ url_for('index') }}" class="nowrap">
+      <a href="{{ url_for('bp_main.index') }}" class="nowrap">
         <small>&copy; 2023 PyBlog</small>
       </a>
       <a href="#terms">

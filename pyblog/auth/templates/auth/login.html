@@ -26,7 +26,7 @@
         {% if form.password.errors %} 
           <div class="forgot-password">
             {{ form.password(class="field-danger", placeholder=form.password.description) }} 
-            <a href="{{ url_for('email_token') }}">Forgot?</a>  
+            <a href="{{ url_for('bp_user.email_token') }}">Forgot?</a>  
           </div>
           <ul>
             {% for error in form.password.errors %}
@@ -36,7 +36,7 @@
         {% else %}  
         <div class="forgot-password">
           {{ form.password(placeholder=form.password.description) }} 
-          <a href="{{ url_for('email_token') }}">Forgot?</a>  
+          <a href="{{ url_for('bp_user.email_token') }}">Forgot?</a>  
         </div>
         {% endif %}
         <!-- <<< Password -->
@@ -45,7 +45,7 @@
         <!-- <<< Submit Button -->
       </fieldset>
     </form> 
-    <p class="mt-20 mb-24">Need an account? <a href="{{ url_for("register") }}" class="ml-3">Sign up</a></p>  
+    <p class="mt-20 mb-24">Need an account? <a href="{{ url_for('bp_auth.register') }}" class="ml-3">Sign up</a></p>  
   </section>
 {% endblock content %}
 

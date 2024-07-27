@@ -5,14 +5,12 @@ import glob
 import os
 from PIL import Image
 
-from pyblog import app
-
  
 ### Classes  ###################################################################
 
 class Img:
 
-    root_img_dir = os.path.join(app.static_folder, "images")
+    root_img_dir = os.path.join("/home/mo/projects/pyblog/static", "images") # Pending: Circular import
 
     def __init__(self, img_file):
         self.img = img_file 

@@ -67,7 +67,7 @@
         <div class="div-2 account mt-20 clearfix">
           <div class="fleft width-50pc t-align-center">
             <span>Password</span>
-            <a href="{{ url_for('change_password') }}" class="circle">
+            <a href="{{ url_for('bp_user.change_password') }}" class="circle">
               <span class="abs-center">Change</span>
             </a>
           </div> 
@@ -142,7 +142,7 @@
     <!-- Delete Account Modal -->
     <div class="modal" id="deleteAccountModal">
       <div class="card modal-content">
-        <form class="mt-40" method="Post" action="{{ url_for("delete_account", user_id=current_user.id) }}" id="deleteAccountForm">
+        <form class="mt-40" method="Post" action="{{ url_for('bp_user.delete_account', user_id=current_user.id) }}" id="deleteAccountForm">
           <fieldset>
             <legend>Delete Account</legend>
             <p class="l-height-6 mb-26">All your posts and bookmarks will be deleted. Are you sure you want to delete your account?</p>
@@ -206,7 +206,7 @@
           <article class="post mt-30 mb-30">
             <header>
               <h2>
-                <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+                <a href="{{ url_for('bp_post.post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
               </h2>
             </header> 
             <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
@@ -282,7 +282,7 @@
           <article class="post mt-30 mb-30">
             <header>
               <h2>
-                <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+                <a href="{{ url_for('bp_post.post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
               </h2>
             </header> 
             <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
@@ -362,7 +362,7 @@
         <article class="post mt-30 mb-30">
           <header>
             <h2>
-              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+              <a href="{{ url_for('bp_post.post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
             </h2>
           </header> 
           <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
@@ -397,7 +397,7 @@
       <hr class="hr mt-0 mb-30">
       {% for follower in current_user.followers %}
         <div class="avatar-username ellipsis mb-16">
-          <a href="{{ url_for('posts_written_by', user_id=follower.id) }}">
+          <a href="{{ url_for('bp_post.posts_written_by', user_id=follower.id) }}">
             <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
             <span>{{ follower.fullname }}</span>
           </a> 
@@ -416,7 +416,7 @@
       <hr class="hr mt-0 mb-30">
       {% for following in current_user.following %}
         <div class="avatar-username ellipsis mb-16">
-          <a href="{{ url_for('posts_written_by', user_id=following.id) }}">
+          <a href="{{ url_for('bp_post.posts_written_by', user_id=following.id) }}">
             <img class="width-50 height-50" src="{{ url_for('static', filename='images/default.png') }}" alt="Employee Avatar" width="50px" height="50px">
             <span>{{ following.fullname }}</span>
           </a> 

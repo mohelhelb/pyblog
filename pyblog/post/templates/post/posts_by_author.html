@@ -4,7 +4,7 @@
   <section class="card mb-20">
     {% if current_user.is_authenticated %}
       {% if current_user in user.followers %}  
-        <form action="{{ url_for('unfollow', user_id=user.id) }}" method="POST" class="mt-40">
+        <form action="{{ url_for('bp_user.unfollow', user_id=user.id) }}" method="POST" class="mt-40">
           <fieldset>
             <!-- >>> CSRF token -->
             {{ form.hidden_tag() }}
@@ -15,7 +15,7 @@
           </fieldset>
         </form> 
       {% else %} 
-        <form action="{{ url_for('follow', user_id=user.id) }}" method="POST" class="mt-40">
+        <form action="{{ url_for('bp_user.follow', user_id=user.id) }}" method="POST" class="mt-40">
           <fieldset>
             <!-- >>> CSRF token -->
             {{ form.hidden_tag() }}
@@ -27,7 +27,7 @@
         </form> 
       {% endif %}
     {% else %}
-      <form action="{{ url_for('follow', user_id=user.id) }}" method="POST" class="mt-40">
+      <form action="{{ url_for('bp_user.follow', user_id=user.id) }}" method="POST" class="mt-40">
         <fieldset>
           <!-- >>> CSRF token -->
           {{ form.hidden_tag() }}
@@ -111,7 +111,7 @@
         <article class="post mt-30 mb-30">
           <header>
             <h2>
-              <a href="{{ url_for('post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
+              <a href="{{ url_for('bp_post.post', post_id=post.id) }}" class="title mt-8 mb-8">{{ post.title }}</a>
             </h2>
           </header> 
           <p class="mt-8 mb-8 l-height-6 text-muted-dark">{{ post.subheading }}</p>
@@ -146,7 +146,7 @@
       <hr class="hr mt-0 mb-30">
       {% for follower in user.followers %}
         <div class="avatar-username ellipsis mb-16">
-          <a href="{{ url_for('posts_written_by', user_id=follower.id) }}">
+          <a href="{{ url_for('bp_post.posts_written_by', user_id=follower.id) }}">
             <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(follower.image)) }}" alt="Employee Avatar" width="50px" height="50px">
             <span>{{ follower.fullname }}</span>
           </a> 
@@ -165,7 +165,7 @@
       <hr class="hr mt-0 mb-30">
       {% for following in user.following %}
         <div class="avatar-username ellipsis mb-16">
-          <a href="{{ url_for('posts_written_by', user_id=following.id) }}">
+          <a href="{{ url_for('bp_post.posts_written_by', user_id=following.id) }}">
             <img class="width-50 height-50" src="{{ url_for('static', filename='images/{}'.format(following.image)) }}" alt="Employee Avatar" width="50px" height="50px">
             <span>{{ following.fullname }}</span>
           </a> 
