@@ -657,7 +657,7 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
 
 .post .title {
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .post .level {
