@@ -226,6 +226,9 @@ form legend {
 }    
 .width-85 {
   width: 85px;
+}    
+.width-70 {
+  width: 70px;
 }   
 .width-60 {
   width: 60px;
@@ -247,6 +250,9 @@ form legend {
 }    
 .height-85 {
   height: 85px;
+}    
+.height-70 {
+  height: 70px;
 }   
 .height-60 {
   height: 60px;
@@ -467,7 +473,6 @@ form legend {
 .avatar-username span {
   margin-left: 5px;
   color: var(--gray-xl);
-  font-weight: 500;
 }  
 
 .circle, .circle.disabled {
