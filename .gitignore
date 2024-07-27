@@ -1,7 +1,7 @@
 instance/
 venv/
 temp/
-pyblog/static/images/img*
+app/static/images/img*
 *__pycache__*
 *.swp
 .env_development
