@@ -5,3 +5,4 @@ pyblog/static/images/img*
 __pycache__/
 *.swp
 .env_development
+.flake8
