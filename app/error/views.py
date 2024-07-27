@@ -3,7 +3,7 @@
 
 from flask import render_template
 
-from pyblog.error import bp_error
+from app.error import bp_error
 
 
 ### ERROR HANDLERS  ############################################################  

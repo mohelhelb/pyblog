@@ -38,11 +38,11 @@ def create_app(ConfigClass=None):
     mail.init_app(app)
 
     # Register blueprints: 
-    from pyblog.auth import bp_auth
-    from pyblog.main import bp_main
-    from pyblog.post import bp_post
-    from pyblog.user import bp_user 
-    from pyblog.error import bp_error 
+    from app.auth import bp_auth
+    from app.main import bp_main
+    from app.post import bp_post
+    from app.user import bp_user 
+    from app.error import bp_error 
                                   
     app.register_blueprint(bp_auth) 
     app.register_blueprint(bp_main) 
@@ -51,11 +51,3 @@ def create_app(ConfigClass=None):
     app.register_blueprint(bp_error)
 
     return app
-
-
-
-
-
-
-
-

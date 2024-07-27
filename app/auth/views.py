@@ -16,10 +16,10 @@ from flask_login import (
         )
 from werkzeug.urls import url_parse
 
-from pyblog import db
-from pyblog.auth import bp_auth
-from pyblog.forms import SigninForm, SignupForm
-from pyblog.models import User          
+from app import db
+from app.auth import bp_auth
+from app.forms import SigninForm, SignupForm
+from app.models import User          
 
 
 ### VIEW FUNCTIONS  ############################################################

@@ -19,8 +19,8 @@ from wtforms.validators import (
         ValidationError
         )
 
-from pyblog import db
-from pyblog.models import User
+from app import db
+from app.models import User
 
 
 ### FORMS  #####################################################################

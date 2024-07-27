@@ -8,7 +8,7 @@ from flask_mail import Message
 from sqlalchemy import func
 import jwt
 
-from pyblog import bcrypt, db, login_manager, mail
+from app import bcrypt, db, login_manager, mail
 
  
 ### FUNCTIONS  #################################################################

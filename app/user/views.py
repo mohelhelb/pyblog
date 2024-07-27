@@ -16,8 +16,8 @@ from flask_login import (
         logout_user
         )
 
-from pyblog import db
-from pyblog.forms import (                                                              
+from app import db
+from app.forms import (                                                              
         ChangePasswordForm,
         EmailTokenForm,
         EmptyForm,
@@ -26,9 +26,9 @@ from pyblog.forms import (
         ProfileForm,
         ResetPasswordForm
         )                 
-from pyblog.helpers import Img 
-from pyblog.models import Post, User
-from pyblog.user import bp_user
+from app.helpers import Img 
+from app.models import Post, User
+from app.user import bp_user
 
 
 ### VIEW FUNCTIONS #############################################################

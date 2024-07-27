@@ -3,8 +3,8 @@
 
 from flask import g, render_template
 
-from pyblog.main import bp_main
-from pyblog.models import Post, User  
+from app.main import bp_main
+from app.models import Post, User  
 
 
 ### FUNCTIONS  #################################################################

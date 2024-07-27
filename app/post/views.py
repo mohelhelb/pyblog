@@ -14,10 +14,10 @@ from flask import (
         )
 from flask_login import current_user, login_required
 
-from pyblog import db
-from pyblog.forms import CreatePostForm, EmptyForm
-from pyblog.models import Post, User  
-from pyblog.post import bp_post
+from app import db
+from app.forms import CreatePostForm, EmptyForm
+from app.models import Post, User  
+from app.post import bp_post
 
 
 ### VIEW FUNCTIONS #############################################################             
