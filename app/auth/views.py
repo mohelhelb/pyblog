@@ -19,12 +19,14 @@ from werkzeug.urls import url_parse
 from app import db
 from app.auth import bp_auth
 from app.forms import SigninForm, SignupForm
+from app.helpers import logout_required
 from app.models import User          
 
 
 ### VIEW FUNCTIONS  ############################################################
 
 @bp_auth.route("/register", methods=["GET", "POST"])
+@logout_required
 def register():
     # WTForms library:
     # form = SignupForm(request.form)
@@ -46,6 +48,7 @@ def register():
 
 
 @bp_auth.route("/login", methods=["GET", "POST"])
+@logout_required
 def login():
     # If the current user is already authenticated and navigate to the login page, 
     # redirect them to their profile page.

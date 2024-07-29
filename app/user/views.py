@@ -26,7 +26,7 @@ from app.forms import (
         ProfileForm,
         ResetPasswordForm
         )                 
-from app.helpers import Img 
+from app.helpers import Img, logout_required 
 from app.models import Post, User
 from app.user import bp_user
 
@@ -99,6 +99,7 @@ def change_password():
 
 
 @bp_user.route("/reset-password", methods=["GET", "POST"])
+@logout_required
 def email_token():
     if current_user.is_authenticated:
         flash("Please sign out first to be able to reset your password", category="info")
@@ -116,6 +117,7 @@ def email_token():
 
 
 @bp_user.route("/reset-password/<string:token>", methods=["GET", "POST"])
+@logout_required
 def reset_password(token): 
     if current_user.is_authenticated:
         flash("Please sign out first to be able to recover your account.", category="info")

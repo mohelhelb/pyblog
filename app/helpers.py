@@ -3,7 +3,36 @@
 
 import glob
 import os
+
+from flask import flash, redirect, url_for
+from flask_login import current_user
+from functools import wraps
 from PIL import Image
+
+
+### Functions  #################################################################
+
+def logout_required(view):
+    """
+    Prevent authenticated users from visiting certain pages.
+
+    If an authenticated user attempts to visit pages intended only for
+    non-authenticated users (e.g. "login" page), they are redirected to their 
+    profile page.
+
+    Parameters:
+    view: View function to be decorated.
+
+    Returns:
+    view(*args, **kwargs): View call if the user is not authenticated, profile view call otherwise.
+    """
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if current_user.is_authenticated:
+            flash("Please log out first to visit that page", category="info")
+            return redirect(url_for("bp_user.profile")), 302
+        return view(*args, **kwargs)
+    return wrapper
 
  
 ### Classes  ###################################################################
