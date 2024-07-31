@@ -1,8 +1,13 @@
+            
+### IMPORTS  ################################################################### 
 
 import os
 
 from app import create_app
-from app.config import config_env
+from config_app import config_env    
+
+
+### RUN APP ####################################################################
 
 app = create_app(ConfigClass=config_env[os.getenv("FLASK_ENV")])
 
