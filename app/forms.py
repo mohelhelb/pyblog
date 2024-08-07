@@ -3,6 +3,7 @@
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+from PIL import Image, UnidentifiedImageError
 from wtforms import (
         EmailField,
         PasswordField,
@@ -67,12 +68,28 @@ class UserBaseForm(FlaskForm):
 class ImageForm(FlaskForm):
     image = FileField(
             label="Image",
-            validators=[FileAllowed(["jpg", "jpeg", "png"], "Invalid image file. Allowed extensions: jpg, jpeg, png.")],
             id="image"
             )
-    submit_image = SubmitField()  
- 
+    submit_image = SubmitField()
 
+    def validate_image(form, field):
+        if field.data:
+            try:
+                image = Image.open(field.data)
+            except UnidentifiedImageError:
+                raise ValidationError("Invalid image.")
+            else:
+                try:
+                    image.verify()
+                except Exception:
+                    image.close()
+                    raise ValidationError("Corrupted image.")
+                else:
+                    if image.format not in ("JPEG", "PNG"):
+                        image.close()
+                        raise ValidationError("Invalid image extention.")
+
+ 
 class EmptyForm(FlaskForm):
     submit = SubmitField() 
 

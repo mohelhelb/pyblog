@@ -4,7 +4,7 @@
 import glob
 import os
 
-from flask import flash, redirect, url_for
+from flask import current_app, flash, redirect, url_for
 from flask_login import current_user
 from functools import wraps
 from PIL import Image
@@ -39,33 +39,32 @@ def logout_required(view):
 
 class Img:
 
-    root_img_dir = os.path.join("/home/mo/projects/pyblog/static", "images") # Pending: Circular import
-
-    def __init__(self, img_file):
-        self.img = img_file 
+    def __init__(self, uploaded_img=None):
+        self.img = uploaded_img
 
     @property
-    def fn(self):
+    def fname(self):
         return self.img.filename
 
-    @fn.setter
-    def fn(self, new_filename):
-        self.img.filename = new_filename
-
-    @property
-    def ext(self):
-        filename = self.img.filename
-        return filename.rsplit(".", 1)[-1].lower()
+    @fname.setter
+    def fname(self, new_fname):
+        self.img.filename = new_fname
     
-    @classmethod
-    def remove_current_imgs(cls, user=None):
-        images = glob.glob(pathname=f"img-{user.id}.*", root_dir=cls.root_img_dir)
-        if images:
-            for image in images:
-                os.remove(os.path.join(cls.root_img_dir, image))
+    def remove_current_img(self, user=None, static_folder=None):
+        if user.image != "default.png":
+            try:
+                os.remove(os.path.join(static_folder, "images", user.image))
+            except Exception:
+                pass # Pending
 
-    def save_uploaded_img(self, size=None):
+    def save_uploaded_img(self, static_folder=None, size=(100, 100), user=None): 
         with Image.open(self.img) as img:
-            img.thumbnail(size)
-            img.save(os.path.join(self.root_img_dir, self.fn))
-            
+            img.thumbnail(size) 
+            img_ext = img.format.lower()  
+            img_fn = f"img-{user.id}.{img_ext}" 
+            try:
+                img.save(os.path.join(static_folder, "images", img_fn))
+            except Exception:
+                pass # Pending
+            else:
+                self.fname = img_fn

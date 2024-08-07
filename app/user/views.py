@@ -3,6 +3,7 @@
 
 from flask import (
         abort,
+        current_app,
         flash,
         redirect,
         render_template,
@@ -41,15 +42,10 @@ def profile():
     delete_account_form = EmptyForm()
     if "submit_image" in request.form:
         if image_form.validate():
-            # Change the filename of the uploaded image.
-            # If any, remove all the current images.
-            # Save the uploaded image.
-            img = Img(image_form.image.data)
-            img.fn = f"img-{current_user.id}.{img.ext}"
-            img.remove_current_imgs(user=current_user)
-            img.save_uploaded_img(size=(100, 100))
-            #
-            current_user.update(image=img.fn)
+            img = Img(uploaded_img=image_form.image.data)
+            img.remove_current_img(static_folder=current_app.static_folder, user=current_user)
+            img.save_uploaded_img(static_folder=current_app.static_folder, user=current_user)
+            current_user.update(image=img.fname)
             return redirect(request.url)
         profile_form.first_name.data = current_user.first_name
         profile_form.last_name.data = current_user.last_name
