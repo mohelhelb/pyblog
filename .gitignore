@@ -1,8 +1,10 @@
 instance/
 venv/
-temp/
-app/static/images/img*
+temp/              
+!app/static/images/default.png 
+app/static/images/*
 *__pycache__*
 *.swp
 .env_development
 .flake8
+
