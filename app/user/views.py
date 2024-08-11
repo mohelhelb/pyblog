@@ -49,20 +49,17 @@ def profile():
             return redirect(request.url)
         profile_form.first_name.data = current_user.first_name
         profile_form.last_name.data = current_user.last_name
-        profile_form.email.data = current_user.email
         profile_form.about_me.data = current_user.about_me
     elif "submit_profile" in request.form and profile_form.validate():
         current_user.update(
                 first_name=profile_form.first_name.data,
                 last_name=profile_form.last_name.data,
-                email=profile_form.email.data,
                 about_me=profile_form.about_me.data
                 )
         return redirect(request.url)
     if request.method == "GET":
         profile_form.first_name.data = current_user.first_name
         profile_form.last_name.data = current_user.last_name
-        profile_form.email.data = current_user.email
         profile_form.about_me.data = current_user.about_me 
     return render_template(
             "user/profile.html",

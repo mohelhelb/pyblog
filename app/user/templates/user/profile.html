@@ -106,20 +106,7 @@
         {% else %}  
           {{ profile_form.last_name(placeholder=profile_form.last_name.description) }} 
         {% endif %}
-        <!-- < Last Name --->    
-        <!-- > Email -->
-        {{ profile_form.email.label }}
-        {% if profile_form.email.errors %} 
-          {{ profile_form.email(class="field-danger", placeholder=profile_form.email.description) }} 
-          <ul>
-            {% for error in profile_form.email.errors %}
-              <li class="small text-danger">{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% else %}  
-          {{ profile_form.email(placeholder=profile_form.email.description) }} 
-        {% endif %}
-        <!-- < Email -->
+        <!-- < Last Name ---> 
         <!-- > About Me -->
         {{ profile_form.about_me.label }}
         {% if profile_form.about_me.errors %} 
