@@ -65,6 +65,6 @@ class Img:
             try:
                 img.save(os.path.join(static_folder, "images", img_fn))
             except Exception:
-                pass # Pending
+                img.close() # Pending
             else:
                 self.fname = img_fn
