@@ -1,10 +1,9 @@
 
 ### IMPORTS  ###################################################################  
 
-import glob
 import os
 
-from flask import current_app, flash, redirect, url_for
+from flask import flash, redirect, url_for
 from flask_login import current_user
 from functools import wraps
 from PIL import Image
