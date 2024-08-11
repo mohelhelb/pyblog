@@ -2,7 +2,7 @@
 ### IMPORTS  ###################################################################  
 
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField
 from PIL import Image, UnidentifiedImageError
 from wtforms import (
         EmailField,
@@ -20,13 +20,27 @@ from wtforms.validators import (
         ValidationError
         )
 
-from app import db
 from app.models import User
 
 
-### FORMS  #####################################################################
+### CUSTOM VALIDATOR  ##########################################################
+
+class Account:
+
+    def __init__(self, existent=True):
+        self.existent = existent
+
+    def __call__(self, form, field):
+        user = User.retrieve_user_with(email=field.data)
+        if self.existent and not user:
+            raise ValidationError("There is no account with this email")
+        if not self.existent and user:
+            raise ValidationError("This email is already in use.") 
+
+
+### FORMS: USER  ###############################################################
  
-class UserBaseForm(FlaskForm):
+class SignupForm(FlaskForm):
     first_name = StringField(
             label="First Name",
             validators=[DataRequired(), Length(max=30)],
@@ -41,7 +55,7 @@ class UserBaseForm(FlaskForm):
             )
     email = EmailField(
             label="Email",
-            validators=[DataRequired(), Email()], 
+            validators=[Account(existent=False), DataRequired(), Email()], 
             id="emailAddress",
             description="e.g. johndoe@demo.com"
             )
@@ -49,7 +63,7 @@ class UserBaseForm(FlaskForm):
             label="Password",
             validators=[Length(min=4, max=20)],
             id="password",
-            description="At least 4 characters long"
+            description="At least 4 characters"
             )
     confirm_password = PasswordField(
             label="Repeat Password",
@@ -63,6 +77,87 @@ class UserBaseForm(FlaskForm):
             id="aboutMe",
             description="Enter a brief description of yourself"
             )
+    submit = SubmitField(label="Sign up")   
+
+
+class SigninForm(FlaskForm): 
+    email = EmailField(
+            label="Email",
+            validators=[Account(existent=True), DataRequired(), Email()], 
+            id="emailAddress",
+            description="e.g. johndoe@demo.com"
+            ) 
+    password = PasswordField(
+            label="Password",
+            validators=[Length(min=4, max=20)],
+            id="password",
+            description="At least 4 characters"
+            ) 
+    submit = SubmitField(label="Sign in")  
+
+
+class EmailTokenForm(FlaskForm): 
+    email = EmailField(
+            label="Email",
+            validators=[Account(existent=True), DataRequired(), Email()], 
+            id="emailAddress",
+            description="e.g. johndoe@demo.com"
+            )  
+    submit = SubmitField(label="Reset Password")
+
+
+class ProfileForm(FlaskForm):
+    first_name = StringField(
+            label="First Name",
+            validators=[DataRequired(), Length(max=30)],
+            id="firstName",
+            description="e.g. John"
+            )
+    last_name = StringField(
+            label="Last Name", 
+            validators=[DataRequired(), Length(max=30)],
+            id="lastName",
+            description="e.g. Doe"
+            )
+    about_me = TextAreaField(
+            label="About me", 
+            validators=[DataRequired(), Length(max=150)],
+            id="aboutMe",
+            description="Enter a brief description of yourself"
+            )     
+    submit_profile = SubmitField(label="Edit")    
+
+
+class ChangePasswordForm(FlaskForm):
+    current_password = PasswordField(
+            label="Current Password",
+            validators=[Length(min=4, max=20)],
+            id="currentPassword",
+            description="Enter current password"
+            )
+    password = PasswordField(
+            label="New Password",
+            validators=[Length(min=4, max=20)],
+            id="password",
+            description="At least 4 characters long"
+            )
+    confirm_password = PasswordField(
+            label="Repeat Password",
+            validators=[EqualTo("password")],
+            id="confirmPassword",
+            description="Repeat new password"
+            ) 
+    submit_change_password_form = SubmitField(label="Confirm")  
+
+
+class LogoutForm(FlaskForm):
+    submit_logout_form = SubmitField(label="Sign out")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = ChangePasswordForm.password
+    confirm_password = ChangePasswordForm.confirm_password
+    submit = SubmitField(label="Reset Password")                 
 
 
 class ImageForm(FlaskForm):
@@ -91,8 +186,10 @@ class ImageForm(FlaskForm):
 
  
 class EmptyForm(FlaskForm):
-    submit = SubmitField() 
+    submit = SubmitField()   
 
+
+### FORMS: POST  ###############################################################
 
 class CreatePostForm(FlaskForm):
     title = StringField(
@@ -123,65 +220,4 @@ class CreatePostForm(FlaskForm):
             id="status",
             choices=["Now", "Later"]
             )
-    submit = SubmitField()  
-
-
-class ChangePasswordForm(FlaskForm):
-    current_password = PasswordField(
-            label="Current Password",
-            validators=[Length(min=4, max=20)],
-            id="currentPassword",
-            description="Enter current password"
-            )
-    password = PasswordField(
-            label="New Password",
-            validators=[Length(min=4, max=20)],
-            id="password",
-            description="At least 4 characters long"
-            )
-    confirm_password = PasswordField(
-            label="Repeat Password",
-            validators=[EqualTo("password")],
-            id="confirmPassword",
-            description="Repeat new password"
-            ) 
-    submit_change_password_form = SubmitField(label="Confirm")  
-
-
-class LogoutForm(FlaskForm):
-    submit_logout_form = SubmitField(label="Sign out")
-
-
-class SignupForm(UserBaseForm):
-    submit = SubmitField(label="Sign up") 
-
-    def validate_email(form, field):
-        """Check if the provided email is assigned to an existing account. If so, provide feedback to users."""
-        user = db.session.execute(db.select(User).filter_by(email=field.data)).scalar()
-        if user:
-            raise ValidationError("This email is already assigned to an account. Please choose another one.")
-
-
-class ResetPasswordForm(FlaskForm):
-    password = ChangePasswordForm.password
-    confirm_password = ChangePasswordForm.confirm_password
-    submit = SubmitField(label="Reset Password")
-
-
-class SigninForm(FlaskForm):
-    email = UserBaseForm.email
-    password = UserBaseForm.password
-    submit = SubmitField(label="Sign in")
-
-
-class EmailTokenForm(FlaskForm):
-    email = UserBaseForm.email
-    submit = SubmitField(label="Reset Password")
-
-
-class ProfileForm(FlaskForm):
-    first_name = UserBaseForm.first_name
-    last_name = UserBaseForm.last_name
-    email = UserBaseForm.email
-    about_me = UserBaseForm.about_me
-    submit_profile = SubmitField(label="Edit")   
+    submit = SubmitField() 
