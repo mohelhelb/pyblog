@@ -119,6 +119,12 @@ class User(db.Model, UserMixin):
     def public_posts(self):
         return (post for post in self.posts if post.public)
 
+    @classmethod
+    def retrieve_user_with(cls, email=None):
+        if email:
+            stmt = db.select(cls).filter(cls.email == email)
+            return db.session.execute(stmt).scalar()
+
     def send_reset_password_link(self):
         msg = Message(
                 sender=current_app.config["MAIL_USERNAME"],
