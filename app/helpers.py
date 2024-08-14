@@ -13,7 +13,7 @@ from PIL import Image
 
 def logout_required(view):
     """
-    Prevent authenticated users from visiting certain pages.
+    Prevent authenticated users from visiting given pages.
 
     If an authenticated user attempts to visit pages intended only for
     non-authenticated users (e.g. "login" page), they are redirected to their 
@@ -38,32 +38,26 @@ def logout_required(view):
 
 class Img:
 
-    def __init__(self, uploaded_img=None):
-        self.img = uploaded_img
-
-    @property
-    def fname(self):
-        return self.img.filename
-
-    @fname.setter
-    def fname(self, new_fname):
-        self.img.filename = new_fname
+    def __init__(self, static_folder=None, uploaded_img=None, user=None):
+        self.static_folder = static_folder
+        self.uploaded_img = uploaded_img
+        self.user = user
     
-    def remove_current_img(self, user=None, static_folder=None):
-        if user.image != "default.png":
+    def remove_current_img(self):
+        if self.user.image != "default.png":
             try:
-                os.remove(os.path.join(static_folder, "images", user.image))
+                os.remove(os.path.join(self.static_folder, "images", self.user.image))
             except Exception:
                 pass # Pending
 
-    def save_uploaded_img(self, static_folder=None, size=(100, 100), user=None): 
-        with Image.open(self.img) as img:
+    def save_uploaded_img(self, size=(100, 100)): 
+        with Image.open(self.uploaded_img) as img:
             img.thumbnail(size) 
             img_ext = img.format.lower()  
-            img_fn = f"img-{user.id}.{img_ext}" 
+            img_fn = f"img-{self.user.id}.{img_ext}" 
             try:
-                img.save(os.path.join(static_folder, "images", img_fn))
+                img.save(os.path.join(self.static_folder, "images", img_fn))
             except Exception:
                 img.close() # Pending
             else:
-                self.fname = img_fn
+                self.user.update(image=img_fn)

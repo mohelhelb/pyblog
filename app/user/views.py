@@ -42,10 +42,13 @@ def profile():
     delete_account_form = EmptyForm()
     if "submit_image" in request.form:
         if image_form.validate():
-            img = Img(uploaded_img=image_form.image.data)
-            img.remove_current_img(static_folder=current_app.static_folder, user=current_user)
-            img.save_uploaded_img(static_folder=current_app.static_folder, user=current_user)
-            current_user.update(image=img.fname)
+            img = Img(
+                    static_folder=current_app.static_folder,
+                    uploaded_img=image_form.image.data,
+                    user=current_user
+                    )
+            img.remove_current_img()
+            img.save_uploaded_img()
             return redirect(request.url)
         profile_form.first_name.data = current_user.first_name
         profile_form.last_name.data = current_user.last_name

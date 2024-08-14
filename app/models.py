@@ -142,18 +142,24 @@ class User(db.Model, UserMixin):
         self.saved_posts.remove(post)
         db.session.commit()
 
-    def update(self, **kwargs):
-        for attr in kwargs.keys():
-            # When updating the password, write the corresponding hash to the database instead.
-            if attr == "password":
-                setattr(self, "hash_password", bcrypt.generate_password_hash(kwargs["password"]))
-                continue
-            try:
-                getattr(self, attr)
-            except AttributeError:
-                continue
-            else:
-                setattr(self, attr, kwargs[attr])
+    def update(
+            self,
+            about_me=None,
+            first_name=None,
+            image=None,
+            last_name=None,
+            password=None
+            ):
+        if about_me:
+            self.about_me = about_me
+        if first_name:
+            self.first_name = first_name
+        if image:
+            self.image = image
+        if last_name:
+            self.last_name = last_name
+        if password:
+            self.hash_password = bcrypt.generate_password_hash(password)
         db.session.commit()
 
     @classmethod
