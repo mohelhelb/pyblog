@@ -41,7 +41,7 @@ The steps that should be taken to set up this application are as follows:
   PYBLOG_MAIL_USERNAME="Replace this with your gmail"
   PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces" 
   ~~~
-- Modify the *deactivate* function defined in the *venv/bin/activate* file:
+- Adjust the *deactivate* function defined in the *venv/bin/activate* file:
   ~~~
   deactivate() {
     ...
