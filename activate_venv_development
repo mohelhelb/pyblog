@@ -5,7 +5,7 @@
 # control system.
 
 # Set the current project's root directory:
-PROJECT_ROOT_DIR="/home/mo/projects/pyblog"
+PROJECT_ROOT_DIR="${HOME}/projects/pyblog"
   
 # Activate the virtual environment for the current project:
 source "${PROJECT_ROOT_DIR}/venv/bin/activate"   
