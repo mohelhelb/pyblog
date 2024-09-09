@@ -38,7 +38,7 @@ The steps that should be taken to set up this application are as follows:
   ~~~
 - Activate the virtual environment:
   ~~~
-  source ~/projects/pyblog/.activate_venv_development
+  source ~/projects/pyblog/activate_venv_development
   ~~~
 - Install the application's dependencies:
   ~~~	
