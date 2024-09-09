@@ -48,6 +48,7 @@ The steps that should be taken to set up this application are as follows:
     unset PYBLOG_MAIL_PASSWORD
   }
   ~~~
+- Redefine the *PROJECT_ROOT_DIR* variable in the *activate_venv_development* file accordingly.
 - Activate the virtual environment:
   ~~~
   source ~/projects/pyblog/activate_venv_development
