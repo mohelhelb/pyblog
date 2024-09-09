@@ -1,7 +1,7 @@
 ## Web Application
 
 ### Description
-This project is a simple blog-based web application built with Flask (Python web framework), JavaScript, CSS, and HTML. Some of the features of the application are the following:
+This web application is a simple blogging platform that enables Python developers to share insights and knowledge. Some of the features of this application are the following:
 
 - Mobile-first design.
 - Create/Delete user accounts. 
@@ -13,41 +13,47 @@ This project is a simple blog-based web application built with Flask (Python web
 ### Setup
 The steps that should be taken to set up this application are as follows:
 
-- Clone the GitHub repository into the preferred directory (e.g. *~/projects/*).
+- Clone the GitHub repository into your chosen directory (e.g. *~/projects/*):
   ~~~	
   mkdir -p ~/projects/
   git clone git@github.com:mohelhelb/pyblog.git ~/projects/pyblog/
   ~~~	
-- Isolate the application by creating and activating a virtual environment.
+- Create a virtual environment to isolate the application:
 	~~~	
-  [pip install -U virtualenv]
+  pip install -U virtualenv
   virtualenv ~/projects/pyblog/venv/
-  source ~/projects/pyblog/venv/bin/activate
-  ~~~	
-- Install the application's dependencies (See the *requirements.txt* file).
+  ~~~
+- Create a file with the name *.env_development* and write the following environment variables into it:
+  ~~~
+  touch ~/projects/pyblog/.env_development
+  ~~~
+  ~~~
+  FLASK_APP=run_app
+  FLASK_DEBUG=True  
+  FLASK_ENV=development
+  PYBLOG_SECRET_KEY="Replace this with a long, unguessable string"
+  PYBLOG_MAIL_USERNAME="Replace this with your gmail"
+  PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces"[^1]
+  [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en)  
+  ~~~
+- Activate the virtual environment:
+  ~~~
+  source ~/projects/pyblog/.activate_venv_development
+  ~~~
+- Install the application's dependencies:
   ~~~	
   pip install -r ~/projects/pyblog/requirements.txt
   ~~~
-- Set the application's configuration keys (See the *config.py* file)[^1].
-  [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en)
+- Create a SQLite database:
   ~~~
-  export PYBLOG_DEVELOPMENT_SECRET_KEY="Substitute this for a random string"
-  export PYBLOG_MAIL_USERNAME="Substitute this for your gmail address"
-  export PYBLOG_MAIL_PASSWORD="Substitute this for your Google app password with no spaces"
-  ~~~
-- Create a SQLite database.
-  ~~~
-  flask --app ~/projects/pyblog/pyblog shell
+  flask shell
   ~~~
   ~~~
-  Python 3.10.12 (main, Jun 11 2023, 05:26:28) [GCC 11.4.0] on linux
-  App: pyblog
-  Instance: ~/projects/pyblog/instance
   >>> db.create_all()
   >>> exit()
   ~~~
-- Run the application.
+- Run the application:
   ~~~
-  flask --app ~/projects/pyblog/pyblog run
+  flask run
   ~~~
-- Enter the local server address and port number (http://127.0.0.1:5000/) that are generated in the browser's search bar.
+- Enter the generated server address and port number (http://127.0.0.1:5000/) in the browser's search bar.
