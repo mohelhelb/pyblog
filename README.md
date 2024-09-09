@@ -36,6 +36,18 @@ The steps that should be taken to set up this application are as follows:
   PYBLOG_MAIL_USERNAME="Replace this with your gmail"
   PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces" 
   ~~~
+- Modify the *deactivate* function defined in the *venv/bin/activate* file:
+  ~~~
+  deactivate() {
+    ...
+    unset FLASK_APP
+    unset FLASK_DEBUG
+    unset FLASK_ENV
+    unset PYBLOG_SECRET_KEY
+    unset PYBLOG_MAIL_USERNAME
+    unset PYBLOG_MAIL_PASSWORD
+  }
+  ~~~
 - Activate the virtual environment:
   ~~~
   source ~/projects/pyblog/activate_venv_development
