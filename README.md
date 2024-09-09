@@ -17,16 +17,17 @@ The steps that should be taken to set up this application are as follows:
   ~~~	
   mkdir -p ~/projects/
   git clone git@github.com:mohelhelb/pyblog.git ~/projects/pyblog/
+  cd ~/projects/pyblog/
   ~~~	
 - Create a virtual environment to isolate the application:
 	~~~	
   pip install -U virtualenv
-  virtualenv ~/projects/pyblog/venv/
+  virtualenv venv/
   ~~~
 - Create a file with the name *.env_development* and write the following environment variables into it[^1]: 
   [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en) 
   ~~~
-  touch ~/projects/pyblog/.env_development
+  touch .env_development
   ~~~
   ~~~
   FLASK_APP=run_app
@@ -51,11 +52,11 @@ The steps that should be taken to set up this application are as follows:
 - Redefine the *PROJECT_ROOT_DIR* variable in the *activate_venv_development* file accordingly.
 - Activate the virtual environment:
   ~~~
-  source ~/projects/pyblog/activate_venv_development
+  source activate_venv_development
   ~~~
 - Install the application's dependencies:
   ~~~	
-  pip install -r ~/projects/pyblog/requirements.txt
+  pip install -r requirements.txt
   ~~~
 - Create a SQLite database:
   ~~~
