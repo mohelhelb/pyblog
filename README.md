@@ -23,7 +23,8 @@ The steps that should be taken to set up this application are as follows:
   pip install -U virtualenv
   virtualenv ~/projects/pyblog/venv/
   ~~~
-- Create a file with the name *.env_development* and write the following environment variables into it:
+- Create a file with the name *.env_development* and write the following environment variables into it[^1]: 
+  [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en) 
   ~~~
   touch ~/projects/pyblog/.env_development
   ~~~
@@ -33,8 +34,7 @@ The steps that should be taken to set up this application are as follows:
   FLASK_ENV=development
   PYBLOG_SECRET_KEY="Replace this with a long, unguessable string"
   PYBLOG_MAIL_USERNAME="Replace this with your gmail"
-  PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces"[^1]
-  [^1]: [Google: Sign in with app passwords](https://support.google.com/accounts/answer/185833?hl=en)  
+  PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces" 
   ~~~
 - Activate the virtual environment:
   ~~~
