@@ -16,7 +16,11 @@ The steps that should be taken to set up this application are as follows:
 - Clone the GitHub repository into your chosen directory (e.g. *~/projects/*):
   ~~~	
   mkdir -p ~/projects/
-  git clone git@github.com:mohelhelb/pyblog.git ~/projects/pyblog/
+  cd ~/projects/
+  git clone git@github.com:mohelhelb/pyblog.git
+  ~~~
+- Change working directory:
+  ~~~
   cd ~/projects/pyblog/
   ~~~	
 - Create a virtual environment to isolate the application:
