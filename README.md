@@ -15,8 +15,9 @@ The steps that should be taken to set up this application are as follows:
 
 - Clone the GitHub repository into your chosen directory (e.g. *~/projects/*):
   ~~~	
-  mkdir -p ~/projects/
-  cd ~/projects/
+  mkdir -p ~/projects/ && cd ~/projects/
+  ~~~
+  ~~~
   git clone git@github.com:mohelhelb/pyblog.git
   ~~~
 - Change working directory:
@@ -26,6 +27,8 @@ The steps that should be taken to set up this application are as follows:
 - Create a virtual environment to isolate the application:
 	~~~	
   pip install -U virtualenv
+  ~~~
+  ~~~
   virtualenv venv/
   ~~~
 - Create a file with the name *.env_development* and write the following environment variables into it[^1]: 
@@ -64,11 +67,7 @@ The steps that should be taken to set up this application are as follows:
   ~~~
 - Create a SQLite database:
   ~~~
-  flask shell
-  ~~~
-  ~~~
-  >>> db.create_all()
-  >>> exit()
+  flask db upgrade
   ~~~
 - Run the application:
   ~~~

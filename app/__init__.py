@@ -5,6 +5,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -16,15 +17,18 @@ db = SQLAlchemy()
 # Flask-Bcrypt
 bcrypt = Bcrypt()
 
-# Flask-mail
-mail = Mail()
-
 # Flask-login
 login_manager = LoginManager()
 login_manager.login_view = "bp_auth.login"
 login_manager.login_message_category = "info"
 login_manager.refresh_view = "bp_auth.login"
-login_manager.needs_refresh_message_category = "info"
+login_manager.needs_refresh_message_category = "info"    
+
+# Flask-mail
+mail = Mail() 
+
+# Flask-migrate
+migrate = Migrate()
 
 def create_app(ConfigClass=None):
     # Create and configure the application:
@@ -36,6 +40,7 @@ def create_app(ConfigClass=None):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    migrate.init_app(app, db)
 
     # Register blueprints: 
     from app.auth import bp_auth
