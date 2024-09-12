@@ -1,27 +1,38 @@
 
 # Ignore python bytecode and cache files:
 *__pycache__*
-*.pyc  
+*.pyc
 
 # Ignore local environment variables:
-*.env*   
+*.env*
 
-# Ignore directories related to the virtual environment:
-venv/ 
+# Ignore files and directories related to the virtual environment:
+activate_venv*
+venv/
 
 # Ignore files and directories related to databases:
 instance/
-*.db   
+*.db    
 
 # Ignore all profile images except the default:
 app/static/images/*
-!app/static/images/default.png     
+!app/static/images/default.png   
 
 # Ignore configuration files related to the vim extensions:
 .flake8   
 
 # Ignore swap files and temporary directories:
 *.swp
-temp/
+temp/      
+
+# Ignore files related to docker:
+Dockerfile
+.dockerignore  
+
+# Ignore files and directories related to version control:
+.git/
+.gitignore
+README.md
+
 
 
