@@ -1,7 +1,7 @@
-# Web Application
+# PyBlog
 
 ## Description
-This web application is a simple blogging platform that enables Python developers to share insights and knowledge. Some of the features of this application are the following:
+This web application is a blogging platform that enables Python developers to share insights and knowledge. Some of the features of this application are the following:
 
 - Mobile-first design.
 
@@ -32,7 +32,8 @@ This web application is a simple blogging platform that enables Python developer
   cd ~/projects/pyblog/
   ~~~	
   
-- Create a file with the name *.env_development* and write the following environment variables into it: 
+- Create a file with the name *.env_development* and write the following environment variables into it[^1]:
+  [^1]: [Sign in with Google app passwords](https://support.google.com/accounts/answer/185833?hl=en) 
   ~~~
   touch .env_development
   ~~~
@@ -73,7 +74,7 @@ This web application is a simple blogging platform that enables Python developer
   cd ~/projects/pyblog/
   ~~~	 
 
-- Create a file with the name *.env_development* and write the following environment variables into it: 
+- Create a file with the name *.env_development* and write the following environment variables into it[^1]: 
   ~~~
   touch .env_development
   ~~~
