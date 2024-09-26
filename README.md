@@ -18,19 +18,6 @@ This web application is a blogging platform that enables Python developers to sh
 ## Setup
 
 ### Docker  
-
-- Clone the GitHub repository into your chosen directory (e.g. *~/projects/*):
-  ~~~	
-  mkdir -p ~/projects/ && cd ~/projects/
-  ~~~
-  ~~~
-  git clone git@github.com:mohelhelb/pyblog.git
-  ~~~
-
-- Change working directory:
-  ~~~
-  cd ~/projects/pyblog/
-  ~~~	
   
 - Create a file with the name *.env_development* and write the following environment variables into it[^1]:
   [^1]: [Sign in with Google app passwords](https://support.google.com/accounts/answer/185833?hl=en) 
@@ -46,14 +33,9 @@ This web application is a blogging platform that enables Python developers to sh
   PYBLOG_MAIL_PASSWORD="Replace this with your Google app password with no spaces" 
   ~~~ 
 
-- Build the docker image:
+- Run the docker container:
   ~~~
-  docker build -t pyblog .
-  ~~~
-
-- Start a docker container:
-  ~~~
-  docker container run -d -p 5000:5000 --env-file .env_development --rm pyblog
+  docker container run -d -p 5000:5000 --env-file .env_development --rm mohelhelb/pyblog
   ~~~  
 
 - Enter the server address and port number (http://127.0.0.1:5000/) in the browser's search bar. 
