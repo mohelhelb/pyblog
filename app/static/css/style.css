@@ -165,7 +165,7 @@ form legend {
 }
 
 .post-title {
-  font-size: 2rem;
+  font-size: 1.4rem;
 }
 
 .post-content {
@@ -274,7 +274,10 @@ form legend {
 }
 .mb-54 {
   margin-bottom: 54px;
-}   
+}    
+.mt-50 {
+  margin-top: 50px;
+}  
 .mt-48 {
   margin-top: 48px;
 }
@@ -866,6 +869,10 @@ input[type="submit"].unfollow, input[type="submit"].unbookmark {
   right: 10px;
   z-index: 1;
   transform: translateY(-50%);
+}
+
+.date-level-author {
+  font-size: 0.9rem;
 }
 
 .date-level-author .fleft {

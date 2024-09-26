@@ -6,52 +6,52 @@
     <article id="singlePost">
       <!-- Post Header -->
       <header>
-        <h1 class="post-title">{{ selected_post.title }}</h1>    
+        <h1 class="post-title mt-50">{{ selected_post.title }}</h1>    
         {% if current_user.is_authenticated and current_user == selected_post.author %}       
-        <div class="date-level-author clearfix"> 
-          <span class="time-stamp">{{ selected_post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
-          <span class="fleft width-third text-muted-light t-align-left lag"></span> <!-- JS-only class: lag --> 
-          <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span>
-        </div> 
-        <div class="sort-toggle">
-          <hr class="hr mt-0 mb-3"> 
-          <span class="circle">
-            <span class="abs-center">
-              <i class="fa-solid fa-angles-down"></i>
-            </span>
-          </span> 
-        </div> 
-        <div class="div-3 edit-hide-delete mt-30 clearfix"> 
-          <div class="fleft width-third t-align-center">
-            <a href="{{ url_for('bp_post.edit_post', post_id=selected_post.id) }}" class="circle">
-              <span class="abs-center">Edit</span>
-            </a> 
+          <div class="date-level-author clearfix"> 
+            <span class="time-stamp">{{ selected_post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+            <span class="fleft width-third text-muted-light t-align-left lag"></span> <!-- JS-only class: lag --> 
+            <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span>
           </div> 
-          <div class="fleft width-third t-align-center">
-            {% if selected_post.public %} 
-            <a href="{{ url_for('bp_post.hide_post', post_id=selected_post.id) }}" class="circle"> 
-              <span class="abs-center">Hide</span>
-            </a> 
-            {% else %} 
-            <a href="{{ url_for('bp_post.show_post', post_id=selected_post.id) }}" class="circle"> 
-              <span class="abs-center">Show</span>
-            </a> 
-            {% endif %} 
-          </div>  
-          <div class="fleft width-third t-align-center">
-            <div class="circle delete"> 
-              <span class="abs-center">Delete</span>
+          <div class="sort-toggle">
+            <hr class="hr mt-0 mb-3"> 
+            <span class="circle">
+              <span class="abs-center">
+                <i class="fa-solid fa-angles-down"></i>
+              </span>
+            </span> 
+          </div> 
+          <div class="div-3 edit-hide-delete mt-30 clearfix"> 
+            <div class="fleft width-third t-align-center">
+              <a href="{{ url_for('bp_post.edit_post', post_id=selected_post.id) }}" class="circle">
+                <span class="abs-center">Edit</span>
+              </a> 
+            </div> 
+            <div class="fleft width-third t-align-center">
+              {% if selected_post.public %} 
+              <a href="{{ url_for('bp_post.hide_post', post_id=selected_post.id) }}" class="circle"> 
+                <span class="abs-center">Hide</span>
+              </a> 
+              {% else %} 
+              <a href="{{ url_for('bp_post.show_post', post_id=selected_post.id) }}" class="circle"> 
+                <span class="abs-center">Show</span>
+              </a> 
+              {% endif %} 
+            </div>  
+            <div class="fleft width-third t-align-center">
+              <div class="circle delete"> 
+                <span class="abs-center">Delete</span>
+              </div>
             </div>
           </div>
-        </div>
         {% else %}      
-        <div class="date-level-author clearfix"> 
-          <span class="time-stamp">{{ selected_post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
-          <span class="fleft width-third text-muted-light t-align-left lag"></span> <!-- JS-only class: lag -->   
-          <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span> 
-          <span class="fleft width-third text-muted-light t-align-right">{{ selected_post.reading_time }} min read</span> 
-        </div>
-        <hr class="hr mt-0 mb-0">
+          <div class="date-level-author clearfix"> 
+            <span class="time-stamp">{{ selected_post.time_stamp() }}</span> <!-- JS-only class: time-stamp -->
+            <span class="fleft width-third text-muted-light t-align-left lag"></span> <!-- JS-only class: lag -->   
+            <span class="fleft width-third text-muted-light t-align-center">{{ selected_post.level }}</span> 
+            <span class="fleft width-third text-muted-light t-align-right">{{ selected_post.reading_time }} min read</span> 
+          </div>
+          <hr class="hr mt-0 mb-0">
         {% endif %}      
         <p class="l-height-6 text-muted-dark mt-24">{{ selected_post.subheading }}</p>
       </header>
