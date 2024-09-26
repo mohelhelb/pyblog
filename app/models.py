@@ -195,7 +195,7 @@ class Post(db.Model):
 
     @property
     def reading_time(self):
-        avg_reading_speed = 250  # Average Reading Speed: 250 wpm
+        avg_reading_speed = 80  # Average Reading Speed: 250 wpm
         return round(self.content.count(" ") / avg_reading_speed)
 
     def __repr__(self):
